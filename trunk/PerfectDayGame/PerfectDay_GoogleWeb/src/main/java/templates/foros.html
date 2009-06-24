@@ -1,0 +1,51 @@
+{% extends "main.html" %} 
+{% block contenido %}
+{% if admin %}
+<div id="botonera">
+<form action="/foros" method="post">
+    <input type="text" id="name" name="name">
+    <input type="submit" value="Nuevo Foro">
+</form>
+
+</div>
+{% else %}
+ NO ADMIN
+{% endif %}
+
+<div id="tabla-foros">
+<li>Foros({{nforos}})
+{% for foro in foros %}
+    <ul>
+        <div class="div-foro">
+            <div class="foro-name">
+                <a href="/foros/{{foro.name}}/view">{{foro.name}}({{foro.nposts}})</a>
+            </div>
+            <div class="foro-ultimo-post">
+               
+                        <table border=0 width='100%' class=".post-resumen">
+                            <tr>
+                            <td width='100px'>
+                                {% ifnotequal foro.nposts 0 %}
+                                <table border=1 width='100%'>
+                                    <tr><td width='30%'>{{foro.lastpost.creador}}</td>
+                                    <td>{{foro.lastpost.text|truncatewords:30}}</td></tr>
+                                </table>
+                                {% endifnotequal %}
+                            </td>
+                            <tr>
+                               
+                            <td>Últimpo comentario por :{{foro.lastpost.ultimousuariocomento}} ({{foro.lastpost.ncomentarios}} comentario)</td>
+                            </tr>
+                        </table>
+                   
+               
+            </div>            
+        </div>
+    </ul>
+{% endfor %}
+
+</li>
+
+</div>
+{% endblock %}
+
