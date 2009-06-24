@@ -1,0 +1,18 @@
+application: perfectday-game
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /css
+  static_dir: css
+
+- url: /javascripts
+  static_dir: javascripts
+
+- url: /modelos
+  static_dir: modelos
+
+- url: /.*
+  script: main.py
+

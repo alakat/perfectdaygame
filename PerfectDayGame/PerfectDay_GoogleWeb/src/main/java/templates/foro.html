@@ -1,0 +1,52 @@
+{% extends "main.html" %} 
+{% block contenido %}
+{% if admin %}
+<div id="botonera">
+<form action="/foros/{{foro.name}}/add" method="post">
+    <table>
+    <tr><td>Titulo: <input type="text" id="title" name="title"></td></tr>
+    <tr><td><textarea type="text" id="text" name="text"></textarea></td></tr>
+    <tr><td>    <input type="submit" value="Nuevo Post"></td></tr>
+    </table>
+</form>
+
+</div>
+{% else %}
+ NO ADMIN
+{% endif %}
+
+<div id="table-foros">
+<div class="foro-cabecera">
+{{foro.name}} by {{foro.creada|date:"F j, Y"}}
+</div>
+
+{% for post in foro.posts %}
+<div id="post">
+    <table width='90%' border=1 >
+    <tr align=left as><td class="post-titulo"> {{post.title}}</td></tr>
+    <tr align=left><td ><p> {{post.text}}</p></td></tr>
+    <tr align=right><td class="post-creador">by: {{post.creador}} </td></tr>
+    <tr><td>
+        <table width='90%'>
+        {%for comentarion in post.comentarios%}
+            <tr><td><div class="comentario">
+                {{post.comentario}}
+                </div></td></tr>
+        {% endfor %}
+        </table>
+    </td></tr>
+    <tr><td>
+        <from action="/comentario" method="post">
+            <table>
+            <tr><td><textarea id="comentario_text" name="comentario_text" cols="50" ></textarea></td></tr>
+            <tr><td><input type="submit" value="Comentar!!!"></td></tr>
+            </table>
+        </from>
+    </td></tr>
+    </table>
+</div>
+    
+{% endfor %}
+
+</div>
+{% endblock %}
