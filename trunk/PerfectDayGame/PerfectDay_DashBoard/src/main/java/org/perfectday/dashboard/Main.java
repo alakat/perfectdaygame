@@ -5,23 +5,29 @@
 
 package org.perfectday.dashboard;
 
-import org.jivesoftware.smack.Chat;
+import org.perfectday.dashboard.gui.DashBoard;
+import org.perfectday.dashboard.threads.DashBoardThreadGroup;
+import org.perfectday.logicengine.core.Game;
 
 /**
  *
  * @author Miguel Angel Lopez Montellano (alakat@gmail.com)
  */
-public class Main {
+public class Main implements Runnable {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args)  {
-        
-        
-        
-       
-        
+    public static void main(String args[] )throws Exception{
+        Thread t = new Thread(DashBoardThreadGroup.getInstance(),new Main(),"DashBoard-Main");
+        t.start();
+        t.join();
+    }
+
+    public Main() {
+    }
+
+    @Override
+    public void run() {
+        Game.getInstance_();
+        new DashBoard().setVisible(true);
     }
 
 }

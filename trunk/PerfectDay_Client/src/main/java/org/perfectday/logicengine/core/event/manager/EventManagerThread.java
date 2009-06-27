@@ -49,6 +49,12 @@ public class EventManagerThread implements Runnable {
             logger.info("Me despiertan!!!");
         }
     }
+
+    public EventManager getEventManager() {
+        return eventManager;
+    }
+
+
     
     
     
