@@ -63,18 +63,6 @@ public class DashBoard extends javax.swing.JFrame {
         setBounds((screenSize.width-701)/2, (screenSize.height-488)/2, 701, 488);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-            Game.getInstance_();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DashBoard().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lAyuda;
     private org.perfectday.dashboard.gui.WarRoom warRoom1;
