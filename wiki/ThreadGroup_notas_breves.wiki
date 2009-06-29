@@ -1,0 +1,37 @@
+#labels Phase-Implementation,Phase-Implementation
+=Gestión de Hebras en PerfectDay=
+
+
+==Introducción==
+El juego posee 3 grandes bloques:
+
+El dashboard que es el chat y lanzador de las partidas tanto en multiusuario como en mono usuario (esto último cuando lo tengamos), Por ser el primer módulo en ejecución y necesitar de las comunicaciones por internet y de los eventos de usuario, este módulo posee las siguientes hebras:
+  * Smack Sender (emisor de comunicaciones)
+  * Smack Listenes (receptor de comunicaciones)
+  * AWT-QUEUE (encargada de los procesos de repintado provenientes de la máquina virtual y de la recepción de eventos y ejecución de los códigos asignados a estos
+  * Hebra DashBoard
+
+El Kernell, una vez que el juego se ha iniciado el módulo del kernell es el encargado de ejecutar el código del nucleo del juego, solicitando al módulo del motor gráfico el repintado de determinadas situaciones, así como recibiendo y enviando datos mediente la hebra del Smack *. Las hebras de este módulo son:
+  * Hebra de juego. Encargada de procesar las distintas ocurrencias (Accidents) que se apilan en la cola de juego (esta cola modela el tiempo, lo que se apila aquí esta ordenado por su momento de ejecución y no por su momento de apilamiento) Los Accidents son los que realizan la ejecución del juego realmente.
+  * Hebra de eventos del juego. Estos eventos, a diferencia de accidents si están ordenados por su orden de apilamiento y deben ser enviados al servidor para que este convierta a los accidents adecuados.
+
+El motor gráfico. Encargado de todo el procesamiento del renderizado de las acciones del juego. ---NO REDACTO LAS HEBRAS POR QUE AUN NO SE HAN DEFINIDO COMPLETAMENTE----
+
+==El problema==
+Todo los módulos anteriormente mencionados no funcionan de modo aislado si no que están íntimamente relacionados. Por ejemplo la recepción de un evento por las comunicaciones implica un apilamiento de un evento que más tarde se transformará en iniciar una animación en el motor gráfico.
+Si esto no se protege podrá pasar que una hebra realice todo el trabajo mientras que otras permanecen ociosas atacando esto directamente al rendimiento del juego.
+Además el no tener los recursos (clases del sistema) bien gestionados hace que el código se emborrone mucho llenándolo de interdependencia que en tiempo de ejecución pueden fallar o interbloqueares
+
+==La solución propuesta==
+Cada Modulo funciona como un conjunto de hebras independiente _PerfectDayThreadGroup_. Para solucionar el primer problema (rendimiento e interbloqueo) definimos el concepto:
+* Comando
+* Cola de comandos
+Para solucionar el segundo problema (localización de recursos) se solventa componiendo cada grupo de hebras de los puentes hacia los distintos recursos compartidos(por ejemplo la interfaz al motor gráfico) y esto se consigue gracias a que en cualquier código:
+{{{
+Thread.currentThread().getThreadGroup()
+}}}
+Devuelve la instancia del ThreadGroup asociado a la hebra y podremos usar sus objetos y métodos.
+===Comando===
+TODO
+===Cola de comandos===
+TODO
