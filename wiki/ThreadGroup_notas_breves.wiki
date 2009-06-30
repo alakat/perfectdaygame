@@ -15,7 +15,7 @@ El Kernell, una vez que el juego se ha iniciado el módulo del kernell es el enc
   * Hebra de juego. Encargada de procesar las distintas ocurrencias (Accidents) que se apilan en la cola de juego (esta cola modela el tiempo, lo que se apila aquí esta ordenado por su momento de ejecución y no por su momento de apilamiento) Los Accidents son los que realizan la ejecución del juego realmente.
   * Hebra de eventos del juego. Estos eventos, a diferencia de accidents si están ordenados por su orden de apilamiento y deben ser enviados al servidor para que este convierta a los accidents adecuados.
 
-El motor gráfico. Encargado de todo el procesamiento del renderizado de las acciones del juego. ---NO REDACTO LAS HEBRAS POR QUE AUN NO SE HAN DEFINIDO COMPLETAMENTE----
+El motor gráfico. Encargado de todo el procesamiento del renderizado de las acciones del juego. Se compone de una única hebra que gestiona el renderizado constante del entorno de juego, así como de las animaciones en curso. Tiene una cola de animaciones que permite añadir nuevas animaciones a personajes de forma asíncrona, de forma que otros procedimientos le envían una orden de animación al motor y éste la encola y la ejecuta.
 
 ==El problema==
 Todo los módulos anteriormente mencionados no funcionan de modo aislado si no que están íntimamente relacionados. Por ejemplo la recepción de un evento por las comunicaciones implica un apilamiento de un evento que más tarde se transformará en iniciar una animación en el motor gráfico.
