@@ -22,7 +22,7 @@ import org.perfectday.logicengine.model.minis.action.ActionMini;
 import org.perfectday.logicengine.model.minis.action.combat.CombatActionMini;
 import org.perfectday.logicengine.model.unittime.UnitTime;
 import org.perfectday.logicengine.model.unittime.factories.LongUnitTimeFactory;
-import org.perfectday.main.laboratocGUI.LaboratoryGUI;
+import org.perfectday.main.dummyengine.DummyGraphicsEngine;
 
 /**
  *
@@ -52,7 +52,7 @@ public class SimpleBrain extends AbstractBrain {
         Field field = this.motionBrain.getBestField(mini);
         if( field !=null){
             //Movemos
-            Field oldField = Game.getInstance().getBattelField().getField(mini);
+            Field oldField = Game.getGame().getBattelField().getField(mini);
             oldField.setMiniOcupant(null);
             field.setMiniOcupant(mini);
             commands.add(new MovementCommand(mini, field));
@@ -60,21 +60,21 @@ public class SimpleBrain extends AbstractBrain {
             /*
              *Si hemos movido pintar el campo de batalla nuevo
              */
-            LaboratoryGUI.me.getJBattelField1().repaint();
+            ((DummyGraphicsEngine)Game.getPerfectDayGUI()).getJBattelField1().repaint();
             ut.plus(LongUnitTimeFactory.getInstance().doMovementAction(mini));
         }else{          
             ut.plus(LongUnitTimeFactory.getInstance().doNothing(mini));
-            field = Game.getInstance().getBattelField().getField(mini);
+            field = Game.getGame().getBattelField().getField(mini);
         }
         //Atacar si tenemos enemigos al alcance
         ActionMini selectedAction = this.actionBrain.getBestAction(mini);
         if (enemyNear(selectedAction, field, 
-                Game.getInstance().getPlayerByMini(mini))){
+                Game.getGame().getPlayerByMini(mini))){
             try {
                 Mini targetMini = getTargetMini(field, selectedAction,mini);
                 ((CombatActionMini) selectedAction).createCombat(targetMini, mini, false);
 
-                ut.plus(LongUnitTimeFactory.getInstance().doCombat(Game.getInstance().getSelectedMini()));
+                ut.plus(LongUnitTimeFactory.getInstance().doCombat(Game.getGame().getSelectedMini()));
                 if (((CombatActionMini) selectedAction).isNeedPreparation() && ((CombatActionMini) selectedAction).getCostPreparation() != null) {
                     ut.plus(((CombatActionMini) selectedAction).getCostPreparation());
                 }
@@ -94,10 +94,10 @@ public class SimpleBrain extends AbstractBrain {
         if (primaryAction instanceof CombatActionMini) {
             CombatActionMini combatActionMini = (CombatActionMini) primaryAction;
             List<Field> keepFields = 
-                    combatActionMini.getCombatKeep().getFieldKeeped(f);
+                    combatActionMini.getCombatKeep().getFieldKeeped(f,Game.getGame());
             for(Field field : keepFields){
                 if(field.getMiniOcupant()!=null){
-                    Player p = Game.getInstance().getPlayerByMini(field.getMiniOcupant());
+                    Player p = Game.getGame().getPlayerByMini(field.getMiniOcupant());
                     if ( !p.equals(miniOwner))
                         return true;
                 }
@@ -110,13 +110,13 @@ public class SimpleBrain extends AbstractBrain {
 
     private Mini getTargetMini(Field field, ActionMini selectedAction,Mini mini) {
         List<Field> fields = ((CombatActionMini)selectedAction).
-                getCombatKeep().getFieldKeeped(field);
-        Player p = Game.getInstance().getPlayerByMini(mini);
+                getCombatKeep().getFieldKeeped(field,Game.getGame());
+        Player p = Game.getGame().getPlayerByMini(mini);
         Mini targetMini=null;
         List<Mini> enemies= new ArrayList<Mini>();
         for (Field f : fields) {
             if ( f.getMiniOcupant()!=null &&
-                    !(Game.getInstance().getPlayerByMini(
+                    !(Game.getGame().getPlayerByMini(
                     f.getMiniOcupant()).equals(p)))
                 enemies.add(f.getMiniOcupant());
         }

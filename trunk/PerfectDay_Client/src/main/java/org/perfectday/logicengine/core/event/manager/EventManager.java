@@ -9,6 +9,7 @@ package org.perfectday.logicengine.core.event.manager;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.perfectday.core.threads.KernellThreadGroup;
 import org.perfectday.logicengine.core.event.Event;
 import org.perfectday.logicengine.core.event.accident.ActivationEvent;
 import org.perfectday.logicengine.core.event.accident.OffensiveActionEvent;
@@ -35,6 +36,7 @@ import org.perfectday.logicengine.core.event.state.ActivationStateEvent;
 import org.perfectday.logicengine.core.event.state.ClearStateEvent;
 import org.perfectday.logicengine.model.command.Command;
 import org.perfectday.logicengine.model.spells.accident.CastSpellAccident;
+import org.perfectday.main.dummyengine.threads.GraphicsEngineThreadGroup;
 
 /**
  *
@@ -42,7 +44,6 @@ import org.perfectday.logicengine.model.spells.accident.CastSpellAccident;
  */
 public class EventManager  {
 
-    private static EventManager instance = new EventManager();
     private static Logger logger = Logger.getLogger(EventManager.class);
     private List<Event> events;
     private boolean deadThread;
@@ -66,8 +67,8 @@ public class EventManager  {
     }
 
     public synchronized  void eventWaitTest() {
-        synchronized(EventManagerThread.getEventManagerThread()){
-            EventManagerThread.getEventManagerThread().notifyAll();
+        synchronized(EventManagerRunnable.getEventManagerThread()){
+            EventManagerRunnable.getEventManagerThread().notifyAll();
         }
     }
 
@@ -80,7 +81,23 @@ public class EventManager  {
     }
 
     public static EventManager getInstance() {
-        return instance;
+        logger.info("Buscamos en el KernellThreadGroup");
+        if (Thread.currentThread().getThreadGroup() instanceof KernellThreadGroup) {
+            KernellThreadGroup kernellThreadGroup = (KernellThreadGroup) Thread.currentThread().getThreadGroup();
+            return kernellThreadGroup.getEventManager();
+        }else  if (Thread.currentThread().getThreadGroup() instanceof GraphicsEngineThreadGroup) {
+            GraphicsEngineThreadGroup graphicsEngineThreadGroup = (GraphicsEngineThreadGroup) Thread.currentThread().getThreadGroup();
+            return graphicsEngineThreadGroup.getKernellThreadGroup().getEventManager();
+        }else{
+            StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+            logger.fatal("Una hebra que no pertencia a Kernell o Graphics entro " +
+                    "getPerfectDayGUI["+Thread.currentThread().getName()+","
+                    +Thread.currentThread().getThreadGroup().getName()+"]");
+            for (StackTraceElement stackTraceElement : trace) {
+                logger.fatal(stackTraceElement.toString());
+            }
+            return null;
+        }
     }
 
     

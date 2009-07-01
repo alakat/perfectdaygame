@@ -41,17 +41,17 @@ public class CommandConsumer {
       */
     private void process(CombatResolutionCommand combatResolutionCommand) {
         logger.info("Comando de resolución de combate");
-        Mini defensor = Game.getInstance().getMiniByReferneceObject(combatResolutionCommand.getDefensor());
+        Mini defensor = Game.getGame().getMiniByReferneceObject(combatResolutionCommand.getDefensor());
         if(combatResolutionCommand.isDead()){
             logger.info("Mini muerto");
             //Lo eliminamos del campo de batalla
-            Game.getInstance().getBattelField().getField(defensor).setMiniOcupant(null);
+            Game.getGame().getBattelField().getField(defensor).setMiniOcupant(null);
             logger.info("Eliminado del battelfield");
             //Lo eliminamos del equipo del player
-            Game.getInstance().getPlayerByMini(defensor).getBand().remove(defensor);
+            Game.getGame().getPlayerByMini(defensor).getBand().remove(defensor);
             logger.info("Eliminado del ejercito del jugador");
             //Eliminamos todos las activaciones
-            Game.getInstance().getActivationStack().deadClear(defensor);         
+            Game.getGame().getActivationStack().deadClear(defensor);
             logger.info("Eliminamos las activaciones del mini");
         }else{
             logger.info("Se modifica los daños");
@@ -68,7 +68,7 @@ public class CommandConsumer {
      */
     private void process(SetDamageCommand setDamageCommand) {
         logger.debug("Se modifica el daño del mini.");
-        Mini mini = Game.getInstance().getMiniByReferneceObject(setDamageCommand.getMini());
+        Mini mini = Game.getGame().getMiniByReferneceObject(setDamageCommand.getMini());
         mini.setDamage(setDamageCommand.getDamage());
     }
      

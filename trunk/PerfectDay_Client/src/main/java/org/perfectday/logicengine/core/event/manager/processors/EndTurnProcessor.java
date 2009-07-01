@@ -27,10 +27,10 @@ public class EndTurnProcessor implements Processor{
     @Override
     public void eventRequest(Event event) {
         //Desactivamos el mini seleccionado 
-        Game.getInstance().setSelectedMini(null);
-        Game.getInstance().getPerfectDayGUI().desactivateMini();
+        Game.getGame().setSelectedMini(null);
+        Game.getGame().getPerfectDayGUI().desactivateMini();
         logger.info("request");
-        if(Game.getInstance().isServer()){
+        if(Game.getGame().isServer()){
             logger.info("server");
             event= event.generateEventResponse();
             EventManager.getInstance().addEvent(event);
@@ -38,33 +38,33 @@ public class EndTurnProcessor implements Processor{
         }else{
             logger.info("client");
             event= event.generateEventResponse();
-            MasterCommunication.getInstance().sendEvent(event);
+            Game.getGame().getMasterCommunication().sendEvent(event);
         }
     }
 
     @Override
     public void eventResponse(Event event) {
         EndTurnEvent endTurnEvent  = (EndTurnEvent)event;
-        Mini mini = Game.getInstance().getMiniByReferneceObject(endTurnEvent.getMini());        
-        if(Game.getInstance().isServer()){
+        Mini mini = Game.getGame().getMiniByReferneceObject(endTurnEvent.getMini());
+        if(Game.getGame().isServer()){
             if(mini!=null && mini.isAlive()){            
                 try {
-                    UnitTime newActualTime = (UnitTime) Game.getInstance().getActualTime().clone();
+                    UnitTime newActualTime = (UnitTime) Game.getGame().getActualTime().clone();
                     newActualTime.plus(endTurnEvent.getUt());
                     Activation activation = ActivationFactory.getInstance().createActivation(mini, newActualTime);
                     logger.info("Nuevo apilamiento:"+activation.toString());
                     /** Send To client **/
                      
-                    Game.getInstance().getActivationStack().put(activation); 
+                    Game.getGame().getActivationStack().put(activation);
                     PutActionEvent pae = new  PutActionEvent();
                     pae.setActivation(activation);
                     pae.setEventType(Event.EventType.RESPONSE);
-                    MasterCommunication.getInstance().sendEvent(pae);
+                    Game.getGame().getMasterCommunication().sendEvent(pae);
                 } catch (CloneNotSupportedException ex) {
                     logger.error("No se pudo clonar una unidad de tiempo",ex);
                 }
             }
-            Game.getInstance().nextAccident();
+            Game.getGame().nextAccident();
         }else{
             logger.error("un endturnResponse nunca se ha de ejecutar en cliente");
         }

@@ -27,22 +27,22 @@ public class OffensiveActionProcesor extends CombatProcessor implements Processo
     
     @Override
     public void eventRequest(Event event) {
-        if (!Game.getInstance().isServer()){
+        if (!Game.getGame().isServer()){
             logger.warn("Esta es cliente y no debería procesar un OffensiveEventResquest");
         }
         OffensiveActionEvent oae = (OffensiveActionEvent)event;
         InstanceCombat ic = oae.getInstanceCombat();
         if(ic.getAtack().getActionKeep().isDefenderKeeped(
-                Game.getInstance().getBattelField().getField(ic.getDefensor()),
-                Game.getInstance().getBattelField().getField(ic.getAtacker()))){
-         MasterOfCombatImpl.getInstance().putInstanceCombat(oae.getInstanceCombat());
+                Game.getGame().getBattelField().getField(ic.getDefensor()),
+                Game.getGame().getBattelField().getField(ic.getAtacker()),Game.getGame())){
+         Game.getGame().getMasterOfCombat().putInstanceCombat(oae.getInstanceCombat());
             resolvedCombat(oae.getCommands());
             oae.getCommands().addAll(searchDead()); //search mini dead in this turn
         }else{
             oae.getCommands().add(new TargetOutOfRangeCommand("Ataque fallo, fuera de rango"));
         }
         event = oae.generateEventResponse();
-        MasterCommunication.getInstance().sendEvent(event);
+        Game.getGame().getMasterCommunication().sendEvent(event);
         EventManager.getInstance().addEvent(event);
         EventManager.getInstance().eventWaitTest();        
     }
@@ -51,16 +51,16 @@ public class OffensiveActionProcesor extends CombatProcessor implements Processo
     public void eventResponse(Event event) {
         logger.info("Response");
         OffensiveActionEvent ce = (OffensiveActionEvent)event;
-        if(Game.getInstance().isServer()){
+        if(Game.getGame().isServer()){
             //Server.
             logger.info("Server");
             Journalist.getInstance().infoCombat(ce.getCommands()); //Informamos del combate
-            Game.getInstance().nextAccident();  
+            Game.getGame().nextAccident();
         }else{
             logger.info("Cliente");            
             //Desapilamos el combate preparado
-            synchronized(Game.getInstance().getActivationStack()){
-                Game.getInstance().getActivationStack().pop();
+            synchronized(Game.getGame().getActivationStack()){
+                Game.getGame().getActivationStack().pop();
             }
             CommandConsumer.process(ce.getCommands());
             Journalist.getInstance().infoCombat(ce.getCommands()); //Informamos del combate

@@ -1,16 +1,18 @@
 /*
- * LaboratoryGUI.java
+ * DummyGraphicsEngine.java
  *
  * Created on 8 de marzo de 2008, 11:42
  */
 
-package org.perfectday.main.laboratocGUI;
+package org.perfectday.main.dummyengine;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+import org.apache.log4j.Logger;
+import org.perfectday.dashboard.threads.DashBoardThreadGroup;
 import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.core.player.Player;
 import org.perfectday.logicengine.model.battelfield.Field;
@@ -22,37 +24,43 @@ import org.perfectday.logicengine.model.minis.Mini;
 import org.perfectday.logicengine.model.minis.action.ActionMini;
 import org.perfectday.logicengine.model.unittime.factories.LongUnitTimeFactory;
 import org.perfectday.logicengine.movement.MasterMovement;
-import org.perfectday.main.laboratocGUI.model.ActivationStackPanel;
-import org.perfectday.main.laboratocGUI.model.CombatInformationDialog;
-import org.perfectday.main.laboratocGUI.model.JBattelField;
-import org.perfectday.main.laboratocGUI.model.JMiniInfo;
+import org.perfectday.main.dummyengine.model.ActivationStackPanel;
+import org.perfectday.main.dummyengine.model.CombatInformationDialog;
+import org.perfectday.main.dummyengine.model.JBattelField;
+import org.perfectday.main.dummyengine.model.JMiniInfo;
 import org.perfectday.error.Error;
 import org.perfectday.logicengine.core.event.game.EndTurnEvent;
 import org.perfectday.logicengine.core.event.manager.EventManager;
 import org.perfectday.message.TextMessage.PDTextMessage;
+import org.perfectday.threads.commands.kernell.DoActionCommand;
+import org.perfectday.threads.commands.kernell.GoForAllCommand;
+import org.perfectday.threads.commands.kernell.PutEventCommand;
 
 /**
  *
  * @author  Miguel Angel Lopez Montellano ( alakat@gmail.com )
  */
-public class LaboratoryGUI extends javax.swing.JFrame implements PerfectDayGUI{
+public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsEngine{
     
     //private BattelField battelField;
-    private Game game;
+
+    private static Logger logger = Logger.getLogger(DummyGraphicsEngine.class);
     private UnitTime unitTime;
-    public static LaboratoryGUI me;
-    private Mini selectedMini;
     private ActionMini actionMiniSelected;
-    /** Creates new form LaboratoryGUI */
-    public LaboratoryGUI() {
-        
+    private Game game;
+    /** Creates new form DummyGraphicsEngine */
+    public DummyGraphicsEngine() {
+
+
         initComponents();        
-       
-        //this.battelField = new BattelField(w, h);
-        LaboratoryGUI.me=this;
         this.jMiniInfo1.setVisible(false);
+        this.activationStackPanel1.setDummyGraphicsEngine(this);
     }
 
+
+
+
+    @Override
     public boolean combatFinishWithPlayerWin(Player winer) {
         JOptionPane.showMessageDialog(
                 this, "El jugador que gano es:"+winer.getName());
@@ -72,18 +80,18 @@ public class LaboratoryGUI extends javax.swing.JFrame implements PerfectDayGUI{
         ActionMini actionMini = (ActionMini) this.actionMiniSelected;              
         this.actionMiniSelected = null;
         if (this.getUnitTime()== null) {
-            this.unitTime = LongUnitTimeFactory.getInstance().doNothing(Game.getInstance().getSelectedMini());
+            this.unitTime = LongUnitTimeFactory.getInstance().doNothing(game.getSelectedMini());
         }    
          //Se envia false por q no es un contra atacke y por tanto el contra 
         //ataque esta permitido permitido el contraatacke
         actionMini.setActionData(new Boolean(false));
-        actionMini.doAction(Game.getInstance().getSelectedMini(), targetMini);       
-        this.turnOff();
+        DashBoardThreadGroup.sendEventToKernell(new DoActionCommand(actionMini, targetMini, game.getSelectedMini(), unitTime));
+        
     }
 
     public synchronized void turnOff() {     
         EndTurnEvent endTurnEvent = new EndTurnEvent(this.getUnitTime());
-        endTurnEvent.setMini(Game.getInstance().getSelectedMini());
+        endTurnEvent.setMini(game.getSelectedMini());
         EventManager.getInstance().addEvent(endTurnEvent);
         EventManager.getInstance().eventWaitTest();
        
@@ -104,14 +112,11 @@ public class LaboratoryGUI extends javax.swing.JFrame implements PerfectDayGUI{
         bAtacarPrimaria = new javax.swing.JButton();
         bSecundario = new javax.swing.JButton();
         tabs = new javax.swing.JTabbedPane();
-        jMiniInfo1 = new org.perfectday.main.laboratocGUI.model.JMiniInfo();
+        jMiniInfo1 = new org.perfectday.main.dummyengine.model.JMiniInfo();
         pGame = new javax.swing.JPanel();
-        jBattelField1 = new org.perfectday.main.laboratocGUI.model.JBattelField();
+        jBattelField1 = new org.perfectday.main.dummyengine.model.JBattelField();
         jPanel1 = new javax.swing.JPanel();
-        activationStackPanel1 = new org.perfectday.main.laboratocGUI.model.ActivationStackPanel();
-        jMenuBar3 = new javax.swing.JMenuBar();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        activationStackPanel1 = new org.perfectday.main.dummyengine.model.ActivationStackPanel();
         jMenuBar4 = new javax.swing.JMenuBar();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -181,7 +186,7 @@ public class LaboratoryGUI extends javax.swing.JFrame implements PerfectDayGUI{
         );
 
         jMiniInfo1.setFont(new java.awt.Font("Comic Sans MS", 0, 12));
-        tabs.addTab("Información de los minis", jMiniInfo1);
+        tabs.addTab("Informaci�n de los minis", jMiniInfo1);
 
         pGame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -248,18 +253,6 @@ public class LaboratoryGUI extends javax.swing.JFrame implements PerfectDayGUI{
                 .addContainerGap())
         );
 
-        jMenu5.setText("PerfectDay");
-
-        jMenuItem3.setText("About");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem3);
-
-        jMenuBar3.add(jMenu5);
-
         jMenu6.setText("PerfectDay");
 
         jMenuItem4.setText("About");
@@ -318,53 +311,39 @@ public class LaboratoryGUI extends javax.swing.JFrame implements PerfectDayGUI{
     private void bWaitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bWaitActionPerformed
         if(this.unitTime==null){
             this.unitTime = LongUnitTimeFactory.getInstance().doNothing(
-                    Game.getInstance().getSelectedMini());                   
+                    game.getSelectedMini());
         }        
-        this.turnOff();
+        EndTurnEvent endTurnEvent = new EndTurnEvent(unitTime, game.getSelectedMini());
+        DashBoardThreadGroup.sendEventToKernell(new PutEventCommand(endTurnEvent));
     }//GEN-LAST:event_bWaitActionPerformed
 
     private void bAPorEllosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAPorEllosActionPerformed
-        double x = (new Random(System.currentTimeMillis())).nextDouble();
-        if(game.getMasterAPorEllos().getNewProbability()>x){
-//            this.tfInfo.append("A Por Ellos");
-            List<Field> aporEllosField = MasterMovement.getInstance().
-                    getAPorEllosField(game.getSelectedMini(), game.getBattelField());
-            this.jBattelField1.setSelectedMiniNoSearchFieldsAccess(game.getSelectedMini());
-            this.jBattelField1.getMiniAccess().addAll(aporEllosField);
-            this.jBattelField1.repaint();
-        }else{
-            //Fail a por ellos
-//            this.tfInfo.append("Falla el aporellos!!!");
-            this.setTurnCost(
-                    LongUnitTimeFactory.getInstance().
-                    doMovementFailAPorEllos(game.getSelectedMini()));
-            this.turnOff();
-        }
+        DashBoardThreadGroup.sendEventToKernell(new GoForAllCommand(game.getSelectedMini()));
     }//GEN-LAST:event_bAPorEllosActionPerformed
 
     private void bAtacarPrimariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtacarPrimariaActionPerformed
-        Field f = Game.getInstance().getBattelField().getField(
-                Game.getInstance().getSelectedMini());
+        Field f = game.getBattelField().getField(
+                game.getSelectedMini());
         //Adaptar a la distancÃƒÂ­a
         this.jBattelField1.getKeepAccess().clear();
         this.jBattelField1.getKeepAccess().addAll(
-                ((ActionMini)Game.getInstance().getSelectedMini().getPrimaryAction())
-                .getActionKeep().getFieldKeeped(f));
-        this.actionMiniSelected = Game.getInstance().getSelectedMini().getPrimaryAction();
+                ((ActionMini)game.getSelectedMini().getPrimaryAction())
+                .getActionKeep().getFieldKeeped(f,game));
+        this.actionMiniSelected = game.getSelectedMini().getPrimaryAction();
         this.jBattelField1.getMiniAccess().clear();
         this.jBattelField1.repaint();
     }//GEN-LAST:event_bAtacarPrimariaActionPerformed
 
     private void bSecundarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSecundarioActionPerformed
                 
-        Field f = Game.getInstance().getBattelField().getField(
-                Game.getInstance().getSelectedMini());
+        Field f = game.getBattelField().getField(
+                game.getSelectedMini());
         //Adaptar a la distancÃƒÂ­a
         this.jBattelField1.getKeepAccess().clear();
         this.jBattelField1.getKeepAccess().addAll(
-                ((ActionMini)Game.getInstance().getSelectedMini().getSecondaryAction())
-                .getActionKeep().getFieldKeeped(f));
-        this.actionMiniSelected = Game.getInstance().getSelectedMini().getSecondaryAction();
+                ((ActionMini)game.getSelectedMini().getSecondaryAction())
+                .getActionKeep().getFieldKeeped(f,game));
+        this.actionMiniSelected = game.getSelectedMini().getSecondaryAction();
         this.jBattelField1.getMiniAccess().clear();
         this.jBattelField1.repaint();
     }//GEN-LAST:event_bSecundarioActionPerformed
@@ -379,14 +358,14 @@ public class LaboratoryGUI extends javax.swing.JFrame implements PerfectDayGUI{
         if (evt.getKeyCode() == KeyEvent.VK_SPACE){
             if(this.unitTime==null){
                 this.unitTime = LongUnitTimeFactory.getInstance().doNothing(
-                    Game.getInstance().getSelectedMini());                   
+                    game.getSelectedMini());
             }        
             this.turnOff();
         }
     }//GEN-LAST:event_formKeyPressed
 
 private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed1
-    String  as = Game.getInstance().getActivationStack().toString();
+    String  as = game.getActivationStack().toString();
     JOptionPane.showMessageDialog(this,as,"Debug- Show ActivationStack",JOptionPane.INFORMATION_MESSAGE);
 }//GEN-LAST:event_jMenuItem1ActionPerformed1
     
@@ -397,18 +376,18 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
 //        final String[] argvs =args;
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new LaboratoryGUI();
+//                new DummyGraphicsEngine();
 //            }
 //        });
 //    }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.perfectday.main.laboratocGUI.model.ActivationStackPanel activationStackPanel1;
+    private org.perfectday.main.dummyengine.model.ActivationStackPanel activationStackPanel1;
     private javax.swing.JButton bAPorEllos;
     private javax.swing.JButton bAtacarPrimaria;
     private javax.swing.JButton bSecundario;
     private javax.swing.JButton bWait;
-    private org.perfectday.main.laboratocGUI.model.JBattelField jBattelField1;
+    private org.perfectday.main.dummyengine.model.JBattelField jBattelField1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
@@ -417,7 +396,7 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private org.perfectday.main.laboratocGUI.model.JMiniInfo jMiniInfo1;
+    private org.perfectday.main.dummyengine.model.JMiniInfo jMiniInfo1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel pAcciones;
     private javax.swing.JPanel pGame;
@@ -434,7 +413,7 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
 
     public void activateMini(Mini mini) {
         jBattelField1.setSelectedMini(mini);
-        
+        this.unitTime=null;
         this.jMiniInfo1.setMini(mini);
         this.jBattelField1.getKeepAccess().clear();
         
@@ -444,13 +423,14 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
 //        this.jActivationStack1.stackRefresh();
         
         this.activationStackPanel1.setAccident(
-                Game.getInstance().getActivationStack().getStack());
+                game.getActivationStack().getStack());
         
         jBattelField1.repaint();
         this.activationStackPanel1.repaint();
     }
 
     public UnitTime getTurnCost() {
+        logger.info("getTurn Cost Donde, no deber�a ser llamado!!!");
         UnitTime ut = new LongUnitTime(0l) ;
         ut.plus(this.unitTime);
         this.unitTime=null;
@@ -460,15 +440,6 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
     
     public void setTurnCost(UnitTime ut){
         this.unitTime=ut;        
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game=game;
-        this.jBattelField1.setBattelField(game.getBattelField());
     }
 
     public UnitTime getUnitTime() {
@@ -538,10 +509,34 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
 //        this.jActivationStack1.stackRefresh();
         
         this.activationStackPanel1.setAccident(
-                Game.getInstance().getActivationStack().getStack());
+                game.getActivationStack().getStack());
         
         jBattelField1.repaint();
         this.activationStackPanel1.repaint();
     }
+
+    @Override
+    public void setGame(Game game) {
+        this.game=game;
+        this.jBattelField1.setGame(game);
+        this.jBattelField1.setBattelField(game.getBattelField());
+        this.jBattelField1.setDummyGraphicsEngine(this);
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+
+    public void addMiniAccess(Mini mini, List<Field> access){
+        this.jBattelField1.setSelectedMiniNoSearchFieldsAccess(mini);
+        this.jBattelField1.getMiniAccess().addAll(access);
+        this.jBattelField1.repaint();
+    }
+
+
+
+    
+    
     
 }

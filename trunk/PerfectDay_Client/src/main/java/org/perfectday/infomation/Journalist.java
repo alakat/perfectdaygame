@@ -8,10 +8,11 @@ package org.perfectday.infomation;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.model.command.Command;
 import org.perfectday.logicengine.model.command.move.MovementCommand;
-import org.perfectday.main.laboratocGUI.LaboratoryGUI;
-import org.perfectday.main.laboratocGUI.PerfectDayGUI;
+import org.perfectday.main.dummyengine.DummyGraphicsEngine;
+import org.perfectday.main.dummyengine.GraphicsEngine;
 
 /**
  * ppp
@@ -21,9 +22,9 @@ import org.perfectday.main.laboratocGUI.PerfectDayGUI;
 public class Journalist {
     
     private static Journalist instance;
-    private PerfectDayGUI gui;
+    private GraphicsEngine gui;
     private Journalist(){
-        gui = LaboratoryGUI.me;    
+        gui = Game.getPerfectDayGUI();
     }
 
     public static Journalist getInstance(){

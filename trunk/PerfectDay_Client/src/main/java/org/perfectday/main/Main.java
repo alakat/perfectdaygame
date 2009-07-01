@@ -18,25 +18,25 @@ import org.perfectday.logicengine.model.battelfield.generator.SimpleMapGenerator
 public class Main {
 
 
-    public static void main(String[] argvs){
-
-        SimpleMapGenerator simpleMapGenerator = new SimpleMapGenerator(13,13);
-//        System.out.println("Go...");
-        long t0 = System.currentTimeMillis();
-        simpleMapGenerator.generateBattelField();
-        long t1 = System.currentTimeMillis();
-//        System.out.println("end ["+(t1-t0)+"ms]");
-        Field[][] fields = simpleMapGenerator.getBattelfield();
-        for(int i=0;i<fields.length; i++){
-            for(int j=0; j<fields[i].length;j++){
-                printField(fields[i][j]);
-            }
-//            System.out.println("");
-        }
-        
-        
-        
-    }
+//    public static void main(String[] argvs){
+//
+//        SimpleMapGenerator simpleMapGenerator = new SimpleMapGenerator(13,13);
+////        System.out.println("Go...");
+//        long t0 = System.currentTimeMillis();
+//        simpleMapGenerator.generateBattelField();
+//        long t1 = System.currentTimeMillis();
+////        System.out.println("end ["+(t1-t0)+"ms]");
+//        Field[][] fields = simpleMapGenerator.getBattelfield();
+//        for(int i=0;i<fields.length; i++){
+//            for(int j=0; j<fields[i].length;j++){
+//                printField(fields[i][j]);
+//            }
+////            System.out.println("");
+//        }
+//
+//
+//
+//    }
 
     private static void printField(Field field) {
         String cad="";

@@ -14,24 +14,17 @@ import java.util.List;
  */
 public class MasterOfCombatImpl {
     
-    private static MasterOfCombatImpl instance;
     private List<InstanceCombat> combatStack;
 
-    private MasterOfCombatImpl() {
+    public MasterOfCombatImpl() {
         combatStack = new ArrayList<InstanceCombat>();
     }
     
-    public static MasterOfCombatImpl getInstance(){
-        if(instance==null)
-            instance = new MasterOfCombatImpl();
-        return instance;
-    }
-    
-    public void putInstanceCombat(InstanceCombat combat){
+    public synchronized  void putInstanceCombat(InstanceCombat combat){
         this.combatStack.add(combat);
     }
     
-    public InstanceCombat getInstanceCombat(){
+    public synchronized InstanceCombat getInstanceCombat(){
         if(this.combatStack.isEmpty())
             return null;
         return this.combatStack.remove(0);

@@ -37,7 +37,7 @@ public class SpellCastAction extends ActionMini{
     
     public void preparedSpell(ReferenceObject target){
         InstanceCastSpell ics = new InstanceCastSpell(spellcast, caster, target);
-        Game game = Game.getInstance();
+        Game game = Game.getGame();
         UnitTime ut = game.getActualTime();
         ut.plus(game.getPerfectDayGUI().getUnitTime());
         ut.plus(this.spellcast.getSpellCastTime());
@@ -82,9 +82,9 @@ public class SpellCastAction extends ActionMini{
         this.preparedSpell(target);
         logger.debug("sumamos el tipo de lanzamiento al coste del turno"+this.getSpellcast());
         //Es probable que este coste se elimine
-        Game.getInstance().getTurnTime().plus(this.getSpellcast().getSpellCastTime());
+        Game.getGame().getTurnTime().plus(this.getSpellcast().getSpellCastTime());
         logger.debug("Sumamos el tipo de haber lanzado un conjuto al consumido en el turno");
-        Game.getInstance().getTurnTime().plus(LongUnitTimeFactory.getInstance().doCastSpell(worker));
+        Game.getGame().getTurnTime().plus(LongUnitTimeFactory.getInstance().doCastSpell(worker));
     }
     
     

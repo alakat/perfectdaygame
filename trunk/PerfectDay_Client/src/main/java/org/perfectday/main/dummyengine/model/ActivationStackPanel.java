@@ -4,7 +4,7 @@
  * Created on 19 de abril de 2008, 0:25
  */
 
-package org.perfectday.main.laboratocGUI.model;
+package org.perfectday.main.dummyengine.model;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -21,7 +21,7 @@ import org.perfectday.logicengine.model.activationstack.accidents.OffensiveActio
 import org.perfectday.logicengine.model.minis.Mini;
 import org.perfectday.logicengine.model.spells.accident.CastSpellAccident;
 import org.perfectday.logicengine.model.state.accident.StateAccident;
-import org.perfectday.main.laboratocGUI.LaboratoryGUI;
+import org.perfectday.main.dummyengine.DummyGraphicsEngine;
 
 /**
  *
@@ -39,6 +39,7 @@ public class ActivationStackPanel extends javax.swing.JPanel {
     private List<Accident> accident;
     private Image imgActivationMini;
     private Image imgCombatAction;
+    private DummyGraphicsEngine dummyGraphicsEngine;
 
     public ActivationStackPanel() {
         this.accident = new ArrayList<Accident>();
@@ -49,7 +50,13 @@ public class ActivationStackPanel extends javax.swing.JPanel {
         this.imgCombatAction =Toolkit.getDefaultToolkit().getImage(
                 CombatInformationPanel.class.getClassLoader().
                 getResource("org/perfectday/main/laboratocGUI/model/"+IMG_COMBAT));
+        
     }
+
+    public void setDummyGraphicsEngine(DummyGraphicsEngine dummyGraphicsEngine) {
+        this.dummyGraphicsEngine = dummyGraphicsEngine;
+    }
+    
             
     
     /** Creates new form ActivationStackPanel */
@@ -117,14 +124,14 @@ public class ActivationStackPanel extends javax.swing.JPanel {
                 mini = ((Activation)acc).getMini();
             if (acc instanceof OffensiveAction)
                 mini = ((OffensiveAction)acc).getAtacker();
-            LaboratoryGUI.me.getJBattelField1().
+            dummyGraphicsEngine.getJBattelField1().
                     setActivationStackSelectedMini(mini);
-            LaboratoryGUI.me.getJBattelField1().repaint();
+            dummyGraphicsEngine.getJBattelField1().repaint();
         }
     }//GEN-LAST:event_formMouseMoved
 
     private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
-        LaboratoryGUI.me.getJBattelField1().
+        dummyGraphicsEngine.getJBattelField1().
                 setActivationStackSelectedMini(null);
     }//GEN-LAST:event_formMouseExited
 
@@ -173,9 +180,9 @@ public class ActivationStackPanel extends javax.swing.JPanel {
         g.clearRect(0,((INI_I+(i*5))+(H_EVENT*i)),W_EVENT,H_EVENT);
         if(accident instanceof Activation){
             Logger.getLogger(ActivationStackPanel.class).debug("Mini Activado Pintado:"+ ((Activation)accident).getMini().toString());
-            Logger.getLogger(ActivationStackPanel.class).debug("Player mini Activado Pintado:"+ Game.getInstance().getPlayerByMini(
+            Logger.getLogger(ActivationStackPanel.class).debug("Player mini Activado Pintado:"+ dummyGraphicsEngine.getGame().getPlayerByMini(
                     ((Activation)accident).getMini()));
-            Color c = (Color) Game.getInstance().getPlayerByMini(
+            Color c = (Color) dummyGraphicsEngine.getGame().getPlayerByMini(
                     ((Activation)accident).getMini()).getDitingibleBandObject();
             g.setColor(c);        
             g.drawRect(0,((INI_I+(i*5))+(H_EVENT*i)),W_EVENT,H_EVENT);   
@@ -189,7 +196,7 @@ public class ActivationStackPanel extends javax.swing.JPanel {
                 miniName = miniName.substring(0,MAX_STRING);            
             img = this.imgActivationMini;
         }else if ( accident instanceof OffensiveAction){
-            Color c = (Color) Game.getInstance().getPlayerByMini(
+            Color c = (Color) dummyGraphicsEngine.getGame().getPlayerByMini(
                     ((OffensiveAction)accident).getAtacker()).getDitingibleBandObject();
             g.setColor(c);        
             g.drawRect(0,((INI_I+(i*5))+(H_EVENT*i)),W_EVENT,H_EVENT); 
@@ -203,7 +210,7 @@ public class ActivationStackPanel extends javax.swing.JPanel {
             img = this.imgCombatAction;
         } else if (accident instanceof StateAccident){
             //TODO modificar en el futuro
-            Color c = (Color) Game.getInstance().getPlayerByMini(
+            Color c = (Color) dummyGraphicsEngine.getGame().getPlayerByMini(
                     ((StateAccident)accident).getState().getMini()).getDitingibleBandObject();
             g.setColor(c);        
             g.drawRect(0,((INI_I+(i*5))+(H_EVENT*i)),W_EVENT,H_EVENT); 
@@ -216,7 +223,7 @@ public class ActivationStackPanel extends javax.swing.JPanel {
                 description = description.substring(0,MAX_STRING);
             img = this.imgCombatAction;
         }else if(accident instanceof CastSpellAccident){
-             Color c = (Color) Game.getInstance().getPlayerByMini(
+             Color c = (Color) dummyGraphicsEngine.getGame().getPlayerByMini(
                     ((CastSpellAccident)accident).getInstanceCastSpell().getCaster()).getDitingibleBandObject();
             g.setColor(c);        
             g.drawRect(0,((INI_I+(i*5))+(H_EVENT*i)),W_EVENT,H_EVENT); 

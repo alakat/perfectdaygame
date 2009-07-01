@@ -6,7 +6,7 @@ import org.perfectday.logicengine.combat.MasterOfCombatImpl;
 import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.core.event.accident.OffensiveActionEvent;
 import org.perfectday.logicengine.core.event.manager.EventManager;
-import org.perfectday.logicengine.core.event.manager.EventManagerThread;
+import org.perfectday.logicengine.core.event.manager.EventManagerRunnable;
 import org.perfectday.logicengine.model.command.Command;
 import org.perfectday.logicengine.model.command.combat.PreparedCombatCommand;
 import org.perfectday.logicengine.model.minis.Mini;
@@ -69,7 +69,7 @@ public class OffensiveAction extends Action {
             CombatActionMini combatActionMini =
                     (CombatActionMini) instanceCombat.getAtack();
             if(!combatActionMini.isDefenederInRange(                            
-                    Game.getInstance().getBattelField().
+                    Game.getGame().getBattelField().
                     getField(instanceCombat.getDefensor()),
                     instanceCombat.getAtackerField()))
                 return;                            
@@ -77,7 +77,7 @@ public class OffensiveAction extends Action {
         //Un combate Atrasado
         commands.add(new PreparedCombatCommand(instanceCombat.getAtacker(),
                 (CombatActionMini)instanceCombat.getAtack()));
-        MasterOfCombatImpl.getInstance().putInstanceCombat(instanceCombat);
+        Game.getGame().getMasterOfCombat().putInstanceCombat(instanceCombat);
         game.resolvedCombat(commands);
         commands.addAll(game.searchDead()); //search mini dead in this turn
     }
@@ -87,8 +87,8 @@ public class OffensiveAction extends Action {
         OffensiveActionEvent actionEvent = 
                 new OffensiveActionEvent(this.getUnitTime(),this.getInstanceCombat());
         EventManager.getInstance().addEvent(actionEvent);
-        synchronized(EventManagerThread.getEventManagerThread()){
-            EventManagerThread.getEventManagerThread().notifyAll();
+        synchronized(EventManagerRunnable.getEventManagerThread()){
+            EventManagerRunnable.getEventManagerThread().notifyAll();
         }
     }
 

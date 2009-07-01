@@ -41,8 +41,8 @@ public class MultiCombatActionMini extends CombatActionMini{
 
     @Override
     public InstanceCombat createInstanceCombat(Mini defender, Mini ataker, boolean isConterAtack) {
-        Field fDefender = Game.getInstance().getBattelField().getField(defender);
-        Field fAtaker = Game.getInstance().getBattelField().getField(ataker);
+        Field fDefender = Game.getGame().getBattelField().getField(defender);
+        Field fAtaker = Game.getGame().getBattelField().getField(ataker);
         MultyTargetInstanceCombat instanceCombat =
                     new MultyTargetInstanceCombat(defender, fDefender, ataker, fAtaker,
                     this,(DistanceHitFunction) this.hitFunction,(DistanceDamageFunction)this.damageFunction,!isConterAtack,this.effectArea);

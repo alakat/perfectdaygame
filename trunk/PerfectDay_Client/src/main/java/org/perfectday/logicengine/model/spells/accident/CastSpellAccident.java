@@ -9,7 +9,7 @@ import java.util.List;
 import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.core.event.action.spells.CastSpellEvent;
 import org.perfectday.logicengine.core.event.manager.EventManager;
-import org.perfectday.logicengine.core.event.manager.EventManagerThread;
+import org.perfectday.logicengine.core.event.manager.EventManagerRunnable;
 import org.perfectday.logicengine.model.activationstack.accidents.Accident;
 import org.perfectday.logicengine.model.command.Command;
 import org.perfectday.logicengine.model.spells.InstanceCastSpell;
@@ -47,8 +47,8 @@ public class CastSpellAccident extends Accident {
         CastSpellEvent castEvent = new CastSpellEvent(
                 instanceCastSpell.getCaster(),null, spellCastAction, instanceCastSpell);
         EventManager.getInstance().addEvent(castEvent);
-        synchronized(EventManagerThread.getEventManagerThread()){
-            EventManagerThread.getEventManagerThread().notifyAll();
+        synchronized(EventManagerRunnable.getEventManagerThread()){
+            EventManagerRunnable.getEventManagerThread().notifyAll();
         }
         
     }

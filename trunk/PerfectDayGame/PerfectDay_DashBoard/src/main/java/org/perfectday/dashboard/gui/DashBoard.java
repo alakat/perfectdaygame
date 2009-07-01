@@ -6,6 +6,7 @@
 
 package org.perfectday.dashboard.gui;
 
+import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -25,7 +26,9 @@ public class DashBoard extends javax.swing.JFrame {
         initComponents();
         LoginPanel loginPanel = new LoginPanel(this);
         JDialog dialog = new JDialog(this, "Login", true);
-        loginPanel.setParent(dialog);        
+        dialog.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint());
+        loginPanel.setParent(dialog);
+        loginPanel.requestFocus();
         dialog.setContentPane(loginPanel);
         dialog.pack();
         dialog.setVisible(true);

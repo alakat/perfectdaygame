@@ -24,7 +24,7 @@ public class SimpleMotionBrain extends AbstractMotionBrain{
 
     @Override
     public Field getBestField(Mini mini) {
-        Game game = Game.getInstance();
+        Game game = Game.getGame();
         Player miniOwner = game.getPlayerByMini(mini);
         Field miniPosition = game.getBattelField().getField(mini);        
         //Comprobamos que no haya enemigos al alcance de nuestro ataque
@@ -64,10 +64,10 @@ public class SimpleMotionBrain extends AbstractMotionBrain{
         if (primaryAction instanceof CombatActionMini) {
             CombatActionMini combatActionMini = (CombatActionMini) primaryAction;
             List<Field> keepFields = 
-                    combatActionMini.getCombatKeep().getFieldKeeped(f);
+                    combatActionMini.getCombatKeep().getFieldKeeped(f,Game.getGame());
             for(Field field : keepFields){
                 if(field.getMiniOcupant()!=null){
-                    Player p = Game.getInstance().getPlayerByMini(field.getMiniOcupant());
+                    Player p = Game.getGame().getPlayerByMini(field.getMiniOcupant());
                     if ( !p.equals(miniOwner))
                         return true;
                 }

@@ -33,6 +33,11 @@ public class EndTurnEvent extends GameEvent{
         this.ut = ut;
     }
 
+    public EndTurnEvent(UnitTime ut, Mini mini) {
+        this.ut = ut;
+        this.mini = mini;
+    }
+    
     public UnitTime getUt() {
         return ut;
     }

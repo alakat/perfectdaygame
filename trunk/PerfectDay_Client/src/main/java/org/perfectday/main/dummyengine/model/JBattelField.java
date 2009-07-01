@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.perfectday.main.laboratocGUI.model;
+package org.perfectday.main.dummyengine.model;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -12,9 +12,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
+import org.perfectday.dashboard.threads.DashBoardThreadGroup;
 import org.perfectday.logicengine.core.Game;
-import org.perfectday.logicengine.core.event.manager.EventManager;
-import org.perfectday.logicengine.core.event.manager.EventManagerThread;
 import org.perfectday.logicengine.core.event.movement.MovedMiniEvent;
 import org.perfectday.logicengine.model.battelfield.BattelField;
 import org.perfectday.logicengine.model.battelfield.Field;
@@ -23,7 +22,8 @@ import org.perfectday.logicengine.model.command.combat.CombatResolutionCommand;
 import org.perfectday.logicengine.model.minis.Mini;
 import org.perfectday.logicengine.model.minis.MiniLevel;
 import org.perfectday.logicengine.movement.MasterMovement;
-import org.perfectday.main.laboratocGUI.LaboratoryGUI;
+import org.perfectday.main.dummyengine.DummyGraphicsEngine;
+import org.perfectday.threads.commands.kernell.PutEventCommand;
 
 /**
  *
@@ -50,6 +50,8 @@ public class JBattelField extends JPanel {
     private static final int SIZE_FIELD=30;   
     private static final int SIZA_SOLDIER=SIZE_FIELD-(SIZE_FIELD/5);
     private MessageVolante message;
+    private Game game;
+    private DummyGraphicsEngine dummyGraphicsEngine;
 
     
 
@@ -153,21 +155,22 @@ public class JBattelField extends JPanel {
             if (orig != null) {
                 MovedMiniEvent miniEvent = 
                         new MovedMiniEvent(selectedMini, targetField);
-                EventManager.getInstance().addEvent(miniEvent);
-                synchronized(EventManagerThread.getEventManagerThread()){
-                    EventManagerThread.getEventManagerThread().notifyAll();
-                }
+                DashBoardThreadGroup.sendEventToKernell(new PutEventCommand(miniEvent));
+//                EventManager.getInstance().addEvent(miniEvent);
+//                synchronized(EventManagerRunnable.getEventManagerThread()){
+//                    EventManagerRunnable.getEventManagerThread().notifyAll();
+//                }
                 //Antiguo modo de mover
 //                orig.setMiniOcupant(null);
 //                targetField.setMiniOcupant(selectedMini);
 //                this.miniAccess.clear();
 //                this.selectedMini = null;
-//                UnitTime ut = LongUnitTimeFactory.getInstance().
-//                        doMovementAction(Game.getInstance().getSelectedMini());
-//                LaboratoryGUI.me.setTurnCost(ut);
-//                LaboratoryGUI.me.fin_del_moviemiento();
+//                UnitTime ut = LongUnitTimeFactory.getGame().
+//                        doMovementAction(game.getSelectedMini());
+//                DummyGraphicsEngine.me.setTurnCost(ut);
+//                DummyGraphicsEngine.me.fin_del_moviemiento();
             } else {
-                LaboratoryGUI.me.addInfo("No field de origen");
+                dummyGraphicsEngine.addInfo("No field de origen");
             }
             this.repaint();
         }
@@ -213,7 +216,7 @@ public class JBattelField extends JPanel {
     }
 
     private void paintTriangleKeep(Graphics g, Field field, int i, int j) {
-        Field mField = this.battelField.getField(Game.getInstance().getSelectedMini());
+        Field mField = this.battelField.getField(game.getSelectedMini());
         if(mField!=null){
             int xS = mField.getX()-i;
             int yS = mField.getY()-j;
@@ -330,13 +333,13 @@ public class JBattelField extends JPanel {
         int i = e.getX()/JBattelField.SIZE_FIELD;
         int j = e.getY()/JBattelField.SIZE_FIELD;
         if(isMiniSelected(i,j)){
-                LaboratoryGUI.me.getJMiniInfo1().setVisible(true);
-                LaboratoryGUI.me.getJMiniInfo1().setMini(
+                dummyGraphicsEngine.getJMiniInfo1().setVisible(true);
+                dummyGraphicsEngine.getJMiniInfo1().setMini(
                         battelField.getBattelfield()[i][j].getMiniOcupant()
                         );
-                LaboratoryGUI.me.getTabs().setSelectedIndex(0);
+                dummyGraphicsEngine.getTabs().setSelectedIndex(0);
                 //Pintamos quien es en la pila de acciones.
-                LaboratoryGUI.me.getActivationStackPanel().setSelectedMini(
+                dummyGraphicsEngine.getActivationStackPanel().setSelectedMini(
                         battelField.getBattelfield()[i][j].getMiniOcupant());
                 //Cargamos el alcance de Apoyo
                 if( battelField.getBattelfield()[i][j].getMiniOcupant().getSupport()!=null ){
@@ -344,7 +347,7 @@ public class JBattelField extends JPanel {
                    keepSupporAccess.addAll(
                             battelField.getBattelfield()[i][j]
                             .getMiniOcupant().getSupport().getSupportKeep()
-                            .getFieldKeeped(battelField.getBattelfield()[i][j]));
+                            .getFieldKeeped(battelField.getBattelfield()[i][j],this.dummyGraphicsEngine.getGame()));
                    this.supportSelectedMini=
                            battelField.getBattelfield()[i][j].getMiniOcupant();
                    this.repaint();
@@ -354,7 +357,7 @@ public class JBattelField extends JPanel {
                 keepSupporAccess.clear();
                 supportSelectedMini=null;
                 this.repaint();
-                LaboratoryGUI.me.getActivationStackPanel().setSelectedMini(null);
+                dummyGraphicsEngine.getActivationStackPanel().setSelectedMini(null);
             }
     }
 
@@ -375,13 +378,13 @@ public class JBattelField extends JPanel {
             }else{
                 //Es un ataque
                 if(isMiniSelected(i, j)){
-                    LaboratoryGUI.me.setTargetMini(battelField.getBattelfield()[i][j].getMiniOcupant());              
+                    dummyGraphicsEngine.setTargetMini(battelField.getBattelfield()[i][j].getMiniOcupant());
                 }
             }
         }else if(e.getID()==MouseEvent.MOUSE_MOVED){
             if(isMiniSelected(i,j)){
-                LaboratoryGUI.me.getJMiniInfo1().setVisible(true);
-                LaboratoryGUI.me.getJMiniInfo1().setMini(
+                dummyGraphicsEngine.getJMiniInfo1().setVisible(true);
+                dummyGraphicsEngine.getJMiniInfo1().setMini(
                         battelField.getBattelfield()[i][j].getMiniOcupant()
                         );
                
@@ -471,7 +474,7 @@ public class JBattelField extends JPanel {
                 case ASSASAIN: printAsessain(g,i,j); break;
             }
             //Pintamos bandera.
-            Color c = (Color) Game.getInstance().getDintingibleObjectBand(field.getMiniOcupant());
+            Color c = (Color) game.getDintingibleObjectBand(field.getMiniOcupant());
             g.setColor(c);
             g.fillRect(i*SIZE_FIELD, j*SIZE_FIELD, 8, 3);
             //Si esta seleccionado en la pila de activación pintamos un punto 
@@ -549,8 +552,25 @@ public class JBattelField extends JPanel {
     public void setActivationStackSelectedMini(Mini activationStackSelectedMini) {
         this.activationStackSelectedMini = activationStackSelectedMini;
     }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public DummyGraphicsEngine getDummyGraphicsEngine() {
+        return dummyGraphicsEngine;
+    }
+
+    public void setDummyGraphicsEngine(DummyGraphicsEngine dummyGraphicsEngine) {
+        this.dummyGraphicsEngine = dummyGraphicsEngine;
+    }
     
-    
+
+
 
      
    

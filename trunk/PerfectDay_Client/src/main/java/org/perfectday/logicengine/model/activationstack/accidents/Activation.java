@@ -6,7 +6,7 @@ import org.perfectday.logicengine.brain.Turn;
 import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.core.event.accident.ActivationEvent;
 import org.perfectday.logicengine.core.event.manager.EventManager;
-import org.perfectday.logicengine.core.event.manager.EventManagerThread;
+import org.perfectday.logicengine.core.event.manager.EventManagerRunnable;
 import org.perfectday.logicengine.core.player.Player;
 
 import org.perfectday.logicengine.model.activationstack.accidents.factories.ActivationFactory;
@@ -50,7 +50,7 @@ public class Activation extends Accident {
     public String toString() {
         String cad="{";
         try{         
-         cad+="Activar(Jugador:"+Game.getInstance().getPlayerByMini(this.mini)+" mini:{"+this.mini.toString()+"}ut:{"+this.getUnitTime().toString()+"}";
+         cad+="Activar(Jugador:"+Game.getGame().getPlayerByMini(this.mini)+" mini:{"+this.mini.toString()+"}ut:{"+this.getUnitTime().toString()+"}";
          cad+="}";
         }catch(Exception ex){cad="Error en to String";}
          return cad;
@@ -115,8 +115,8 @@ public class Activation extends Accident {
         ActivationEvent activationEvent = new ActivationEvent(
                 this.getUnitTime(),this.getMini());
         EventManager.getInstance().addEvent(activationEvent);
-        synchronized(EventManagerThread.getEventManagerThread()){
-            EventManagerThread.getEventManagerThread().notifyAll();
+        synchronized(EventManagerRunnable.getEventManagerThread()){
+            EventManagerRunnable.getEventManagerThread().notifyAll();
         }
     }
     

@@ -62,7 +62,7 @@ public class SimpleMovedFunction implements MovedFunction{
     }
 
     private void configure(Mini mini) {
-        Game game = Game.getInstance();
+        Game game = Game.getGame();
         Player p = game.getPlayerByMini(mini);
         Player pe =null;
         for(Player player: game.getPlayers()){

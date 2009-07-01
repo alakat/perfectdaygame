@@ -30,9 +30,9 @@ public abstract class PerfectDayThreadGroup extends ThreadGroup {
      * Arranca el grupo
      */
     public void start(){
-        Thread tEventRunner = new Thread(eventRunner);
+        Thread tEventRunner = new Thread(this,eventRunner,this.getName()+"EventRunner");
         tEventRunner.start();
-        Thread tCommandRunner = new Thread(commandRunner);
+        Thread tCommandRunner = new Thread(this,commandRunner,this.getName()+"");
         tCommandRunner.start();
     }
 
@@ -44,6 +44,15 @@ public abstract class PerfectDayThreadGroup extends ThreadGroup {
         commandRunner.stop();
         this.stop();
     }
+
+    public CommandRunner getCommandRunner() {
+        return commandRunner;
+    }
+
+    public EventRunner getEventRunner() {
+        return eventRunner;
+    }
+
 
 
 

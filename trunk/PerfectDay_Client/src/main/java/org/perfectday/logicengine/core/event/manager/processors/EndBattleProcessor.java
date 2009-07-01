@@ -21,7 +21,7 @@ public class EndBattleProcessor implements Processor {
     private static final Logger logger = Logger.getLogger(EndBattleProcessor.class);
     @Override
     public void eventRequest(Event event) {
-        if(Game.getInstance().isServer()){
+        if(Game.getGame().isServer()){
             logger.info("Server fin de batalla.");
             event = event.generateEventResponse();
             EventManager.getInstance().addEvent(event);
@@ -34,7 +34,7 @@ public class EndBattleProcessor implements Processor {
         logger.info("Response Evento <<End Battlarg3e>>");
         EndBattleEvent ebe = (EndBattleEvent)event;
         JOptionPane.showMessageDialog(null, ebe.getMsgWiner(),"Fin de la partida" , JOptionPane.INFORMATION_MESSAGE);
-        Game.getInstance().closeGame();
+        Game.getGame().closeGame();
         
     }
 

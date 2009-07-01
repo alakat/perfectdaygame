@@ -43,7 +43,7 @@ public class PoisonedState extends ActiveState{
         double v = this.getMini().getVitality();
         v = v*0.1; //10% de la vitalidad
         this.getMini().setDamage(this.getMini().getDamage()+v); 
-        UnitTime t = Game.getInstance().getActualTime();
+        UnitTime t = Game.getGame().getActualTime();
         t.plus(POISONED_STATE_DELAY_TIME);
         PutAccidentEvent accident = new PutAccidentEvent();
         accident.setAccident(new StateActivationAccident(this, t));

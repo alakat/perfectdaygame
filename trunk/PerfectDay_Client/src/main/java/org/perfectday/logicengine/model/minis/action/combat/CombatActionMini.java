@@ -71,8 +71,8 @@ public class CombatActionMini extends ActionMini{
     }
 
     public InstanceCombat createInstanceCombat(Mini defender,Mini ataker,boolean isConterAtack) {
-        Field fDefender = Game.getInstance().getBattelField().getField(defender);
-        Field fAtaker = Game.getInstance().getBattelField().getField(ataker);
+        Field fDefender = Game.getGame().getBattelField().getField(defender);
+        Field fAtaker = Game.getGame().getBattelField().getField(ataker);
         if (isDefenederInRange(fDefender,fAtaker)){
             //Es alcanzable
             //Si es un conterAtack, no se permiten conter atack
@@ -109,7 +109,7 @@ public class CombatActionMini extends ActionMini{
     }
 
     public boolean isDefenederInRange(Field fDefender, Field fAtaker) {
-        return this.combatKeep.isDefenderKeeped(fDefender, fAtaker);
+        return this.combatKeep.isDefenderKeeped(fDefender, fAtaker,Game.getGame());
     }
 
     public CombatKeep getCombatKeep() {
@@ -166,7 +166,7 @@ public class CombatActionMini extends ActionMini{
             logger.debug("Worker"+worker);
             this.createCombat(target, worker, ((Boolean)this.getActionData()).booleanValue());
             if (this.isNeedPreparation() && this.getCostPreparation() != null) {
-                Game.getInstance().getTurnTime().plus(this.getCostPreparation());
+                Game.getGame().getTurnTime().plus(this.getCostPreparation());
             }
         } catch (CloneNotSupportedException ex) {
            logger.error("Error",ex);

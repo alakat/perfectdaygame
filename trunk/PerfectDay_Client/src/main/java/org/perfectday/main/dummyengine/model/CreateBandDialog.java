@@ -4,7 +4,7 @@
  * Created on 16 de marzo de 2008, 10:10
  */
 
-package org.perfectday.main.laboratocGUI.model;
+package org.perfectday.main.dummyengine.model;
 
 import java.awt.Color;
 import java.util.ArrayList;

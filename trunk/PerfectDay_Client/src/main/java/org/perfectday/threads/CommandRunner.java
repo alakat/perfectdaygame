@@ -5,8 +5,9 @@
 
 package org.perfectday.threads;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Queue;
 import org.apache.log4j.Logger;
 
 
@@ -19,21 +20,21 @@ import org.apache.log4j.Logger;
 public class CommandRunner implements Runnable {
 
     private static Logger logger = Logger.getLogger(CommandRunner.class);
-    private Queue<Command> commands;
-    private final Object lock = new Object();
+    private List<Command> commands;
     private boolean alive;
     public CommandRunner() {
+        logger.info("CommandRunner es construida");
         alive = true;
-        this.commands =new PriorityQueue<Command>();
+        this.commands =new ArrayList<Command>();
     }
 
     /**
      * Se apila un nuevo commando en la pila de commandos
      * @param command
      */
-    public void sendCommand(Command command){
+    public synchronized  void sendCommand(Command command){
         this.commands.add(command);
-        lock.notifyAll();
+        this.notifyAll();
     }
 
     /**
@@ -43,17 +44,19 @@ public class CommandRunner implements Runnable {
     public void run() {
         while(alive){
             if(this.commands.isEmpty()){
-                synchronized(lock){
+                synchronized(this){
                     try {
-                        lock.wait();
+                        logger.info("lock wait");
+                        this.wait(2000);
                     } catch (InterruptedException ex) {
                         logger.fatal(ex.getMessage(),ex);
                     }
                 }
             }else{
-                Command command = this.commands.poll();
+                Command command = this.commands.remove(0);
+                logger.info("desapilamos "+command);
                 if(command!=null){
-                    Thread t = new Thread(command);
+                    Thread t = new Thread(Thread.currentThread().getThreadGroup(),command,"Command:"+command.getClass().getSimpleName());
                     t.start();
                 }
             }
@@ -67,7 +70,7 @@ public class CommandRunner implements Runnable {
      */
     public void stop() {
         this.alive = false;
-        lock.notifyAll();
+        this.notifyAll();
     }
 
 

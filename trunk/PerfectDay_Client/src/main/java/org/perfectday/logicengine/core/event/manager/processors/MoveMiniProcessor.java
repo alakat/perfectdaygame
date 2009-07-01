@@ -30,24 +30,24 @@ public class MoveMiniProcessor implements Processor{
         logger.info("request");
         MovedMiniEvent movedMiniEvent = (MovedMiniEvent) event;
                 
-        if(Game.getInstance().isServer()){
+        if(Game.getGame().isServer()){
             logger.info("is server");
             // procesamiento
             logger.info("Movimiento logico");
-            Mini m = Game.getInstance().getMiniByReferneceObject(movedMiniEvent.getMini());
+            Mini m = Game.getGame().getMiniByReferneceObject(movedMiniEvent.getMini());
             //Desregistramos los apoyos de este mini
             if(m.getSupport()!=null)
-                 Game.getInstance().getBattelField().removeSupport(m, m.getSupport());
-            Field dest = Game.getInstance().getFieldByRefeferenceObject( movedMiniEvent.getDest());
-            Game.getInstance().getBattelField().getField(m).setMiniOcupant(null);
+                 Game.getGame().getBattelField().removeSupport(m, m.getSupport());
+            Field dest = Game.getGame().getFieldByRefeferenceObject( movedMiniEvent.getDest());
+            Game.getGame().getBattelField().getField(m).setMiniOcupant(null);
             dest.setMiniOcupant(m);
             //Procesamiento de apoyos
             logger.info("aplicamos apoyos");
             if(m.getSupport()!=null)                    
-                Game.getInstance().getBattelField().applySupport(m, m.getSupport());
+                Game.getGame().getBattelField().applySupport(m, m.getSupport());
             logger.info("Calculamos tiempo");
             UnitTime ut = LongUnitTimeFactory.getInstance().
-                        doMovementAction(Game.getInstance().getSelectedMini());
+                        doMovementAction(Game.getGame().getSelectedMini());
             movedMiniEvent.setUtMoved(ut);
             //apilo el event
             event = event.generateEventResponse();
@@ -56,7 +56,7 @@ public class MoveMiniProcessor implements Processor{
         }else{
             event = event.generateEventResponse();
             //Aplia el nuevo evento
-            MasterCommunication.getInstance().sendEvent(event);
+            Game.getGame().getMasterCommunication().sendEvent(event);
             
         }    
         
@@ -73,27 +73,27 @@ public class MoveMiniProcessor implements Processor{
         MovedMiniEvent movedMiniEvent = (MovedMiniEvent) event;
         
         //Movemos la unidad
-        Mini m = Game.getInstance().getMiniByReferneceObject(movedMiniEvent.getMini());
-        if((!Game.getInstance().isServer())||(!Game.getInstance().getPlayerByMini(m).isLocal())){
+        Mini m = Game.getGame().getMiniByReferneceObject(movedMiniEvent.getMini());
+        if((!Game.getGame().isServer())||(!Game.getGame().getPlayerByMini(m).isLocal())){
             logger.info("Si no es server movimiento logico");
             /* Obtener las verdaderas referencias */
             
-            Field dest = Game.getInstance().getFieldByRefeferenceObject( movedMiniEvent.getDest());
-            Game.getInstance().getBattelField().getField(m).setMiniOcupant(null);
+            Field dest = Game.getGame().getFieldByRefeferenceObject( movedMiniEvent.getDest());
+            Game.getGame().getBattelField().getField(m).setMiniOcupant(null);
             dest.setMiniOcupant(m);
-        }if(Game.getInstance().isServer()){
+        }if(Game.getGame().isServer()){
             //Si es el server se lo enviamos al cliente
             logger.info("Send mensaje");
-            MasterCommunication.getInstance().sendEvent(event);
+            Game.getGame().getMasterCommunication().sendEvent(event);
         }
         //Asignamos el coste
-        if(Game.getInstance().getPlayerByMini(movedMiniEvent.getMini()).isLocal()){
-           Game.getInstance().getTurnTime().plus(movedMiniEvent.getUtMoved()); 
+        if(Game.getGame().getPlayerByMini(movedMiniEvent.getMini()).isLocal()){
+           Game.getGame().getTurnTime().plus(movedMiniEvent.getUtMoved());
         }
         
         //volvemos a pintar el mapa.
         logger.info("pintamos la interfaz");
-        Game.getInstance().getPerfectDayGUI().redraw();
+        Game.getGame().getPerfectDayGUI().redraw();
         //Enviamos el movimiento
     }
 

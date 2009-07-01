@@ -109,7 +109,7 @@ public class GameBuilderCommunicator {
                 logger.info("La partida comienza!!!!");
                 this.gameBuilder.move();    
             default:
-                logger.warn("CÃ³difo de perfectdaymessage no reconocido:"+ pdm.getType()+"{"+pdm.getMessage()+"}");
+                logger.warn("Códifo de perfectdaymessage no reconocido:"+ pdm.getType()+"{"+pdm.getMessage()+"}");
         }
         }catch(Exception ex){
             logger.error("Error en logica de comunicaciones",ex);            

@@ -18,6 +18,17 @@ public abstract class Mission {
     public Mission(Game game){
         this.game=game;
     }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+
+
     public abstract boolean missionCompleted();
 
     public abstract Player getWiner();

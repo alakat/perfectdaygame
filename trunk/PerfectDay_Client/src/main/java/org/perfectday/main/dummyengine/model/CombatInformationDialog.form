@@ -58,7 +58,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="org.perfectday.main.laboratocGUI.model.CombatInformationPanel" name="combatInformationPanel1">
+    <Container class="org.perfectday.main.dummyengine.model.CombatInformationPanel" name="combatInformationPanel1">
       <Properties>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[300, 420]"/>

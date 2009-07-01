@@ -5,12 +5,12 @@
 
 package org.perfectday.logicengine.combat;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.perfectday.logicengine.combat.core.functions.damage.DistanceDamageFunction;
 import org.perfectday.logicengine.combat.core.functions.hit.DistanceHitFunction;
 import org.perfectday.logicengine.combat.model.combatkeep.CombatKeep;
+import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.model.battelfield.Field;
 import org.perfectday.logicengine.model.command.Command;
 import org.perfectday.logicengine.model.minis.Mini;
@@ -51,7 +51,7 @@ public class MultyTargetInstanceCombat extends InstanceCombat {
 
     @Override
     public List<Command> doCombat() {
-        List<Field> effectField = this.effectArea.getFieldKeeped(targetField);
+        List<Field> effectField = this.effectArea.getFieldKeeped(targetField,Game.getGame());
         effectField.add(targetField);
         for (Field field : effectField) {
             logger.info("Afecta el field: "+field.toString());

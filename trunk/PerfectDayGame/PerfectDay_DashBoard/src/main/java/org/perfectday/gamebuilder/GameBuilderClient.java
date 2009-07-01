@@ -7,7 +7,6 @@ package org.perfectday.gamebuilder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import org.perfectday.core.asf.State;
@@ -17,10 +16,11 @@ import org.perfectday.communication.model.plugcommunication.PerfectDayMessage;
 import org.perfectday.dashboard.communication.model.PerfectDayMessageFactory;
 import org.perfectday.dashboard.exception.GameBuilderException;
 import org.perfectday.dashboard.gui.CreateArmyDialog;
+import org.perfectday.dashboard.threads.DashBoardThreadGroup;
 import org.perfectday.gamebuilder.model.DashBoardMiniUtilities;
 import org.perfectday.logicengine.core.Game;
-import org.perfectday.logicengine.model.minis.Mini;
-import org.perfectday.main.laboratocGUI.LaboratoryGUI;
+import org.perfectday.main.dummyengine.DummyGraphicsEngine;
+import org.perfectday.main.dummyengine.threads.GraphicsEngineThreadGroup;
 
 /**
  *
@@ -188,14 +188,34 @@ public class GameBuilderClient extends GameBuilder {
             PerfectDayMessage pdm = PerfectDayMessageFactory.getInstance().createGameGo();
             this.getCommunication().sendMessage(pdm);
             //Show game.
-             Game.getInstance().initGUI();
-             Game.getInstance().runEventManager();
+            GraphicsEngineThreadGroup graphicsEngineThreadGroup =
+                    GraphicsEngineThreadGroup.buildGraphicsEngineThreadGroup();
+            if (Thread.currentThread().getThreadGroup() instanceof DashBoardThreadGroup) {
+                DashBoardThreadGroup dashBoardThreadGroup = (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
+                dashBoardThreadGroup.setGraphicsInRun(graphicsEngineThreadGroup);
+                logger.info( "Activation Stack{"+ 
+                        dashBoardThreadGroup.getKernellInRun().getGame().getActivationStack().toString()+"}");
+                graphicsEngineThreadGroup.getDummyGraphicsEngine().getActivationStackPanel().
+                        setAccident(dashBoardThreadGroup.getKernellInRun().
+                        getGame().getActivationStack().getStack());
+                if(!dashBoardThreadGroup.gameGo()){
+                    logger.fatal("La partida no se ejecuto. No todos los atributos en DashBoardThreadGruop están listos");
+                }
+            }else{
+                logger.fatal("Una hebra que no pertenece al DashBoard entro" +
+                        " en este código ["+Thread.currentThread().getName()+
+                        ","+Thread.currentThread().getThreadGroup().getName()+"]");
+            }
+
+//             Game.getGame().initGUI();
+//             Game.getGame().runEventManager();
              //TODO eliminar cuando se pase a 3D
-             LaboratoryGUI.me.getActivationStackPanel().setAccident(Game.getInstance().getActivationStack().getStack());
-             logger.info( "Activation Stack{"+ Game.getInstance().getActivationStack().toString()+"}");
+            // DummyGraphicsEngine.me.getActivationStackPanel().setAccident(Game.getGame().getActivationStack().getStack());
+            
             /*
              * .............GOOOO
              */
+             this.endConstructionGame();
             //Desacer la construicciÃ³n. Deshabilitar la posibilidad de crear otro juego
             
         } catch (GameBuilderException ex) {

@@ -246,6 +246,14 @@ private void pfPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
         this.roster = roster;
     }
 
+    @Override
+    public void requestFocus() {
+        super.requestFocus();
+        pfPassword.requestFocus();
+    }
+
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bConnectar;

@@ -15,6 +15,8 @@ import javax.swing.text.StyledDocument;
 import org.apache.log4j.Logger;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.XMPPException;
+import org.perfectday.dashboard.exception.GameBuilderException;
+import org.perfectday.dashboard.threads.DashBoardThreadGroup;
 import org.perfectday.gamebuilder.GameBuilder;
 import org.perfectday.gamebuilder.GameBuilderFactory;
 import org.perfectday.gamebuilder.model.BattleDescription;
@@ -109,6 +111,15 @@ private void bEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
 }//GEN-LAST:event_bEnviarActionPerformed
 
 private void bBatallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBatallaActionPerformed
+    
+    if (Thread.currentThread().getThreadGroup() instanceof DashBoardThreadGroup) {
+        DashBoardThreadGroup dashBoardThreadGroup = (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
+        if(dashBoardThreadGroup.inGame()){
+            JOptionPane.showMessageDialog(this, "Ya existe una partida en ejecución","PerfectDay. Información",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+    }
+
     DescriptionBattleDialog dbd = new DescriptionBattleDialog(null, true);
     dbd.setVisible(true);
     BattleDescription bd = null;
@@ -132,6 +143,8 @@ private void bBatallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     GameBuilderFactory.getInstance().delete(chat.getParticipant());
                     JOptionPane.showMessageDialog(this, "Error en las comunicaciones","Ha sido imposible iniciar el juego",JOptionPane.ERROR_MESSAGE);
                 }
+            } catch (GameBuilderException ex) {
+                JOptionPane.showMessageDialog(this,ex.getMessage(), "PerfectDay. Información",JOptionPane.INFORMATION_MESSAGE);
             } catch (NoSuchMethodException ex) {
                 logger.error("Error al crear el constructor de partidas",ex);
                 JOptionPane.showMessageDialog(this, "Error en las comunicaciones","Ha sido imposible iniciar el juego",JOptionPane.ERROR_MESSAGE);
