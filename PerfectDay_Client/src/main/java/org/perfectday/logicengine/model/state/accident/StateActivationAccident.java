@@ -9,7 +9,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.core.event.manager.EventManager;
-import org.perfectday.logicengine.core.event.manager.EventManagerThread;
+import org.perfectday.logicengine.core.event.manager.EventManagerRunnable;
 import org.perfectday.logicengine.core.event.state.ActivationStateEvent;
 import org.perfectday.logicengine.model.command.Command;
 import org.perfectday.logicengine.model.state.State;
@@ -45,8 +45,8 @@ public class StateActivationAccident extends StateAccident{
     public void doAccidentWithEvent(Game game) throws Exception {
          ActivationStateEvent activationStateEvent = new ActivationStateEvent(this.getState(), null);
         EventManager.getInstance().addEvent(activationStateEvent);
-        synchronized(EventManagerThread.getEventManagerThread()){
-            EventManagerThread.getEventManagerThread().notifyAll();
+        synchronized(EventManagerRunnable.getEventManagerThread()){
+            EventManagerRunnable.getEventManagerThread().notifyAll();
         }
     }
 

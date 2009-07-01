@@ -5,21 +5,21 @@
 
 package org.perfectday.logicengine.core;
 
+import com.sun.java.swing.plaf.windows.WindowsBorders.DashedBorder;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
 import org.apache.log4j.Logger;
-import org.perfectday.infomation.Journalist;
+import org.perfectday.communication.masterCommunication.MasterCommunication;
+import org.perfectday.core.threads.KernellThreadGroup;
 import org.perfectday.logicengine.combat.InstanceCombat;
 import org.perfectday.logicengine.combat.MasterOfCombatImpl;
 import org.perfectday.logicengine.core.event.Event.EventType;
 import org.perfectday.logicengine.core.event.game.PutActionEvent;
 import org.perfectday.logicengine.core.event.manager.EventManager;
-import org.perfectday.logicengine.core.event.manager.EventManagerThread;
+import org.perfectday.logicengine.core.event.manager.EventManagerRunnable;
 import org.perfectday.logicengine.core.player.Player;
 import org.perfectday.logicengine.exceptions.NoSuchElementException;
 import org.perfectday.logicengine.missions.Mission;
-import org.perfectday.logicengine.missions.SearchAndDestroyMission;
 import org.perfectday.logicengine.model.ReferenceObject;
 import org.perfectday.logicengine.model.activationstack.ActivationStack;
 import org.perfectday.logicengine.model.activationstack.accidents.Accident;
@@ -27,15 +27,15 @@ import org.perfectday.logicengine.model.activationstack.accidents.Activation;
 import org.perfectday.logicengine.model.activationstack.accidents.factories.ActivationFactory;
 import org.perfectday.logicengine.model.battelfield.BattelField;
 import org.perfectday.logicengine.model.battelfield.Field;
-import org.perfectday.logicengine.model.battelfield.generator.SimpleMapGenerator;
 import org.perfectday.logicengine.model.command.Command;
 import org.perfectday.logicengine.model.command.combat.DeathMiniCommand;
 import org.perfectday.logicengine.model.unittime.LongUnitTime;
 import org.perfectday.logicengine.model.unittime.UnitTime;
 import org.perfectday.logicengine.model.minis.Mini;
 import org.perfectday.logicengine.movement.MasterAPorEllos;
-import org.perfectday.main.laboratocGUI.LaboratoryGUI;
-import org.perfectday.main.laboratocGUI.PerfectDayGUI;
+import org.perfectday.main.dummyengine.DummyGraphicsEngine;
+import org.perfectday.main.dummyengine.GraphicsEngine;
+import org.perfectday.main.dummyengine.threads.GraphicsEngineThreadGroup;
 import org.perfectday.message.ReferenceObjectVO;
 
 /**
@@ -57,74 +57,56 @@ public class Game {
     private BattelField battelField;
     private ActivationStack activationStack;
     private MasterOfCombatImpl masterOfCombat;
-    private PerfectDayGUI perfectDayGUI;
     private Mission mission;
     private Mini selectedMini;
     private MasterAPorEllos masterAPorEllos;
     private UnitTime actualTime;
     private UnitTime turnTime;
-    private Logger logger = Logger.getLogger(Game.class);
-    private EventManagerThread eventManagerThread;
+    private MasterCommunication masterCommunication;
+    private static Logger logger = Logger.getLogger(Game.class);
     private boolean server;
     /**
      * Si la partida a iniciado.
      */
     private boolean started;
     
-    /**
-     * Constructor publico para crear partidas a traves de internet
-     * @param bt
-     */
-    public Game(BattelField bt){
-        this.players = new ArrayList<Player>();
-        this.battelField = bt;
-        this.activationStack = new ActivationStack();
-        this.masterOfCombat = MasterOfCombatImpl.getInstance();
-        this.perfectDayGUI = new LaboratoryGUI();
-        this.eventManagerThread = EventManagerThread.getEventManagerThread();
-        this.started = false;
-        Game.instance = this;        
-    }
+   
     
-    private Game(){
-        players = new ArrayList<Player>();
-        this.activationStack = new ActivationStack();
-        this.masterOfCombat = MasterOfCombatImpl.getInstance();        
-        this.perfectDayGUI = new LaboratoryGUI();         
-        this.eventManagerThread = EventManagerThread.getEventManagerThread();
-        
-    }
     /**
      * Constructor privado para crear partidas en "Stand alone"
      */
-    private Game(boolean b){
+    public Game(BattelField battelField){
         players = new ArrayList<Player>();
-        players.add(Player.createPlayerAzul());
-        players.add(Player.createPlayerRojo());
         this.battelField = new BattelField(WEIDTH_BATTELFIELD, 
                 HEIGTH_BATTELFIELD);
-        SimpleMapGenerator simpleMapGenerator = 
-                new SimpleMapGenerator(this.battelField.getHigth(), 
-                this.battelField.getWeidth());
-        simpleMapGenerator.generateBattelField();
-        this.battelField.generateBattelField(simpleMapGenerator);        
+        this.battelField = battelField;
         this.activationStack = new ActivationStack();
-        this.masterOfCombat = MasterOfCombatImpl.getInstance();        
-        this.perfectDayGUI = new LaboratoryGUI();         
-        
-        this.eventManagerThread = EventManagerThread.getEventManagerThread();
+        this.masterOfCombat = new MasterOfCombatImpl();
+        this.masterCommunication = new MasterCommunication();
     }
 
-    public static Game getInstance() {
-        if (instance==null)
-            instance = new Game(false);
-        return instance;
-    }
-    
-    public static Game getInstance_(){
-        if (instance==null)
-            instance = new Game();
-        return instance;
+    /**
+     * Obtiene el game del grupo de hebras en ejecución actual
+     * @return
+     */
+    public static Game getGame() {
+        Game game=null;
+        if (Thread.currentThread().getThreadGroup() instanceof KernellThreadGroup) {
+            KernellThreadGroup kernellThreadGroup = (KernellThreadGroup) Thread.currentThread().getThreadGroup();
+            game = kernellThreadGroup.getGame();
+        }else if (Thread.currentThread().getThreadGroup() instanceof GraphicsEngineThreadGroup) {
+            GraphicsEngineThreadGroup graphicsEngineThreadGroup = (GraphicsEngineThreadGroup) Thread.currentThread().getThreadGroup();
+            game = graphicsEngineThreadGroup.getKernellThreadGroup().getGame();
+        }else{
+            StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+            logger.fatal("Una hebra que no pertencia a Kernell o Graphics entro " +
+                    "getPerfectDayGUI["+Thread.currentThread().getName()+","
+                    +Thread.currentThread().getThreadGroup().getName()+"]");
+            for (StackTraceElement stackTraceElement : trace) {
+                logger.fatal(stackTraceElement.toString());
+            }
+        }
+        return game;
     }
 
     public Object getDintingibleObjectBand(Mini miniOcupant) {
@@ -150,53 +132,19 @@ public class Game {
     }
 
     /**
-     * inicializalos la interfazdel juego
+     * Desapila el proximo evento de juego y provoca la comprobación de
+     * la misión.
+     * Es el bucle del juego
      */
-    public void initGUI() {
-        this.perfectDayGUI.setGame(this);
-        final LaboratoryGUI laboratoryGUI = (LaboratoryGUI) this.perfectDayGUI;
-        final JFrame jpctdebug = new JFrame("Test jpct..v0.0.1");
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                laboratoryGUI.setVisible(true);
-                
-            }
-        });
-        
-        t.start();
-        
-    }
-    /**
-     * Loop del juego
-     * @throws java.lang.Exception
-     */
-    public void loopGame() throws Exception {
-        logger.info(this.activationStack.toString());
-        List<Command> commands = new ArrayList<Command>();
-        while (!missionACompleted()) {
-            Accident accident = popNewAccident();
-            LaboratoryGUI.me.addInfo(accident.toString());
-            this.actualTime = accident.getUnitTime();
-            accident.doAccident(commands, this);
-            Journalist.getInstance().infoCombat(commands);
-            this.perfectDayGUI.proccessCommand(commands);
-            commands.clear();
-        }
-
-        
-        LaboratoryGUI.me.combatFinishWithPlayerWin(this.mission.getWiner());
-        this.closeGame();
-    }
-
     public void nextAccident() {
         try {
             if(missionACompleted()){
-                LaboratoryGUI.me.combatFinishWithPlayerWin(this.mission.getWiner());
+                Game.getPerfectDayGUI().combatFinishWithPlayerWin(this.mission.getWiner());
                 this.closeGame();
                 
             }
             Accident accident = popNewAccident();
-            LaboratoryGUI.me.addInfo(accident.toString());
+            Game.getPerfectDayGUI().addInfo(accident.toString());
             this.actualTime = accident.getUnitTime();
             accident.doAccidentWithEvent( this);
         } catch (Exception ex) {
@@ -204,70 +152,14 @@ public class Game {
         }
     }
     
-    /**
-     * Inicia la partida
-     */
-    public void startGame(){
-        int irojo=2;
-        int jrojo=2;
-        int iazul=15;
-        int jazul=2;
-        
-        List<Mini> bandRoja = (List<Mini>) players.get(1).getBand();
-        for(Mini mini: bandRoja){
-            logger.info("Mini:"+mini.toString());
-            battelField.getBattelfield()[irojo][jrojo].setMiniOcupant(mini);
-            Activation activation = 
-                    ActivationFactory.getInstance().createActivation(mini,
-                    new LongUnitTime((long)(10-mini.getIniciative())));
-            this.activationStack.put(activation);
-            jrojo++;
-            if(jrojo>battelField.getBattelfield()[0].length){
-                jrojo=2;
-                irojo--;
-            }
-        }                
-        logger.info("...");
-        List<Mini> bandAzul = (List<Mini>) players.get(0).getBand();
-        for(Mini mini: bandAzul){
-            logger.info("Mini:"+mini.toString());
-            battelField.getBattelfield()[iazul][jazul].setMiniOcupant(mini);
-            Activation activation = 
-                    ActivationFactory.getInstance().createActivation(mini,
-                    new LongUnitTime((long)(10-mini.getIniciative())));
-            this.activationStack.put(activation);
-            jazul++;
-            if(jazul>=battelField.getBattelfield()[0].length){
-                jazul=2;
-                iazul++;
-            }
-        }    
-        //Mission
-        this.mission = new SearchAndDestroyMission(instance);
-        initGUI();
-    }
-    
-    
-    
-    public void doGameWithEvent(){
-        this.runEventManager();
-        startGame();        
-        logger.info(this.activationStack.toString());
-        this.nextAccident();
-    }
-    
-    public void doGame() throws CloneNotSupportedException, InterruptedException, Exception{
-        startGame();
-        loopGame();
-    }
 
     
     /**
      * Fin del juego, 
      */
     public void closeGame() {
-        LaboratoryGUI.me.dispose();
-        LaboratoryGUI.me.setVisible(false);
+        ((DummyGraphicsEngine)Game.getPerfectDayGUI()).dispose();
+        ((DummyGraphicsEngine)Game.getPerfectDayGUI()).setVisible(false);
         //Eliminar System.exit(0);
         //System.exit(0);
     }
@@ -302,9 +194,9 @@ public class Game {
      * @throws java.lang.InterruptedException
      */
     public synchronized UnitTime proccessTurn(Mini mini,List<Command> commandsTurn) throws InterruptedException {
-        perfectDayGUI.activateMini(mini);
+        Game.getPerfectDayGUI().activateMini(mini);
         wait();
-        UnitTime ut = perfectDayGUI.getTurnCost();
+        UnitTime ut = Game.getPerfectDayGUI().getTurnCost();
         //add moved command
         
         return ut;        
@@ -334,13 +226,30 @@ public class Game {
         this.masterOfCombat = masterOfCombat;
     }
 
-    public PerfectDayGUI getPerfectDayGUI() {
-        return perfectDayGUI;
+    /**
+     * Obtiene el puente hacia el motor gráfico de la hebra adecuada
+     * @return
+     */
+    public static GraphicsEngine getPerfectDayGUI() {
+        //TODO Solo deberían entrar hebras de kernell
+        if (Thread.currentThread().getThreadGroup() instanceof KernellThreadGroup) {
+            KernellThreadGroup kernellThreadGroup = (KernellThreadGroup) Thread.currentThread().getThreadGroup();
+            return kernellThreadGroup.getGraphicsEngine().getGraphicsEngine();
+        }else if (Thread.currentThread().getThreadGroup() instanceof GraphicsEngineThreadGroup) {
+            GraphicsEngineThreadGroup graphicsEngineThreadGroup = (GraphicsEngineThreadGroup) Thread.currentThread().getThreadGroup();
+            return graphicsEngineThreadGroup.getGraphicsEngine();
+        }else{
+            StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+            logger.fatal("Una hebra que no pertencia a Kernell o Graphics entro " +
+                    "getPerfectDayGUI["+Thread.currentThread().getName()+","
+                    +Thread.currentThread().getThreadGroup().getName()+"]");
+            for (StackTraceElement stackTraceElement : trace) {
+                logger.fatal(stackTraceElement.toString());
+            }
+        }
+        return null;
     }
 
-    public void setPerfectDayGUI(PerfectDayGUI perfectDayGUI) {
-        this.perfectDayGUI = perfectDayGUI;
-    }
 
     public List<Player> getPlayers() {
         return players;
@@ -418,7 +327,7 @@ public class Game {
      * @return
      */
     public List<Command> searchDead() {
-        LaboratoryGUI.me.addInfo("Muerte recolecta espiritus...");
+        Game.getPerfectDayGUI().addInfo("Muerte recolecta espiritus...");
         List<Mini> minis = new ArrayList<Mini>();
         List<Command> commands = new ArrayList<Command>();
         for(Player player: players){
@@ -426,15 +335,15 @@ public class Game {
         }
         List<Mini> death = new ArrayList<Mini>();
         for(Mini mini:minis){
-            LaboratoryGUI.me.addInfo("Mini:"+mini.toString()+" vivo:"+mini.isAlive());
+            Game.getPerfectDayGUI().addInfo("Mini:"+mini.toString()+" vivo:"+mini.isAlive());
             if(!mini.isAlive()){
                 commands.add(new DeathMiniCommand(mini.toString()));
-                LaboratoryGUI.me.addInfo("Lo eliminamos de:"+ this.battelField.getField(mini));
+                Game.getPerfectDayGUI().addInfo("Lo eliminamos de:"+ this.battelField.getField(mini));
                 this.battelField.getField(mini).setMiniOcupant(null);
                 death.add(mini);                
             }
         }
-        LaboratoryGUI.me.addInfo("Muerto:"+death.size()); 
+        Game.getPerfectDayGUI().addInfo("Muerto:"+death.size());
         for(Mini miniDead:death){            
             for(Player player:players){
                 if(player.getBand().contains(miniDead)){
@@ -451,15 +360,6 @@ public class Game {
         death=null;
         minis = null;
         return commands;
-    }
-    
-    
-     
-    public static void main(String[] argv) 
-            throws CloneNotSupportedException, InterruptedException, Exception{
-        Game game = Game.getInstance();        
-        game.doGameWithEvent();
-        
     }
     
     /**
@@ -491,19 +391,7 @@ public class Game {
         throw new NoSuchElementException("Id: "+referenceObjectVO.getId());
     }
     
-    /**
-     * Recarga los valores de Game para una nueva partida.
-     */
-    public void reload(){
-        this.players = new ArrayList<Player>();
-        this.activationStack = new ActivationStack();
-        this.masterOfCombat = MasterOfCombatImpl.getInstance();
-        this.perfectDayGUI = new LaboratoryGUI();
-        this.eventManagerThread = EventManagerThread.getEventManagerThread();
-        this.started = false;
-        this.battelField = null;
-    }
-
+    
     public boolean isStarted() {
         return started;
     }
@@ -559,28 +447,29 @@ public class Game {
         return null;
     }
     
-    
+
+
     /**
-     * Inicializa la pila de activaciÃ³n a partir de los minis de los jugadores
+     * Inicializa la pila de activación con las activaciones de todos los minis
      */
-    public  static void initializedActivationState(){
-        for (Player player : Game.getInstance().getPlayers()) {
+    public void initializedActivationState(){
+        for (Player player : this.getPlayers()) {
             for (Mini mini : player.getBand()) {
-                Activation activation = 
+                Activation activation =
                     ActivationFactory.getInstance().createActivation(mini,
                     new LongUnitTime((long)(10-mini.getIniciative())));
                 PutActionEvent putEvent = new PutActionEvent();
                 putEvent.setActivation(activation);
                 putEvent.setEventType(EventType.REQUEST);
-                EventManager.getInstance().addEvent(putEvent);                
+                EventManager.getInstance().addEvent(putEvent);
             }
         }
-        EventManager.getInstance().eventWaitTest();        
+        EventManager.getInstance().eventWaitTest();
+    }
+
+    public MasterCommunication getMasterCommunication() {
+        return masterCommunication;
     }
     
-    
-    public void runEventManager(){
-        Thread tEvent = new Thread(EventManagerThread.getEventManagerThread());
-        tEvent.start();
-    }
+
 }

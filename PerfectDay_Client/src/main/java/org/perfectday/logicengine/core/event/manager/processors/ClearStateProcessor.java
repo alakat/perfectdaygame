@@ -23,30 +23,30 @@ public class ClearStateProcessor implements Processor{
     
     @Override
     public void eventRequest(Event event) {
-        if (!Game.getInstance().isServer()){
+        if (!Game.getGame().isServer()){
             logger.warn("El cliente no debería procesar este evento en Request.");
         }
         event = event.generateEventResponse();
         EventManager.getInstance().addEvent(event);
         EventManager.getInstance().eventWaitTest();
-        if(Game.getInstance().isServer()){
-            MasterCommunication.getInstance().sendEvent(event);
+        if(Game.getGame().isServer()){
+            Game.getGame().getMasterCommunication().sendEvent(event);
         }
     }
 
     @Override
     public void eventResponse(Event event) {
        ClearStateEvent cse = (ClearStateEvent) event;
-       if (Game.getInstance().isServer()){
+       if (Game.getGame().isServer()){
            logger.info("Servidor..");
             MiniModificable miniModificable = (MiniModificable) cse.getAffectedMini();
             miniModificable.removeState(cse.getState());
-            Game.getInstance().getActivationStack().clearState(cse.getState());
-            Game.getInstance().nextAccident();
+            Game.getGame().getActivationStack().clearState(cse.getState());
+            Game.getGame().nextAccident();
        }else{
            logger.info("Cliente...");
-           Game.getInstance().getActivationStack().clearState(cse.getState());
-           Game.getInstance().getPerfectDayGUI().redraw();
+           Game.getGame().getActivationStack().clearState(cse.getState());
+           Game.getGame().getPerfectDayGUI().redraw();
        }       
     }
 

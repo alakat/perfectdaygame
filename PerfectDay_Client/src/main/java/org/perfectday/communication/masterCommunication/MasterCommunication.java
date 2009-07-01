@@ -22,9 +22,7 @@ import org.perfectday.logicengine.core.event.manager.EventManager;
 public class MasterCommunication{
     public static final String NAME_GAME_MESSAGE = "game-message";
     private PlugCommunication plugCom;
-    private static MasterCommunication masterCom;
     private String URL;
-    private EventManager eventManager;
 
     private static final Logger logger = Logger.getLogger(MasterCommunication.class);
    
@@ -45,7 +43,7 @@ public class MasterCommunication{
 
    
     //IMPLEMENTING PATTERN SINGLETON
-    private MasterCommunication(){ }
+    public MasterCommunication(){ }
    
     public void setCommunication(String name, String destiny) {
         this.plugCom = new XMPPPluginsCommunicator(name, destiny);        
@@ -55,12 +53,6 @@ public class MasterCommunication{
     
     public void unSetCommunication(){
         plugCom.disconnect();
-    }
-    public static MasterCommunication getInstance(){
-        if(masterCom == null){
-            masterCom = new MasterCommunication();
-        }
-        return masterCom;
     }
 
     public PlugCommunication getPlugCom() {

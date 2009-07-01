@@ -6,6 +6,7 @@
 package org.perfectday.logicengine.combat.model.combatkeep;
 
 import java.util.List;
+import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.model.battelfield.Field;
 
 
@@ -15,8 +16,8 @@ import org.perfectday.logicengine.model.battelfield.Field;
  */
 public abstract class CombatKeep {
     
-    public abstract boolean isDefenderKeeped(Field defender, Field ataker);
+    public abstract boolean isDefenderKeeped(Field defender, Field ataker,Game game);
     
-    public abstract List<Field> getFieldKeeped(Field ataker);
+    public abstract List<Field> getFieldKeeped(Field ataker,Game game);
 
 }

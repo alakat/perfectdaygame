@@ -14,6 +14,9 @@ import org.perfectday.communication.masterCommunication.MasterCommunication;
 import org.perfectday.communication.model.plugcommunication.PerfectDayMessage;
 import org.perfectday.dashboard.gui.ChatPanel;
 import org.perfectday.dashboard.gui.WarRoom;
+import org.perfectday.dashboard.threads.DashBoardThreadGroup;
+import org.perfectday.logicengine.core.Game;
+import org.perfectday.threads.commands.kernell.MessageReceiveCommand;
 
 /**
  *
@@ -52,7 +55,7 @@ public class MessageChatListener implements MessageListener {
                 PerfectDayMessage parser= (PerfectDayMessage)new XStream().fromXML((String)mess.getProperty(MasterCommunication.NAME_GAME_MESSAGE));
                 long time = System.currentTimeMillis();
                 Logger.getLogger(MessageChatListener.class).info("Tiempo de envio de un mensaje[] de juego:("+(time-parser.getSendtime())+")");
-                MasterCommunication.getInstance().receiveMessage(parser);
+                DashBoardThreadGroup.sendEventToKernell(new MessageReceiveCommand(parser));
                 
             }else{
                 warRoom.incommingMessage(from,mess.getBody());

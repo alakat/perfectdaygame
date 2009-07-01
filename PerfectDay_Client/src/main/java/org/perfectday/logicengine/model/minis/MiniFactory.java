@@ -90,7 +90,7 @@ public class MiniFactory {
         this.combatActionFactory = CombatActionFactory.getInstance();
         this.miniBaseAttributes = new Properties();
         try{
-            this.miniBaseAttributes.load(new FileInputStream(new File("../src/conf/basic-attributes.properties")));
+            this.miniBaseAttributes.load(new FileInputStream(new File("../src/main/conf/basic-attributes.properties")));
         }catch(IOException ex){
             org.apache.log4j.Logger.getLogger(MiniFactory.class).error(
                     "No se pueden cargar los attributos iniciales.",ex);

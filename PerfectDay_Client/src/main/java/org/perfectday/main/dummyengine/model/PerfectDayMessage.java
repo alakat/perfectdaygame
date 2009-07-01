@@ -4,7 +4,7 @@
  * Created on 21 de marzo de 2008, 13:55
  */
 
-package org.perfectday.main.laboratocGUI.model;
+package org.perfectday.main.dummyengine.model;
 
 import java.awt.Graphics;
 

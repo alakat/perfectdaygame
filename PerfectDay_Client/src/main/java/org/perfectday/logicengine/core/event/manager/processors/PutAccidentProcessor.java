@@ -23,16 +23,16 @@ public class PutAccidentProcessor implements Processor {
     
     @Override
     public void eventRequest(Event event) {
-        if(!Game.getInstance().isServer()){
+        if(!Game.getGame().isServer()){
             logger.info("En cliente. Un resquest nunca debería ocurrir");
             event = event.generateEventResponse();
-            MasterCommunication.getInstance().sendEvent(event);
+            Game.getGame().getMasterCommunication().sendEvent(event);
         }else{
             logger.info("Server.");
             event=event.generateEventResponse();
             EventManager.getInstance().addEvent(event);
             EventManager.getInstance().eventWaitTest();
-            MasterCommunication.getInstance().sendEvent(event);
+            Game.getGame().getMasterCommunication().sendEvent(event);
         }
         
     }
@@ -41,7 +41,7 @@ public class PutAccidentProcessor implements Processor {
     public void eventResponse(Event event) {
         logger.info("Response igual en cliente y servidor");
         Accident acc = ((PutAccidentEvent)event).getAccident();
-        Game.getInstance().getActivationStack().put(acc);
+        Game.getGame().getActivationStack().put(acc);
     }
 
     

@@ -5,8 +5,8 @@
 
 package org.perfectday.threads;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.log4j.Logger;
 
 /**
@@ -15,13 +15,13 @@ import org.apache.log4j.Logger;
  */
 public class EventRunner implements Runnable {
 private static Logger logger = Logger.getLogger(CommandRunner.class);
-    private Queue<EventCommand> commands;
+    private List<EventCommand> commands;
     private final Object lock = new Object();
     private boolean alive;
 
     public EventRunner() {
         alive =true;
-        this.commands =new PriorityQueue<EventCommand>();
+        this.commands =new ArrayList<EventCommand>();
     }
 
     /**
@@ -48,7 +48,7 @@ private static Logger logger = Logger.getLogger(CommandRunner.class);
                     }
                 }
             }else{
-                EventCommand event = this.commands.poll();
+                EventCommand event = this.commands.remove(0);
                 if(event!=null){
                    event.do_();
                 }

@@ -51,7 +51,7 @@ public class InstanceCastSpell {
 
     private void doCastTargetField(List<Command> commands) {
         Field field = (Field) target;
-        Field fCaster = Game.getInstance().getBattelField().getField(caster);
+        Field fCaster = Game.getGame().getBattelField().getField(caster);
         
         //restamos el coste del conjuro al lanzador.Si no tiene suficiente 
         //origina un fallo automático
@@ -72,9 +72,9 @@ public class InstanceCastSpell {
             return;
         }
         
-        if( this.spellcast.getSpellKeep().isDefenderKeeped(fCaster, field) ){
+        if( this.spellcast.getSpellKeep().isDefenderKeeped(fCaster, field,Game.getGame()) ){
             List<Mini> targetMinis = new ArrayList<Mini>();
-            List<Field> fieldTarget = this.spellcast.getSpellEffectArea().getFieldKeeped(fCaster);
+            List<Field> fieldTarget = this.spellcast.getSpellEffectArea().getFieldKeeped(fCaster,Game.getGame());
             for (Field field1 : fieldTarget) {
                 if(field1.getMiniOcupant()!=null)
                     targetMinis.add(field1.getMiniOcupant());
@@ -91,8 +91,8 @@ public class InstanceCastSpell {
     }
 
     private void doCastTargetMini(List<Command> commands) {
-        Field field = (Field) Game.getInstance().getBattelField().getField((Mini) this.target);
-        Field fCaster = Game.getInstance().getBattelField().getField(caster);
+        Field field = (Field) Game.getGame().getBattelField().getField((Mini) this.target);
+        Field fCaster = Game.getGame().getBattelField().getField(caster);
         
         //restamos el coste del conjuro al lanzador.Si no tiene suficiente 
         //origina un fallo automático
@@ -111,7 +111,7 @@ public class InstanceCastSpell {
             commands.add(this.spellcast.getFailEffectFunction().doeffect(caster));
             return;
         }
-        if( this.spellcast.getSpellKeep().isDefenderKeeped(fCaster, field) ){
+        if( this.spellcast.getSpellKeep().isDefenderKeeped(fCaster, field,Game.getGame()) ){
             Mini mini = (Mini) this.target;
             commands.add(new MiniIsSpellTargetCommand(mini, spellcast));
                 roll = MasterRoll.getInstance().nextDouble();

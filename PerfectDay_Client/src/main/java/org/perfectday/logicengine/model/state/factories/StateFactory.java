@@ -60,7 +60,7 @@ public class StateFactory {
         commands.add(new AddStateCommand(state,mini.getReferenceObject()));
         
         //registramos su desaparición
-        UnitTime t = Game.getInstance().getActualTime();
+        UnitTime t = Game.getGame().getActualTime();
         UnitTime tclear = state.getTimeEffect();
         tclear.plus(t);
         //Apilamos el registro 

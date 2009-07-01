@@ -4,7 +4,7 @@
  * Created on 15 de marzo de 2008, 15:03
  */
 
-package org.perfectday.main.laboratocGUI.model;
+package org.perfectday.main.dummyengine.model;
 
 import java.awt.Label;
 import java.util.List;
@@ -44,7 +44,7 @@ public class JActivationStack extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     public void stackRefresh(){
         this.removeAll();
-        List<Accident> events = Game.getInstance().getActivationStack().getStack();
+        List<Accident> events = Game.getGame().getActivationStack().getStack();
         for (Accident accident : events) {
             this.add(new Label(accident.toString()));
         }

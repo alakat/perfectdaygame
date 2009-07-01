@@ -33,14 +33,14 @@ public class PutActivationProcessor implements  Processor{
     @Override
     public void eventResponse(Event event) {
         logger.info("response");
-        if(Game.getInstance().isServer()){
-            MasterCommunication.getInstance().sendEvent(event);
+        if(Game.getGame().isServer()){
+            Game.getGame().getMasterCommunication().sendEvent(event);
         }
         PutActionEvent popActionEvent = (PutActionEvent)event;
         Activation activation = popActionEvent.getActivation();
-        Game.getInstance().getActivationStack().put(activation); 
-        Game.getInstance().getPerfectDayGUI().redraw();
-        logger.debug( "Activation Stack{"+ Game.getInstance().getActivationStack().toString()+"}");
+        Game.getGame().getActivationStack().put(activation);
+        Game.getPerfectDayGUI().redraw();
+        logger.debug( "Activation Stack{"+ Game.getGame().getActivationStack().toString()+"}");
     }
 
 }

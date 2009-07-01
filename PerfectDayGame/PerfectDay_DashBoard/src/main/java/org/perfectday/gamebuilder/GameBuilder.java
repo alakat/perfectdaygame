@@ -15,8 +15,10 @@ import org.perfectday.core.asf.FiniteAutomatonState;
 import org.perfectday.core.asf.State;
 import org.perfectday.dashboard.communication.GameBuilderCommunicator;
 import org.perfectday.communication.model.plugcommunication.PerfectDayMessage;
+import org.perfectday.core.threads.KernellThreadGroup;
 import org.perfectday.dashboard.communication.model.PerfectDayMessageFactory;
 import org.perfectday.dashboard.exception.GameBuilderException;
+import org.perfectday.dashboard.threads.DashBoardThreadGroup;
 import org.perfectday.gamebuilder.model.BattleDescription;
 import org.perfectday.gamebuilder.model.MiniDescription;
 import org.perfectday.logicengine.core.Game;
@@ -222,56 +224,89 @@ public class GameBuilder extends FiniteAutomatonState {
      *  Inicializa el juego.
      */
     public void initGame(){
-        Game.getInstance().reload();
-        Game game = Game.getInstance();
-        //Carga los jugadores.
-        Player pServer = new Player("Rojo", false);                    
-        Player pClient = new Player("Azul", false);        
-        if(this instanceof  GameBuilderServer){            
-            pServer.setLocal(true);
-            pClient.setLocal(false);
+
+        boolean isServer = this instanceof GameBuilderServer;
+        KernellThreadGroup kernellThreadGroup =
+                KernellThreadGroup.buildKernellThreadGroup(isServer,
+                    trueServerArmy,
+                    trueClientArmy,
+                    battlefield,
+                    new SearchAndDestroyMission((null)),
+                    new XMPPPluginsCommunicator(this.getCommunication().getChat()));
+
+        if (Thread.currentThread().getThreadGroup() instanceof DashBoardThreadGroup) {
+            DashBoardThreadGroup dashBoardThreadGroup = (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
+            dashBoardThreadGroup.setKernellInRun(kernellThreadGroup);
+        }else{
+            logger.fatal("Una Hebra que no pertene a DashBoardThreadGroup " +
+                    "ejecuto este metodo ["+Thread.currentThread().getName()+
+                    ","+Thread.currentThread().getThreadGroup().getName()+"]");
         }
-        if(this instanceof  GameBuilderClient){
-            pServer.setLocal(false);
-            pClient.setLocal(true);
-        }
-        pServer.setBand(trueServerArmy);
-        pClient.setBand(trueClientArmy);
-        game.getPlayers().add(pServer);
-        game.getPlayers().add(pClient);
-        //Las referencia a los battelfield son incorrectas, lo solventamos.
-        for (Mini mini : trueServerArmy) {
-            battlefield.getField(mini).setMiniOcupant(mini);
-        }
-        for (Mini mini : trueClientArmy) {
-            battlefield.getField(mini).setMiniOcupant(mini);
-        }
-        //Carga el mapa.
-        game.setBattelField(battlefield);        
-        //Start = false.
-        game.setStarted(false);        
-        //Cargamos las comunicaciones correctas a EventManager.
-//        Iterator i = this.getCommunication().getChat().getListeners().iterator();
-        //Set misison
-        switch(this.getBattleDescription().getMission()){
-            case SEARCH_AND_DESTROY:
-                Game.getInstance().setMission(new SearchAndDestroyMission(Game.getInstance()));
-                break;
-            default:
-                JOptionPane.showMessageDialog(null, "Informaci贸n", "La misi贸n no ha sido reconocida", JOptionPane.INFORMATION_MESSAGE);
-                Game.getInstance().setMission(new SearchAndDestroyMission(Game.getInstance()));
-                break;
-        }
+
+//        Game.getInstance().reload();
+//        Game game = Game.getInstance();
+//        //Carga los jugadores.
+//        Player pServer = new Player("Rojo", false);
+//        Player pClient = new Player("Azul", false);
+//        if(this instanceof  GameBuilderServer){
+//            pServer.setLocal(true);
+//            pClient.setLocal(false);
+//        }
+//        if(this instanceof  GameBuilderClient){
+//            pServer.setLocal(false);
+//            pClient.setLocal(true);
+//        }
+//        pServer.setBand(trueServerArmy);
+//        pClient.setBand(trueClientArmy);
+//        game.getPlayers().add(pServer);
+//        game.getPlayers().add(pClient);
+//        //Las referencia a los battelfield son incorrectas, lo solventamos.
+//        for (Mini mini : trueServerArmy) {
+//            battlefield.getField(mini).setMiniOcupant(mini);
+//        }
+//        for (Mini mini : trueClientArmy) {
+//            battlefield.getField(mini).setMiniOcupant(mini);
+//        }
+//        //Carga el mapa.
+//        game.setBattelField(battlefield);
+//        //Start = false.
+//        game.setStarted(false);
+//        //Cargamos las comunicaciones correctas a EventManager.
+////        Iterator i = this.getCommunication().getChat().getListeners().iterator();
+//        //Set misison
+//        switch(this.getBattleDescription().getMission()){
+//            case SEARCH_AND_DESTROY:
+//                Game.getInstance().setMission(new SearchAndDestroyMission(Game.getInstance()));
+//                break;
+//            default:
+//                JOptionPane.showMessageDialog(null, "Informaci贸n", "La misi贸n no ha sido reconocida", JOptionPane.INFORMATION_MESSAGE);
+//                Game.getInstance().setMission(new SearchAndDestroyMission(Game.getInstance()));
+//                break;
+//        }
+//
+//        MasterCommunication.getInstance().setPlugCom(new XMPPPluginsCommunicator(this.getCommunication().getChat()));
+//        //Asignar si es Cliente o Servidor.
+//        if(this instanceof  GameBuilderServer){
+//            game.setServer(true);
+//        }
+//        if(this instanceof  GameBuilderClient){
+//            game.setServer(false);
+//        }
         
-        MasterCommunication.getInstance().setPlugCom(new XMPPPluginsCommunicator(this.getCommunication().getChat()));        
-        //Asignar si es Cliente o Servidor.
-        if(this instanceof  GameBuilderServer){            
-            game.setServer(true);
+    }
+
+    /**
+     *
+     * Marca la finalizaci髇 del proceso de contrucci髇 del sistema
+     */
+    public void endConstructionGame(){
+        if (Thread.currentThread().getThreadGroup() instanceof DashBoardThreadGroup) {
+            DashBoardThreadGroup dashBoardThreadGroup = (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
+            dashBoardThreadGroup.setInGameConstruction(false);
+        }else{
+            logger.fatal("NO DashboardThreadGroup");
         }
-        if(this instanceof  GameBuilderClient){
-            game.setServer(false);
-        }
-        
+
     }
     
      public void readArmies() {

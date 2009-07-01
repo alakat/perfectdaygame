@@ -24,13 +24,13 @@ public class ActivationStateProcessor implements Processor {
     @Override
     public void eventRequest(Event event) {
         logger.info("ActivationStateProcessor request");
-        if(!Game.getInstance().isServer()){
+        if(!Game.getGame().isServer()){
             logger.warn("El cliente no debería ejecutar un ActivationStateEvent en modo Request");
         }
         ActivationStateEvent ase = (ActivationStateEvent)event;
         ase.getState().doState(null, ase.getCommands());
         event  = event.generateEventResponse();
-        MasterCommunication.getInstance().sendEvent(event);
+        Game.getGame().getMasterCommunication().sendEvent(event);
         EventManager.getInstance().addEvent(event);
         EventManager.getInstance().eventWaitTest();
     }
@@ -40,11 +40,11 @@ public class ActivationStateProcessor implements Processor {
         logger.info("ActivationStateProcessor response");
         ActivationStateEvent ase = (ActivationStateEvent)event;
         Journalist.getInstance().infoCombat(ase.getCommands()); //Informamos del combate
-            if(Game.getInstance().isServer()){
-            Game.getInstance().nextAccident();
+            if(Game.getGame().isServer()){
+            Game.getGame().nextAccident();
         }else{
             //quitamos el evento superior de la pila de activación 
-            Game.getInstance().getActivationStack().pop();
+            Game.getGame().getActivationStack().pop();
             CommandConsumer.process(ase.getCommands());
             Journalist.getInstance().infoCombat(ase.getCommands());
         }

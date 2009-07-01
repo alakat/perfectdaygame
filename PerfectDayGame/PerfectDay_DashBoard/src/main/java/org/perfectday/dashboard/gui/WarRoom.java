@@ -27,6 +27,7 @@ import org.perfectday.dashboard.communication.GameBuilderCommunicator;
 import org.perfectday.dashboard.communication.MessageChatListener;
 import org.perfectday.communication.model.plugcommunication.PerfectDayMessage;
 import org.perfectday.dashboard.communication.model.PerfectDayMessageFactory;
+import org.perfectday.dashboard.exception.GameBuilderException;
 import org.perfectday.gamebuilder.GameBuilder;
 import org.perfectday.gamebuilder.GameBuilderFactory;
 import org.perfectday.gamebuilder.model.BattleDescription;
@@ -212,6 +213,8 @@ private void rostersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
             gb.setBattleDescription(bd);
             gb.getCommunication().setChat(this.chats.get(from));
             gb.move();
+        } catch (GameBuilderException ex) {
+            JOptionPane.showMessageDialog(this,ex.getMessage(), "PerfectDay. Información",JOptionPane.INFORMATION_MESSAGE);
         } catch (NoSuchMethodException ex) {
             logger.error("No Such Method Exception",ex);
             JOptionPane.showMessageDialog(null,"Error interno. Porfavor envie el bug a ....","Error", JOptionPane.ERROR_MESSAGE);

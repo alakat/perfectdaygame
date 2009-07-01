@@ -8,6 +8,7 @@ package org.perfectday.logicengine.model.battelfield;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.model.battelfield.generator.SimpleMapGenerator;
 import org.perfectday.logicengine.model.minis.Mini;
 import org.perfectday.logicengine.model.minis.support.Support;
@@ -39,7 +40,7 @@ public class BattelField {
         Field f = this.getField(selectedMini);
         
         if(f!=null){//If mini is death
-            List<Field> list=support.getSupportKeep().getFieldKeeped(f);
+            List<Field> list=support.getSupportKeep().getFieldKeeped(f,Game.getGame());
             for (Field field : list) {
                 logger.info("Apply Support["+support.toString()+"] en"+field.toString());
                 field.getSupports().add(support);
@@ -146,7 +147,7 @@ public class BattelField {
      */
     public void removeSupport(Mini selectedMini,Support support) {
         Field f = this.getField(selectedMini);
-        List<Field> list=support.getSupportKeep().getFieldKeeped(f);
+        List<Field> list=support.getSupportKeep().getFieldKeeped(f,Game.getGame());
         for (Field field : list) {
             logger.info("Remove Support["+support.toString()+"] en"+field.toString());
             field.getSupports().remove(support);

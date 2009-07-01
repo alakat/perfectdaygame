@@ -18,15 +18,15 @@ import org.perfectday.logicengine.model.battelfield.Field;
 public class SpearCloseCombatKeep extends CombatKeep{
 
     @Override
-    public boolean isDefenderKeeped(Field defender, Field ataker) {
+    public boolean isDefenderKeeped(Field defender, Field ataker,Game game) {
         return ((Math.abs((defender.getX()-ataker.getX()))<=2)||
                 (Math.abs((defender.getY()-ataker.getY())))<=2);
     }
     
     @Override
-    public List<Field> getFieldKeeped(Field ataker) {
+    public List<Field> getFieldKeeped(Field ataker,Game game) {
         List<Field> accessFields = new ArrayList<Field>();
-        BattelField bf = Game.getInstance().getBattelField();
+        BattelField bf = game.getBattelField();
         
         addFieldNotNull(accessFields,bf.getNorth(ataker));
         addFieldNotNull(accessFields,bf.getSourth(ataker));

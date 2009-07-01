@@ -46,7 +46,7 @@ public abstract class Event {
      * @return
      */
     public Event generateEventResponse(){
-        Logger.getLogger(Event.class).warn("Este método es la implementación" +
+        Logger.getLogger(Event.class).warn("Este m�todo es la implementación" +
                 " tonta de generateEventResponse,no debe ser usado");
         this.setEventType(EventType.RESPONSE);
         return this;

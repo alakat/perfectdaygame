@@ -18,7 +18,7 @@ import org.perfectday.logicengine.model.battelfield.Field;
 public class CloseCombatKeep extends CombatKeep{
 
     @Override
-    public boolean isDefenderKeeped(Field defender, Field ataker) {
+    public boolean isDefenderKeeped(Field defender, Field ataker,Game game) {
         return (((Math.abs((defender.getX()-ataker.getX()))==1)&&
                     (Math.abs((defender.getY()-ataker.getY())))==0))    ||
                 (((Math.abs((defender.getY()-ataker.getY())))==1)&&
@@ -26,9 +26,9 @@ public class CloseCombatKeep extends CombatKeep{
     }
 
     @Override
-    public List<Field> getFieldKeeped(Field ataker) {
+    public List<Field> getFieldKeeped(Field ataker,Game game) {
         List<Field> accessFields = new ArrayList<Field>();
-        BattelField bf = Game.getInstance().getBattelField();
+        BattelField bf = game.getBattelField();
         if(bf.getNorth(ataker)!=null)
             accessFields.add(bf.getNorth(ataker));
         if(bf.getSourth(ataker)!=null)

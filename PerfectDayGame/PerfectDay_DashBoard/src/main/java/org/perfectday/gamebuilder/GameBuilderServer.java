@@ -17,6 +17,7 @@ import org.perfectday.communication.model.plugcommunication.PerfectDayMessage;
 import org.perfectday.dashboard.communication.model.PerfectDayMessageFactory;
 import org.perfectday.dashboard.exception.GameBuilderException;
 import org.perfectday.dashboard.gui.CreateArmyDialog;
+import org.perfectday.dashboard.threads.DashBoardThreadGroup;
 import org.perfectday.gamebuilder.model.ArmiesAndBattleFieldWrapper;
 import org.perfectday.gamebuilder.model.DashBoardMiniUtilities;
 import org.perfectday.gamebuilder.model.MiniDescription;
@@ -25,7 +26,8 @@ import org.perfectday.logicengine.core.industry.MiniFactory;
 import org.perfectday.logicengine.core.player.Player;
 import org.perfectday.logicengine.model.battelfield.BattelField;
 import org.perfectday.logicengine.model.battelfield.generator.SimpleMapGenerator;
-import org.perfectday.main.laboratocGUI.LaboratoryGUI;
+import org.perfectday.main.dummyengine.DummyGraphicsEngine;
+import org.perfectday.main.dummyengine.threads.GraphicsEngineThreadGroup;
 
 /**
  *
@@ -193,30 +195,47 @@ public class GameBuilderServer extends GameBuilder{
     
     public void receivedOk(){
         logger.info("Recivimos ok!!");     
+        this.endConstructionGame();
         readArmies();
-        Game.initializedActivationState();
-        Game.getInstance().initGUI();
-        Game.getInstance().runEventManager();
-        //TODO eliminar cuando se pase a 3D
-        LaboratoryGUI.me.getActivationStackPanel().setAccident(Game.getInstance().getActivationStack().getStack());
-        logger.info( "Activation Stack{"+ Game.getInstance().getActivationStack().toString()+"}");
-        
-        int eventosApilados = 0;
-        for (Player player : Game.getInstance().getPlayers()) {
-            eventosApilados += player.getBand().size();
+        if (Thread.currentThread().getThreadGroup() instanceof DashBoardThreadGroup) {
+            DashBoardThreadGroup dashBoardThreadGroup = (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
+            GraphicsEngineThreadGroup graphicsEngineThreadGroup =
+                    GraphicsEngineThreadGroup.buildGraphicsEngineThreadGroup();
+            dashBoardThreadGroup.setGraphicsInRun(graphicsEngineThreadGroup);
+            graphicsEngineThreadGroup.getDummyGraphicsEngine().getActivationStackPanel().
+                        setAccident(dashBoardThreadGroup.getKernellInRun().
+                        getGame().getActivationStack().getStack());
+            if(!dashBoardThreadGroup.gameGo()){
+                logger.fatal("La partida no se ejecuto. No todos los atributos en DashBoardThreadGruop están listos");
+            }
+        }else{
+            logger.fatal("Una hebra que no pertenece a DashBoardThreadGroup " +
+                    "ejecuto este códifo ["+Thread.currentThread().getName()+
+                    ","+Thread.currentThread().getThreadGroup().getName()+"]");
         }
-        logger.info("Esperamos al apilamiento de los eventos");
-        while (Game.getInstance().getActivationStack().getStack().size()!=eventosApilados){
-            //waiting loop
-        }
-        logger.info("Activaciones apiladas");
-        Game.getInstance().nextAccident();
-        
+//        Game.initializedActivationStateStatic();
+//        Game.getGame().initGUI();
+//        Game.getGame().runEventManager();
+//        //TODO eliminar cuando se pase a 3D
+//        DummyGraphicsEngine.me.getActivationStackPanel().setAccident(Game.getGame().getActivationStack().getStack());
+//        logger.info( "Activation Stack{"+ Game.getGame().getActivationStack().toString()+"}");
+//
+//        int eventosApilados = 0;
+//        for (Player player : Game.getGame().getPlayers()) {
+//            eventosApilados += player.getBand().size();
+//        }
+//        logger.info("Esperamos al apilamiento de los eventos");
+//        while (Game.getGame().getActivationStack().getStack().size()!=eventosApilados){
+//            //waiting loop
+//        }
+//        logger.info("Activaciones apiladas");
+//        Game.getGame().nextAccident();
+//
 //        //Todo Gestor de hebras
 //        Thread t = new Thread(new Runnable() {
 //            public void run() {
 //                try {
-//                    Game.getInstance().nextAccident();
+//                    Game.getGame().nextAccident();
 //                } catch (Exception ex) {
 //                   Logger.getLogger("HEBRA DE JUEGO").error("Error en loop del juego",ex);
 //                }

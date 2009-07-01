@@ -4,7 +4,7 @@
  * Created on 13 de abril de 2008, 14:57
  */
 
-package org.perfectday.main.laboratocGUI.model;
+package org.perfectday.main.dummyengine.model;
 
 
 import java.util.List;
@@ -94,7 +94,7 @@ public class CombatInformationDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        combatInformationPanel1 = new org.perfectday.main.laboratocGUI.model.CombatInformationPanel();
+        combatInformationPanel1 = new org.perfectday.main.dummyengine.model.CombatInformationPanel();
         bAceptarr = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -164,7 +164,7 @@ public class CombatInformationDialog extends javax.swing.JDialog {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAceptarr;
-    private org.perfectday.main.laboratocGUI.model.CombatInformationPanel combatInformationPanel1;
+    private org.perfectday.main.dummyengine.model.CombatInformationPanel combatInformationPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

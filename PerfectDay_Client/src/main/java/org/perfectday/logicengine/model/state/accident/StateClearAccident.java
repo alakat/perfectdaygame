@@ -8,7 +8,7 @@ package org.perfectday.logicengine.model.state.accident;
 import java.util.List;
 import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.core.event.manager.EventManager;
-import org.perfectday.logicengine.core.event.manager.EventManagerThread;
+import org.perfectday.logicengine.core.event.manager.EventManagerRunnable;
 import org.perfectday.logicengine.core.event.state.ClearStateEvent;
 import org.perfectday.logicengine.model.command.Command;
 import org.perfectday.logicengine.model.minis.Mini;
@@ -44,7 +44,7 @@ public class StateClearAccident extends StateAccident{
                     info("Se elimina el estado["+this.getState()+"] del mini["+this.mini+"]");
             MiniModificable miniModificable = (MiniModificable) mini;
             miniModificable.removeState(this.getState());
-            Game.getInstance().getActivationStack().clearState(this.getState());
+            Game.getGame().getActivationStack().clearState(this.getState());
             commands.add(new ClearStateCommand(this.getState(), this.getMini()));
             
         }else{
@@ -62,8 +62,8 @@ public class StateClearAccident extends StateAccident{
     public void doAccidentWithEvent(Game game) throws Exception {
         ClearStateEvent clearStateEvent = new ClearStateEvent(this.getState(), mini);
         EventManager.getInstance().addEvent(clearStateEvent);
-        synchronized(EventManagerThread.getEventManagerThread()){
-            EventManagerThread.getEventManagerThread().notifyAll();
+        synchronized(EventManagerRunnable.getEventManagerThread()){
+            EventManagerRunnable.getEventManagerThread().notifyAll();
         }
     }
 

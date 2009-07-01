@@ -5,7 +5,6 @@
 
 package org.perfectday.communication.XmppPluginsCommunicator;
 import com.thoughtworks.xstream.XStream;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;

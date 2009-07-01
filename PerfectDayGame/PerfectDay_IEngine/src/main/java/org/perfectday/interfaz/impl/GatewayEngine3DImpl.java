@@ -91,7 +91,7 @@ public class GatewayEngine3DImpl implements GatewayEngine3D {
          
         
         for (Mini mini : army2) {
-            Field f = Game.getInstance().getBattelField().getField(mini);
+            Field f = Game.getGame().getBattelField().getField(mini);
             engine.getHandlEngine().insertNewAnimatedCharacterInWorld(
                     obtainModelByMini(mini),
                     obtainTextureByMini(mini),
@@ -100,7 +100,7 @@ public class GatewayEngine3DImpl implements GatewayEngine3D {
         }
         
         for (Mini mini : army1) {
-            Field f = Game.getInstance().getBattelField().getField(mini);
+            Field f = Game.getGame().getBattelField().getField(mini);
 //            engine.getHandlEngine().insertNewAnimatedCharacterInWorld(
 //                    obtainModelByMini(mini),
 //                    obtainTextureByMini(mini),
@@ -217,14 +217,14 @@ public class GatewayEngine3DImpl implements GatewayEngine3D {
 
     private void createTerrain() {
         int [][] codeRepresentationMap = 
-                new int[Game.getInstance().getBattelField().getBattelfield().length]
-                [Game.getInstance().getBattelField().getBattelfield()[0].length];
+                new int[Game.getGame().getBattelField().getBattelfield().length]
+                [Game.getGame().getBattelField().getBattelfield()[0].length];
           this.engine.getHandlEngine().createNewTerrain(50000);
         String[] terrainsObjs = {"ground.3ds","ground.3ds"};
         String[] terrainsTexs = {"grass.png","rock.png","cell.gif"};
         
-        for (int i = 0; i < Game.getInstance().getBattelField().getBattelfield().length; i++) {
-            Field[] fields = Game.getInstance().getBattelField().getBattelfield()[i];
+        for (int i = 0; i < Game.getGame().getBattelField().getBattelfield().length; i++) {
+            Field[] fields = Game.getGame().getBattelField().getBattelfield()[i];
             for (int j = 0; j < fields.length; j++) {
                 Field field = fields[j];
                 switch(field.getTypeField()){

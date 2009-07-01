@@ -4,7 +4,7 @@
  * Created on 8 de marzo de 2008, 14:22
  */
 
-package org.perfectday.main.laboratocGUI.model;
+package org.perfectday.main.dummyengine.model;
 
 import java.awt.Font;
 import org.perfectday.logicengine.model.minis.Mini;

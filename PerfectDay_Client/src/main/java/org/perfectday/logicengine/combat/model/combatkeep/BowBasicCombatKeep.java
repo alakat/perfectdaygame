@@ -38,16 +38,16 @@ public class BowBasicCombatKeep extends CombatKeep{
     
 
     @Override
-    public boolean isDefenderKeeped(Field defender, Field ataker) {
-        List<Field> fields=this.getFieldKeeped(ataker);
+    public boolean isDefenderKeeped(Field defender, Field ataker,Game game) {
+        List<Field> fields=this.getFieldKeeped(ataker,game);
         boolean contains = fields.contains(defender);
         fields.clear();
         return contains;
     }
 
     @Override
-    public List<Field> getFieldKeeped(Field ataker) {
-        BattelField battelField = Game.getInstance().getBattelField();
+    public List<Field> getFieldKeeped(Field ataker,Game game) {
+        BattelField battelField = game.getBattelField();
         List<Field> fields = new ArrayList<Field>();        
         fields.addAll(battelField.getNeighboures(ataker));
         int dMax = Math.max(this.xMax, this.yMax);

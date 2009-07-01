@@ -28,7 +28,7 @@ import org.perfectday.logicengine.model.command.combat.TargetOutOfRangeCommand;
 import org.perfectday.logicengine.model.minis.Mini;
 import org.perfectday.logicengine.model.minis.action.combat.CombatActionMini;
 import org.perfectday.logicengine.model.unittime.UnitTime;
-import org.perfectday.main.laboratocGUI.LaboratoryGUI;
+import org.perfectday.main.dummyengine.DummyGraphicsEngine;
 
 /**
  * Procesador de eventos de combate. El cliente envia la solicitud de combate al
@@ -45,7 +45,7 @@ public class CombatProcessor implements Processor{
     public void eventRequest(Event event) {
         logger.info("Request");   
         CombatEvent combatEvent = (CombatEvent)event;
-        if(Game.getInstance().isServer()){ 
+        if(Game.getGame().isServer()){
             if(!combatEvent.getAction().isNeedPreparation()){
                 //Si no necesita preparación el combate se ejecuta
                 generateCombat(combatEvent, event);
@@ -56,11 +56,11 @@ public class CombatProcessor implements Processor{
             EventManager.getInstance().addEvent(event);
             EventManager.getInstance().eventWaitTest();
             logger.info("Server ...");
-            MasterCommunication.getInstance().sendEvent(event);
+            Game.getGame().getMasterCommunication().sendEvent(event);
             logger.info("Enviado!");
         }else{
             logger.info("Client ...");
-            MasterCommunication.getInstance().sendEvent(event);
+            Game.getGame().getMasterCommunication().sendEvent(event);
             logger.info("Enviado!");
         }
     }
@@ -69,7 +69,7 @@ public class CombatProcessor implements Processor{
     public void eventResponse(Event event) {
         logger.info("Response");
         CombatEvent ce = (CombatEvent)event;
-        if(Game.getInstance().isServer()){
+        if(Game.getGame().isServer()){
             //Server.
             logger.info("Server");
             Journalist.getInstance().infoCombat(ce.getCommands()); //Informamos del combate
@@ -83,14 +83,14 @@ public class CombatProcessor implements Processor{
 
     protected void generateCombat(CombatEvent combatEvent, Event event) {
         logger.info("Server");
-        Mini aMini = Game.getInstance().getMiniByReferneceObject(combatEvent.getWorker());
-        Mini dMini = Game.getInstance().getMiniByReferneceObject(combatEvent.getTarget());
+        Mini aMini = Game.getGame().getMiniByReferneceObject(combatEvent.getWorker());
+        Mini dMini = Game.getGame().getMiniByReferneceObject(combatEvent.getTarget());
         CombatActionMini combatActionMini = combatEvent.getAction();
-        Field aField = Game.getInstance().getBattelField().getField(aMini);
-        Field dField = Game.getInstance().getBattelField().getField(dMini);
+        Field aField = Game.getGame().getBattelField().getField(aMini);
+        Field dField = Game.getGame().getBattelField().getField(dMini);
         if (combatActionMini.isDefenederInRange(dField, aField)) {
             InstanceCombat instanceCombat = combatActionMini.createInstanceCombat(dMini, aMini, combatEvent.isConterAtack());
-            MasterOfCombatImpl.getInstance().putInstanceCombat(instanceCombat);
+            Game.getGame().getMasterOfCombat().putInstanceCombat(instanceCombat);
             resolvedCombat(combatEvent.getCommands());
             combatEvent.getCommands().addAll(searchDead()); //search mini dead in this turn
         } else {
@@ -103,17 +103,17 @@ public class CombatProcessor implements Processor{
 
     protected void processPreparedCombat(CombatEvent combatEvent) {
         //Si el comabte es preparado...
-        UnitTime ut = Game.getInstance().getActualTime();
-        ut.plus(Game.getInstance().getPerfectDayGUI().getUnitTime());
+        UnitTime ut = Game.getGame().getActualTime();
+        ut.plus(Game.getGame().getPerfectDayGUI().getUnitTime());
         ut.plus(combatEvent.getAction().getCostPreparation());
         OffensiveAction oa = new OffensiveAction(ut, combatEvent.getAction().createInstanceCombat(combatEvent.getTarget(), combatEvent.getWorker(), false));
         //Con evento de apilación
-        //Atigua version: Game.getInstance().getActivationStack().put(oa);
+        //Atigua version: Game.getGame().getActivationStack().put(oa);
         PutAccidentEvent putAccidentEvent = new PutAccidentEvent();
         putAccidentEvent.setAccident(oa);
         EventManager.getInstance().addEvent(putAccidentEvent);       
         EventManager.getInstance().eventWaitTest();
-        Mini atacker = Game.getInstance().getMiniByReferneceObject(combatEvent.getWorker());
+        Mini atacker = Game.getGame().getMiniByReferneceObject(combatEvent.getWorker());
         combatEvent.getCommands().add(new PreparedCombatCommand(atacker, combatEvent.getAction()));
     }
 
@@ -125,12 +125,12 @@ public class CombatProcessor implements Processor{
      */
     protected void resolvedCombat(List<Command> commands) {
         //Any Combat
-        InstanceCombat combat = Game.getInstance().getMasterOfCombat().getInstanceCombat();        
+        InstanceCombat combat = Game.getGame().getMasterOfCombat().getInstanceCombat();
         while (combat != null) {
             //do combat
             //ListCommand
             commands.addAll(combat.doCombat());
-            combat = Game.getInstance().getMasterOfCombat().getInstanceCombat();
+            combat = Game.getGame().getMasterOfCombat().getInstanceCombat();
         }
         combat=null;
     }
@@ -140,32 +140,32 @@ public class CombatProcessor implements Processor{
      * @return
      */
     protected List<Command> searchDead() {
-        LaboratoryGUI.me.addInfo("Muerte recolecta espiritus...");
+        Game.getPerfectDayGUI().addInfo("Muerte recolecta espiritus...");
         List<Mini> minis = new ArrayList<Mini>();
         List<Command> commands = new ArrayList<Command>();
-        for(Player player: Game.getInstance().getPlayers()){
+        for(Player player: Game.getGame().getPlayers()){
             minis.addAll(player.getBand());
         }
         List<Mini> death = new ArrayList<Mini>();
         for(Mini mini:minis){
-            LaboratoryGUI.me.addInfo("Mini:"+mini.toString()+" vivo:"+mini.isAlive());
+            Game.getPerfectDayGUI().addInfo("Mini:"+mini.toString()+" vivo:"+mini.isAlive());
             if(!mini.isAlive()){
                 commands.add(new DeathMiniCommand(mini.toString()));
-                LaboratoryGUI.me.addInfo("Lo eliminamos de:"+ Game.getInstance().getBattelField().getField(mini));
-                Game.getInstance().getBattelField().getField(mini).setMiniOcupant(null);
+                Game.getPerfectDayGUI().addInfo("Lo eliminamos de:"+ Game.getGame().getBattelField().getField(mini));
+                Game.getGame().getBattelField().getField(mini).setMiniOcupant(null);
                 death.add(mini);                
             }
         }
-        LaboratoryGUI.me.addInfo("Muerto:"+death.size()); 
+        Game.getPerfectDayGUI().addInfo("Muerto:"+death.size());
         for(Mini miniDead:death){            
-            for(Player player:Game.getInstance().getPlayers()){
+            for(Player player:Game.getGame().getPlayers()){
                 if(player.getBand().contains(miniDead)){
                     player.getBand().remove(miniDead);                                        
                     break;
                 }
             }
             //TODO: Buscar activaciones o acciones de los muertos
-            Game.getInstance().getActivationStack().deadClear(miniDead);
+            Game.getGame().getActivationStack().deadClear(miniDead);
         }
         
         death.clear();

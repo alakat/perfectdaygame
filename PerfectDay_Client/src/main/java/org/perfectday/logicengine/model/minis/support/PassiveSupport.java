@@ -43,7 +43,7 @@ public class PassiveSupport extends Support {
     public List<Command> doSupport(InstanceCombat instanceCombat) {
         List<Command> list = new ArrayList<Command>();
         if((this.getSupportType()==SupportType.PASIVE_DEFENSIVE)){
-            Player p =Game.getInstance().getPlayerByMini(
+            Player p =Game.getGame().getPlayerByMini(
                     instanceCombat.getDefensor());
             if( p.isBandMember(this.getApoyador())){                
                 instanceCombat.getModifierDefender().add(this.modifier);
@@ -51,7 +51,7 @@ public class PassiveSupport extends Support {
             }
         }
         if ((this.getSupportType()== SupportType.PASIVE_OFENSIVE)){
-            Player p =Game.getInstance().getPlayerByMini(
+            Player p =Game.getGame().getPlayerByMini(
                     instanceCombat.getAtacker());
             if( p.isBandMember(this.getApoyador())){
                 instanceCombat.getModifierAtaquer().add(this.modifier);

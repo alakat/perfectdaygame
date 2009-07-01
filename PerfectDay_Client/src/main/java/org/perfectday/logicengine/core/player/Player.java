@@ -16,7 +16,7 @@ import org.perfectday.logicengine.brain.simple.SimpleBrain;
 import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.model.ReferenceObject;
 import org.perfectday.logicengine.model.minis.Mini;
-import org.perfectday.main.laboratocGUI.model.CreateBandDialog;
+import org.perfectday.main.dummyengine.model.CreateBandDialog;
 
 /**
  *
@@ -78,23 +78,7 @@ public class Player extends ReferenceObject{
         this.distingibleObjectBand = distingibleObjectBand;
     }
     
-    
-    
-    public static Player createPlayerRojo(){
-        CreateBandDialog bandDialog = new CreateBandDialog(null,true,100);
-        bandDialog.setVisible(true);
-        Player player = bandDialog.getPlayer();
-//        player.setDistingibleObjectBand(Color.RED);
-        return player;
-    }
-    
-    public static Player createPlayerAzul(){
-        CreateBandDialog bandDialog = new CreateBandDialog(null,true,100);
-        bandDialog.setVisible(true);
-        Player player = bandDialog.getPlayer();
-//        player.setDistingibleObjectBand(Color.BLUE);
-        return player;
-    }
+
 
     @Override
     public String toString() {

@@ -13,6 +13,9 @@ import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.packet.Packet;
 import org.perfectday.communication.masterCommunication.MasterCommunication;
 import org.perfectday.communication.model.plugcommunication.PerfectDayMessage;
+import org.perfectday.dashboard.threads.DashBoardThreadGroup;
+import org.perfectday.logicengine.core.Game;
+import org.perfectday.threads.commands.kernell.MessageReceiveCommand;
 
 /**
  * Dummy class se usa MessageChatListener
@@ -37,7 +40,7 @@ public class PerfectDayPacketListener implements PacketListener,MessageListener{
             logger.info("From: "+message.getFrom());
             logger.info("To: "+message.getTo());
             PerfectDayMessage pdMessage = (PerfectDayMessage) new XStream().fromXML((String)message.getProperty(MasterCommunication.NAME_GAME_MESSAGE));
-            MasterCommunication.getInstance().receiveMessage(pdMessage);
+            DashBoardThreadGroup.sendEventToKernell(new MessageReceiveCommand(pdMessage));
         }
     }
 

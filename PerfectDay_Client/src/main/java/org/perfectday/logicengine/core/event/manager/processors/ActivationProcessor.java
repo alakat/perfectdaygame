@@ -31,7 +31,7 @@ public class ActivationProcessor implements Processor{
         ActivationEvent ae  = (ActivationEvent)event;
         Mini mini = ae.getActivateMini();
         //Reques solo se procesa en Server
-        if(Game.getInstance().isServer()){            
+        if(Game.getGame().isServer()){
             event = event.generateEventResponse();
             EventManager.getInstance().addEvent(event);
             EventManager.getInstance().eventWaitTest();
@@ -44,27 +44,27 @@ public class ActivationProcessor implements Processor{
     public void eventResponse(Event event) {
         logger.info("Response");
         ActivationEvent ae  = (ActivationEvent)event;
-        Game.getInstance().setActualTime(ae.getUnitTime());
-        Mini mini = Game.getInstance().getMiniByReferneceObject(ae.getActivateMini());
+        Game.getGame().setActualTime(ae.getUnitTime());
+        Mini mini = Game.getGame().getMiniByReferneceObject(ae.getActivateMini());
         logger.info("Activado("+mini.toString()+")");
-        if(!Game.getInstance().isServer()){
+        if(!Game.getGame().isServer()){
             logger.info("Los clientes desapilan la activación del mini");
-            Accident a =Game.getInstance().getActivationStack().pop();
+            Accident a =Game.getGame().getActivationStack().pop();
             logger.info("Desapilamos: "+a.toString());
         }else{
             logger.info("Se envía el evento al cliente.");
-            MasterCommunication.getInstance().sendEvent(event);
+            Game.getGame().getMasterCommunication().sendEvent(event);
         }
-        if(Game.getInstance().getPlayerByMini(mini).isLocal()){
+        if(Game.getGame().getPlayerByMini(mini).isLocal()){
             //Activamos el mini
             logger.info("Se activa el mini");
-            Game.getInstance().setSelectedMini(mini);
-            Game.getInstance().getPerfectDayGUI().activateMini(mini);
+            Game.getGame().setSelectedMini(mini);
+            Game.getPerfectDayGUI().activateMini(mini);
         }
-        Game.getInstance().setMasterAPorEllos(new MasterAPorEllos(mini));
-        Game.getInstance().setActualTime(ae.getUnitTime());
-        Game.getInstance().setTurnTime(new LongUnitTime(0l));
-        Game.getInstance().getPerfectDayGUI().redraw();
+        Game.getGame().setMasterAPorEllos(new MasterAPorEllos(mini));
+        Game.getGame().setActualTime(ae.getUnitTime());
+        Game.getGame().setTurnTime(new LongUnitTime(0l));
+        Game.getPerfectDayGUI().redraw();
     }
 
 }
