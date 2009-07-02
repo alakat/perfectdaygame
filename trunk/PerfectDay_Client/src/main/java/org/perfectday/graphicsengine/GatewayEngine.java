@@ -5,16 +5,29 @@
 
 package org.perfectday.graphicsengine;
 
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import org.perfectday.graphicsengine.exceptions.GraphicsEngineException;
+import org.perfectday.logicengine.model.ReferenceObject;
 import org.perfectday.logicengine.model.battelfield.BattelField;
 import org.perfectday.logicengine.model.battelfield.Field;
 
 /**
  *
+ * Clase abstracta que define los procedimientos y conversiones necesarios para
+ * comunicarse con el motor gráfico
  * @author Miguel Angel Lopez Montellano (alakat@gmail.com)
  */
 public abstract class GatewayEngine {
+
+    private Map<ReferenceObject,Integer> elements;
+
+    public GatewayEngine() {
+        this.elements = new Hashtable<ReferenceObject, Integer>();
+    }
+
+
 
     /**
      * Inicializa en el motor gráfico y en el GatewayEngine el campo de batalla
