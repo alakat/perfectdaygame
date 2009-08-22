@@ -47,6 +47,12 @@ public class KernellThreadGroup extends PerfectDayThreadGroup {
     private Game game;
     private PlugCommunication plugCommunication;
 
+    /**
+     * 
+     * @param name
+     * @param game
+     * @param plugCommunication
+     */
     public KernellThreadGroup(String name, Game game, PlugCommunication plugCommunication) {
         super(name);
         this.game = game;

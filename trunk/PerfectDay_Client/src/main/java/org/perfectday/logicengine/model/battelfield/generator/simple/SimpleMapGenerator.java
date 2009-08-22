@@ -3,30 +3,28 @@
  * and open the template in the editor.
  */
 
-package org.perfectday.logicengine.model.battelfield.generator;
+package org.perfectday.logicengine.model.battelfield.generator.simple;
 
+import org.perfectday.logicengine.model.battelfield.generator.*;
 import java.util.Random;
+
+import org.perfectday.logicengine.model.battelfield.BattelField;
 import org.perfectday.logicengine.model.battelfield.Field;
 import org.perfectday.logicengine.model.battelfield.TypeField;
 
 
 /**
- *
+ * Modo de generación simple
  * @author Miguel Angel Lopez Montellano ( alakat@gmail.com )
  */
-public class SimpleMapGenerator {
+public class SimpleMapGenerator extends MapGenerator {
     public static final double CHANGE_TYPE_PROBABILITY = 0.001;
     public static final int MAX_HEIGHT = 3;
+    private Field[][] battelfield;
     
-    private Random rand;
-    private int xlen;
-    private int ylen;
-    private Field [] [] battelfield;
-    public SimpleMapGenerator(int xlen, int ylen) {
-        this.xlen = xlen;
-        this.ylen = ylen;
-        this. battelfield = new Field[this.xlen][this.ylen];
-        this.rand = new Random(System.currentTimeMillis());
+    public SimpleMapGenerator(int xlen, int ylen,BattelField bf) {
+        super(xlen, ylen);
+        this.battelfield=bf.getBattelfield();
     }
     
     protected boolean equalNeighbor(){
@@ -79,6 +77,7 @@ public class SimpleMapGenerator {
     }
 
     public Field[][] getBattelfield() {
+        this.generateBattelField();
         return battelfield;
     }
 
