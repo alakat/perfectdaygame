@@ -5,11 +5,13 @@
 
 package org.perfectday.dashboard.threads;
 
+import java.io.File;
+
 import org.perfectday.core.threads.KernellThreadGroup;
 import org.perfectday.main.dummyengine.threads.GraphicsEngineThreadGroup;
 import org.perfectday.threads.Command;
 import org.perfectday.threads.PerfectDayThreadGroup;
-
+import es.bitsonfire.perfectday.HelperDatabase;
 /**
  * Este ThreadGroup es lanzado con el Dashboard y sirve de puente de enlace
  * el nucleo y el DashBoard
@@ -18,7 +20,7 @@ import org.perfectday.threads.PerfectDayThreadGroup;
 public class DashBoardThreadGroup extends PerfectDayThreadGroup{
 
     private static final DashBoardThreadGroup instance = new DashBoardThreadGroup("Dashboard");
-
+    public static HelperDatabase helper = new HelperDatabase(new File("./src/main/resources/helper.db"));
     public static void sendEventToKernell(Command messageReceive) {
         if (Thread.currentThread().getThreadGroup() instanceof DashBoardThreadGroup) {
             DashBoardThreadGroup dashBoardThreadGroup = (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.perfectday.logicengine.core.Game;
-import org.perfectday.logicengine.model.battelfield.generator.SimpleMapGenerator;
+import org.perfectday.logicengine.model.battelfield.generator.MapGenerator;
+import org.perfectday.logicengine.model.battelfield.generator.simple.SimpleMapGenerator;
 import org.perfectday.logicengine.model.minis.Mini;
 import org.perfectday.logicengine.model.minis.support.Support;
 
@@ -175,8 +176,8 @@ public class BattelField {
         this.weidth = weidth;
     }
     
-    public void generateBattelField(SimpleMapGenerator simpleMapGenerator){
-        simpleMapGenerator.generateBattelField();
+    public void generateBattelField(MapGenerator simpleMapGenerator){
+        
         this.battelfield = simpleMapGenerator.getBattelfield();
     }
 

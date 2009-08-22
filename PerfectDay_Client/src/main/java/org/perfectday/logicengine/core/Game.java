@@ -5,7 +5,7 @@
 
 package org.perfectday.logicengine.core;
 
-import com.sun.java.swing.plaf.windows.WindowsBorders.DashedBorder;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;

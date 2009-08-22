@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.perfectday.logicengine.model.battelfield.generator;
+package org.perfectday.logicengine.model.battelfield.generator.simple;
 
 import java.util.ArrayList;
 import java.util.List;
