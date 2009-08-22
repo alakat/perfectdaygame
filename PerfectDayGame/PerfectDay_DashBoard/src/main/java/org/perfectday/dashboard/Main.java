@@ -28,7 +28,7 @@ public class Main implements Runnable {
     @Override
     public void run() {
 
-        //TODO eliminar despues de usar ThreadGroup
+        //TODO  eliminar despues de usar ThreadGroup
 //        Game.getInstance_();
         new DashBoard().setVisible(true);
     }

@@ -20,5 +20,20 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+        <groupId>es.bitsonfire</groupId>
+        <artifactId>PerfectDay_Client</artifactId>
+        <version>1.0</version>
+    </dependency>
+    <dependency>
+        <groupId>es.bitsonfire</groupId>
+        <artifactId>PerfectDayHelp</artifactId>
+        <version>1.0</version>
+    </dependency>
+    <dependency>
+        <groupId>es.bitsonfire</groupId>
+        <artifactId>PerfectDayHelp</artifactId>
+        <version>1.0</version>
+    </dependency>
   </dependencies>
 </project>

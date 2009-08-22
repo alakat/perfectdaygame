@@ -6,13 +6,22 @@
 
 package org.perfectday.dashboard.gui;
 
+import es.bitsonfire.perfectday.gui.dialog.SimpleHelpDialog;
 import java.awt.GraphicsEnvironment;
+import java.io.File;
 import java.util.HashMap;
+
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.RosterEntry;
-import org.perfectday.logicengine.core.Game;
+import org.jivesoftware.smack.packet.Presence;
+import org.perfectday.dashboard.gui.dialog.InitialSplashPage;
+import org.perfectday.dashboard.threads.DashBoardThreadGroup;
+
+import java.awt.Point;
 
 /**
  *
@@ -36,8 +45,26 @@ public class DashBoard extends javax.swing.JFrame {
         this.getWarRoom1().setConnection(loginPanel.getConnection());
         this.getWarRoom1().setChats( new HashMap<String,Chat>());
         for (RosterEntry rosterEntry : loginPanel.getRoster().getEntries()) {
+            Presence presence = loginPanel.getRoster().getPresence(rosterEntry.getUser());
+            System.out.println(rosterEntry.getUser()+"-->"+presence.getType()+":"+presence.getStatus()  );
             this.getWarRoom1().addChat(rosterEntry.getUser());
+            
         }
+       
+        
+        InitialSplashPage page;
+		try {
+			page = new InitialSplashPage(this, false, DashBoardThreadGroup.helper.getInformation(1, 0, 0).getCompletText(), DashBoardThreadGroup.helper.getInformation(1, 0, 1).getCompletText());
+			page.setVisible(true);
+			page.setLocation(new Point(300, 300));
+			synchronized (this) {
+				this.wait(5000);
+			}
+			page.dispose();
+		} catch (InterruptedException e) {
+			JOptionPane.showMessageDialog(this, "No dispone de información de ayuda");
+		}
+        
         warRoom1.repaint();
         warRoom1.setDashBoard(this);
        
@@ -54,20 +81,52 @@ public class DashBoard extends javax.swing.JFrame {
 
         warRoom1 = new org.perfectday.dashboard.gui.WarRoom();
         lAyuda = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jmHelp = new javax.swing.JMenu();
+        miHelp = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PerfectDay");
         getContentPane().add(warRoom1, java.awt.BorderLayout.CENTER);
 
-        lAyuda.setText("Ayuda en lÃ­nea");
+        lAyuda.setText("Ayuda en línea");
         getContentPane().add(lAyuda, java.awt.BorderLayout.PAGE_END);
+
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jmHelp.setText("Ayuda");
+
+        miHelp.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, 0));
+        miHelp.setText("Ayuda");
+        miHelp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miHelpActionPerformed(evt);
+            }
+        });
+        jmHelp.add(miHelp);
+
+        jMenuBar1.add(jmHelp);
+
+        setJMenuBar(jMenuBar1);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         setBounds((screenSize.width-701)/2, (screenSize.height-488)/2, 701, 488);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void miHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miHelpActionPerformed
+
+        SimpleHelpDialog dialog = new SimpleHelpDialog(this, false);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_miHelpActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jmHelp;
     private javax.swing.JLabel lAyuda;
+    private javax.swing.JMenuItem miHelp;
     private org.perfectday.dashboard.gui.WarRoom warRoom1;
     // End of variables declaration//GEN-END:variables
 

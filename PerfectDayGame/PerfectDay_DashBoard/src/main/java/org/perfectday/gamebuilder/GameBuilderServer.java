@@ -25,12 +25,12 @@ import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.core.industry.MiniFactory;
 import org.perfectday.logicengine.core.player.Player;
 import org.perfectday.logicengine.model.battelfield.BattelField;
-import org.perfectday.logicengine.model.battelfield.generator.SimpleMapGenerator;
+import org.perfectday.logicengine.model.battelfield.generator.simple.SimpleMapGenerator;
 import org.perfectday.main.dummyengine.DummyGraphicsEngine;
 import org.perfectday.main.dummyengine.threads.GraphicsEngineThreadGroup;
 
 /**
- *
+ * Constructor de juegos en modo server.
  * @author Miguel Angel Lopez Montellano (alakat@gmail.com)
  */
 public class GameBuilderServer extends GameBuilder{
@@ -88,6 +88,9 @@ public class GameBuilderServer extends GameBuilder{
         okWaiting.getTransactions().add(okWaiting2Go);
     }
     
+    /**
+     * Envia la petición de batalla al cliente
+     */
     public void sendBattlePetition(){
         try {
             for (String name : MiniFactory.getInstance().getIndex()) {
@@ -105,6 +108,9 @@ public class GameBuilderServer extends GameBuilder{
         
     }
     
+    /**
+     * Recepción de batalla confirmada.
+     */
     public void receivedAcepted(){
         try{
         CreateArmyDialog armyDialog = new CreateArmyDialog(null, true, this.getBattleDescription());
@@ -120,6 +126,9 @@ public class GameBuilderServer extends GameBuilder{
         } 
     }
     
+    /**
+     * Recepción del ejercito del cliente.
+     */
     public void receiveClientArmy(){
         try{
             move();
@@ -132,11 +141,14 @@ public class GameBuilderServer extends GameBuilder{
         } 
     }
     
+    /**
+     * Enviando el mapa generado al cliente.
+     */
     public void sendingMap(){
         try {
             logger.info("Generando Mapa.....");
             this.battlefield = new BattelField(this.getBattleDescription().getBattleWeidth(), this.getBattleDescription().getBattleHeigth());
-            SimpleMapGenerator simpleMapGenerator = new SimpleMapGenerator(this.battlefield.getHigth(), this.battlefield.getWeidth());
+            SimpleMapGenerator simpleMapGenerator = new SimpleMapGenerator(this.battlefield.getHigth(), this.battlefield.getWeidth(),this.battlefield);
                 simpleMapGenerator.generateBattelField();
             this.battlefield.generateBattelField(simpleMapGenerator);  
             logger.info("Mapa generado!");
@@ -167,6 +179,9 @@ public class GameBuilderServer extends GameBuilder{
         
     }
     
+    /**
+     * Generación del juego.
+     */
     public void generateGame(){
         try {
             logger.info("Generate Game...");
@@ -181,6 +196,9 @@ public class GameBuilderServer extends GameBuilder{
         } 
     }
     
+    /**
+     * Enviar concepción del partida completa.
+     */
     public void sendGame(){
          try {
             logger.info("Sending Game....");
