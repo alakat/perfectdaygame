@@ -64,8 +64,6 @@
   </dependencies>
   <modules>
     <module>PerfectDay_DashBoard</module>
-    <module>PerfectDay_IEngine</module>
-    <module>PerfectDay_MapTools</module>
     <module>PerfectDay_IEngine3D</module>
   </modules>
 </project>
