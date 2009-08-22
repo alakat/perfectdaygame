@@ -24,10 +24,14 @@ import javax.swing.table.TableModel;
 
 /**
  *
+ *Aplicación de gestión de la base de datos de información de ayuda en perfectday
  * @author Miguel Angel Lopez Montellano (alakat@gmail.com)
  */
 public class HelperManagerGui extends javax.swing.JFrame {
 
+	/**
+	 * Refereca la información de la pantalla de gestión de la información en Perfectday
+	 */
     private void refreshGUI() {
         this.locationJList.setModel(new LocationListModel());
         this.contextJList.setModel(new ContextListModel());
@@ -36,7 +40,7 @@ public class HelperManagerGui extends javax.swing.JFrame {
         if (this.jScrollPane2.getBorder() instanceof TitledBorder) {
             TitledBorder titledBorder = (TitledBorder) this.jScrollPane2.getBorder();
             if (c!=null) {
-                titledBorder.setTitle("Acciones de: " + c.getTitle());
+                titledBorder.setTitle("Acciones de: " + c.getTitle() +"("+c.getId()+")");
             }else{
                 titledBorder.setTitle("Acciones");
             }
@@ -44,7 +48,7 @@ public class HelperManagerGui extends javax.swing.JFrame {
         if (this.contextJList.getBorder() instanceof TitledBorder) {
             TitledBorder titledBorder = (TitledBorder) this.contextJList.getBorder();
             if (manager.getSelectedLocation()!=null) {
-                titledBorder.setTitle("Contextos de: " + manager.getSelectedLocation().getTitle());
+                titledBorder.setTitle("Contextos de: " + manager.getSelectedLocation().getTitle()+"("+manager.getSelectedLocation().getId()+")");
             }else{
                titledBorder.setTitle("Contextos");
             }
@@ -231,9 +235,12 @@ public class HelperManagerGui extends javax.swing.JFrame {
 
         locationPopMenu = new javax.swing.JPopupMenu();
         addLocation = new javax.swing.JMenuItem();
+        removelocation = new javax.swing.JMenuItem();
         contextPopMenu = new javax.swing.JPopupMenu();
         addContext = new javax.swing.JMenuItem();
         addAction = new javax.swing.JMenuItem();
+        removeContext = new javax.swing.JMenuItem();
+        removeAction = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         locationJList = new javax.swing.JList();
@@ -244,13 +251,14 @@ public class HelperManagerGui extends javax.swing.JFrame {
         SelectedAction = new javax.swing.JPanel();
         ltitle = new javax.swing.JLabel();
         lResumen = new javax.swing.JLabel();
-        lComplet = new javax.swing.JLabel();
         lpreview = new javax.swing.JLabel();
         lnext = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         lInterest1 = new javax.swing.JLabel();
         lInterest2 = new javax.swing.JLabel();
         lInterest3 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lComplet = new javax.swing.JTextArea();
 
         addLocation.setText("Nueva Localización");
         addLocation.addActionListener(new java.awt.event.ActionListener() {
@@ -259,6 +267,14 @@ public class HelperManagerGui extends javax.swing.JFrame {
             }
         });
         locationPopMenu.add(addLocation);
+
+        removelocation.setText("Eliminar Localización");
+        removelocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removelocationActionPerformed(evt);
+            }
+        });
+        locationPopMenu.add(removelocation);
 
         addContext.setText("Nuevo Contexto");
         addContext.addActionListener(new java.awt.event.ActionListener() {
@@ -276,16 +292,34 @@ public class HelperManagerGui extends javax.swing.JFrame {
         });
         contextPopMenu.add(addAction);
 
+        removeContext.setText("Eliminar contexto");
+        removeContext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeContextActionPerformed(evt);
+            }
+        });
+        contextPopMenu.add(removeContext);
+
+        removeAction.setText("Eliminar acción");
+        removeAction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeActionActionPerformed(evt);
+            }
+        });
+        contextPopMenu.add(removeAction);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrador de mensajes de información para Perfectday");
         setLocationByPlatform(true);
         setName("HelperManager"); // NOI18N
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setAutoscrolls(true);
         jPanel1.setLayout(new java.awt.GridLayout(1, 0, 10, 50));
 
         locationJList.setBorder(javax.swing.BorderFactory.createTitledBorder("Localizaciones de información"));
         locationJList.setModel(this.locations);
+        locationJList.setAutoscrolls(false);
         locationJList.setComponentPopupMenu(locationPopMenu);
         locationJList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -326,8 +360,6 @@ public class HelperManagerGui extends javax.swing.JFrame {
 
         lResumen.setBorder(javax.swing.BorderFactory.createTitledBorder("Resumen"));
 
-        lComplet.setBorder(javax.swing.BorderFactory.createTitledBorder("Completo"));
-
         lpreview.setText("Anterior:");
 
         lnext.setText("Siguiente:");
@@ -338,6 +370,13 @@ public class HelperManagerGui extends javax.swing.JFrame {
         jPanel3.add(lInterest2);
         jPanel3.add(lInterest3);
 
+        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder("Información completa"));
+
+        lComplet.setColumns(20);
+        lComplet.setEditable(false);
+        lComplet.setRows(5);
+        jScrollPane3.setViewportView(lComplet);
+
         javax.swing.GroupLayout SelectedActionLayout = new javax.swing.GroupLayout(SelectedAction);
         SelectedAction.setLayout(SelectedActionLayout);
         SelectedActionLayout.setHorizontalGroup(
@@ -345,9 +384,9 @@ public class HelperManagerGui extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SelectedActionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(SelectedActionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
+                    .addComponent(lResumen, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
-                    .addComponent(lComplet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
-                    .addComponent(lResumen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
                     .addComponent(ltitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lpreview, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lnext, javax.swing.GroupLayout.Alignment.LEADING))
@@ -360,9 +399,9 @@ public class HelperManagerGui extends javax.swing.JFrame {
                 .addComponent(ltitle, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lResumen, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lComplet, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lpreview)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lnext)
@@ -375,12 +414,12 @@ public class HelperManagerGui extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(SelectedAction, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+                    .addComponent(SelectedAction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -389,7 +428,7 @@ public class HelperManagerGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SelectedAction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -397,15 +436,6 @@ public class HelperManagerGui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void addLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLocationActionPerformed
-
-        String title = JOptionPane.showInputDialog(this, "Introduce el nombre de la nueva Localización");
-        if (title != null && !title.equals("")) {
-            this.manager.addLocation(new Location(0, title));
-        }
-        refreshGUI();
-    }//GEN-LAST:event_addLocationActionPerformed
 
     private void locationJListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_locationJListMouseClicked
         if (evt.getClickCount() == 2) {
@@ -443,8 +473,54 @@ public class HelperManagerGui extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         int i = jTable1.getSelectedRow();
         manager.setSelectedActionHelpInformation(manager.getSelectedContext().getActions().get(i));
+        if(evt.getClickCount()==2){
+             ActionDialog dialog = new ActionDialog(this, true, manager,manager.getSelectedContext().getActions().get(i));
+            dialog.setVisible(true);
+            this.manager.save();
+        }
         refreshGUI();
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void addLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLocationActionPerformed
+
+        String title = JOptionPane.showInputDialog(this, "Introduce el nombre de la nueva Localización");
+        if (title != null && !title.equals("")) {
+            Location l = new Location(0, title);
+            this.manager.addLocation(l);
+            this.manager.setSelectedLocation(l);
+        }
+        refreshGUI();
+}//GEN-LAST:event_addLocationActionPerformed
+
+    private void removelocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removelocationActionPerformed
+        int op=JOptionPane.showConfirmDialog(this, "Va a eliminad ["+manager.getSelectedLocation()+"] Los contextos y acciones de esta localización serán eliminados tambien.\n ¿Esta usted seguro?");
+        if(op!= JOptionPane.YES_OPTION){
+            return;
+        }
+        this.manager.removeLocation();
+        manager.save();
+        this.refreshGUI();
+    }//GEN-LAST:event_removelocationActionPerformed
+
+    private void removeContextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeContextActionPerformed
+        int op=JOptionPane.showConfirmDialog(this, "Va a eliminar ["+manager.getSelectedContext()+"] Las acciones asocidas a este contexto serán eliminadas también.\n ¿Esta usted seguro?");
+        if(op!= JOptionPane.YES_OPTION){
+            return;
+        }
+        this.manager.removeContext();
+        manager.save();
+        this.refreshGUI();
+    }//GEN-LAST:event_removeContextActionPerformed
+
+    private void removeActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionActionPerformed
+        int op=JOptionPane.showConfirmDialog(this, "Va a eliminar ["+manager.getSelectedActionHelpInformation()+"].\n ¿Esta usted seguro?");
+        if(op!= JOptionPane.YES_OPTION){
+            return;
+        }
+        this.manager.removeActionHelperInformation();
+        manager.save();
+        this.refreshGUI();
+    }//GEN-LAST:event_removeActionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -469,8 +545,9 @@ public class HelperManagerGui extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lComplet;
+    private javax.swing.JTextArea lComplet;
     private javax.swing.JLabel lInterest1;
     private javax.swing.JLabel lInterest2;
     private javax.swing.JLabel lInterest3;
@@ -480,6 +557,9 @@ public class HelperManagerGui extends javax.swing.JFrame {
     private javax.swing.JPopupMenu locationPopMenu;
     private javax.swing.JLabel lpreview;
     private javax.swing.JLabel ltitle;
+    private javax.swing.JMenuItem removeAction;
+    private javax.swing.JMenuItem removeContext;
+    private javax.swing.JMenuItem removelocation;
     private javax.swing.JScrollPane scrolljList;
     // End of variables declaration//GEN-END:variables
 }
