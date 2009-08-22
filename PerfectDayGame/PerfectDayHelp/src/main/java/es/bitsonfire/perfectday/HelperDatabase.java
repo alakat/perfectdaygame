@@ -140,16 +140,7 @@ public class HelperDatabase {
      * @return
      */
     private int getLocationID(){
-        if(this.getDatabase().getLocations().isEmpty()){
-            return 0;
-        }else{
-            Location l =null;
-            Iterator<Location> i= this.getDatabase().getLocations().iterator();
-            while (i.hasNext()) {
-                l = i.next();
-            }
-            return l.getId()+1;
-        }
+        return database.getNextLocationID();
     }
 
     /**
@@ -158,6 +149,7 @@ public class HelperDatabase {
      * @return
      */
     private int getContextID(Location l){
+        int max = -1;
         if(l.getContexts().isEmpty()){
             return 0;
         }else{
@@ -165,9 +157,12 @@ public class HelperDatabase {
             Context c=null;
             while (i.hasNext()) {
                 c = i.next();
+                if(c.getId()>max){
+                    max = c.getId();
+                }
 
             }
-            return c.getId()+1;
+            return max+1;
         }
     }
 
@@ -175,13 +170,23 @@ public class HelperDatabase {
         if(c.getActions().isEmpty()){
             return 0;
         }else{
+            int max = -1;
             Iterator<ActionHelpInformation> i =  c.getActions().iterator();
             ActionHelpInformation a=null;
             while (i.hasNext()) {
                 a = i.next();
+                if(a.getId()>max){
+                    max = a.getId();
+                }
 
             }
-            return c.getId()+1;
+            return max+1;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Enciclopedia de Perfect Day";
+    }
+
 }

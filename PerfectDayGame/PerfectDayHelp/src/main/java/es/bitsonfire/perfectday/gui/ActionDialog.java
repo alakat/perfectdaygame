@@ -8,12 +8,13 @@
  *
  * Created on 18-ago-2009, 22:05:56
  */
-
 package es.bitsonfire.perfectday.gui;
 
 import es.bitsonfire.perfectday.model.ActionHelpInformation;
 import es.bitsonfire.perfectday.model.Context;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListDataListener;
@@ -24,9 +25,21 @@ import javax.swing.event.ListDataListener;
  */
 public class ActionDialog extends javax.swing.JDialog {
 
-    class ActionsComboBoxModel implements ComboBoxModel{
+    /**
+     * Modelo de un combo box para la selección de una acción.
+     */
+    class ActionsComboBoxModel implements ComboBoxModel {
 
         ActionHelpInformation selected;
+        List<ActionHelpInformation> actions;
+
+        public ActionsComboBoxModel() {
+            actions = new ArrayList<ActionHelpInformation>();
+            for (Context context : manager.getSelectedLocation().getContexts()) {
+                actions.addAll(context.getActions());
+            }
+        }
+
         @Override
         public void setSelectedItem(Object anItem) {
             selected = (ActionHelpInformation) anItem;
@@ -39,16 +52,12 @@ public class ActionDialog extends javax.swing.JDialog {
 
         @Override
         public int getSize() {
-            return manager.getSelectedContext().getActions().size();
+            return actions.size();
         }
 
         @Override
         public Object getElementAt(int index) {
-            Iterator<ActionHelpInformation> i = manager.getSelectedContext().getActions().iterator();
-            for(int j=0;j<index;j++){
-                i.next();
-            }
-            return i.next();
+            return actions.get(index);
         }
 
         @Override
@@ -58,22 +67,56 @@ public class ActionDialog extends javax.swing.JDialog {
         @Override
         public void removeListDataListener(ListDataListener l) {
         }
-
     }
-
-
-    private ComboBoxModel previewAction = new ActionsComboBoxModel();
-    private ComboBoxModel nextAction = new ActionsComboBoxModel();
-    private ComboBoxModel intAction1 = new ActionsComboBoxModel();
-    private ComboBoxModel intAction2 = new ActionsComboBoxModel();
-    private ComboBoxModel intAction3 = new ActionsComboBoxModel();
+    private ComboBoxModel previewAction;
+    private ComboBoxModel nextAction;
+    private ComboBoxModel intAction1;
+    private ComboBoxModel intAction2;
+    private ComboBoxModel intAction3;
     private HelperManager manager;
     private ActionHelpInformation action;
+
     /** Creates new form ActionDialog */
-    public ActionDialog(java.awt.Frame parent, boolean modal,HelperManager manager) {
+    public ActionDialog(java.awt.Frame parent, boolean modal, HelperManager manager) {
         super(parent, modal);
         this.manager = manager;
+        previewAction = new ActionsComboBoxModel();
+        nextAction = new ActionsComboBoxModel();
+        intAction1 = new ActionsComboBoxModel();
+        intAction2 = new ActionsComboBoxModel();
+        intAction3 = new ActionsComboBoxModel();
         initComponents();
+    }
+
+    public ActionDialog(java.awt.Frame parent, boolean modal, HelperManager manager, ActionHelpInformation info) {
+        super(parent, modal);
+        this.manager = manager;
+        this.action = info;
+        previewAction = new ActionsComboBoxModel();
+        nextAction = new ActionsComboBoxModel();
+        intAction1 = new ActionsComboBoxModel();
+        intAction2 = new ActionsComboBoxModel();
+        intAction3 = new ActionsComboBoxModel();
+        initComponents();
+        this.tTitulo.setText(info.getTitle());
+        this.aresumen.setText(info.getResumen());
+        this.acompleto.setText(info.getCompletText());
+        if (info.getPreview() != null) {
+            previewAction.setSelectedItem(info.getPreview());
+        }
+        if (info.getNext() != null) {
+            nextAction.setSelectedItem(info.getNext());
+        }
+        if (info.getInteresting().size() > 0) {
+            this.intAction1.setSelectedItem(info.getInteresting().get(0));
+            if (info.getInteresting().size() > 1) {
+                this.intAction2.setSelectedItem(info.getInteresting().get(1));
+                if (info.getInteresting().size() > 2) {
+                    this.intAction3.setSelectedItem(info.getInteresting().get(2));
+                }
+            }
+        }
+
     }
 
     /** This method is called from within the constructor to
@@ -164,16 +207,16 @@ public class ActionDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
-                    .addComponent(asadf, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE)
+                    .addComponent(asadf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbPrview, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -205,7 +248,7 @@ public class ActionDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(asadf, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -232,22 +275,34 @@ public class ActionDialog extends javax.swing.JDialog {
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         //TODO readaptar
-        if(this.tTitulo.getText().length()>50)
-            this.tTitulo.setText(this.tTitulo.getText().substring(0,47)+"...");
+        if (this.tTitulo.getText().length() > 50) {
+            this.tTitulo.setText(this.tTitulo.getText().substring(0, 47) + "...");
+        }
 
-        if(this.aresumen.getText().length()>255)
-            this.aresumen.setText(this.aresumen.getText().substring(0,252)+"...");
+        if (this.aresumen.getText().length() > 255) {
+            this.aresumen.setText(this.aresumen.getText().substring(0, 252) + "...");
+        }
         //TODO validar
-        this.action= new ActionHelpInformation(0, this.tTitulo.getText(), this.aresumen.getText(), this.acompleto.getText()    );
+        if (this.action == null) {
+            this.action = new ActionHelpInformation(0, this.tTitulo.getText(), this.aresumen.getText(), this.acompleto.getText());
+            this.manager.addActionHelpInformation(action);
+        } else {
+            this.action.setTitle(tTitulo.getText());
+            this.action.setResumen(aresumen.getText());
+            this.action.setCompletText(acompleto.getText());
+        }
         this.action.setNext((ActionHelpInformation) nextAction.getSelectedItem());
         this.action.setPreview((ActionHelpInformation) previewAction.getSelectedItem());
-        if(cbInteres1.getSelectedItem()!=null)
-            this.action.getInteresting().add((ActionHelpInformation)cbInteres1.getSelectedItem());
-        if(cbInterest2.getSelectedItem()!=null)
-            this.action.getInteresting().add((ActionHelpInformation)cbInterest2.getSelectedItem());
-        if(cbInterest3.getSelectedItem()!=null)
-            this.action.getInteresting().add((ActionHelpInformation)cbInterest3.getSelectedItem());
-        this.manager.addActionHelpInformation(action);
+        if (cbInteres1.getSelectedItem() != null) {
+            this.action.getInteresting().add((ActionHelpInformation) cbInteres1.getSelectedItem());
+        }
+        if (cbInterest2.getSelectedItem() != null) {
+            this.action.getInteresting().add((ActionHelpInformation) cbInterest2.getSelectedItem());
+        }
+        if (cbInterest3.getSelectedItem() != null) {
+            this.action.getInteresting().add((ActionHelpInformation) cbInterest3.getSelectedItem());
+        }
+
 
         this.dispose();
         JOptionPane.showMessageDialog(this, "La información se ha guardado correctamente");
@@ -264,9 +319,6 @@ public class ActionDialog extends javax.swing.JDialog {
     public ActionHelpInformation getAction() {
         return action;
     }
-
-   
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea acompleto;
     private javax.swing.JTextArea aresumen;
@@ -285,5 +337,4 @@ public class ActionDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField tTitulo;
     // End of variables declaration//GEN-END:variables
-
 }

@@ -35,6 +35,7 @@ public class HelperManager {
 		if(!this.databaseFile.exists()){
 			throw new FileNotFoundException("HelperInformationNotFound");
 		}
+        this.database = new HelperDatabase(this.databaseFile);
 		refresh();
 	}
 
@@ -44,6 +45,7 @@ public class HelperManager {
 	 */
 	public HelperManager(String path, boolean write) throws FileNotFoundException {
 		this.databaseFile = new File(path);
+        this.database = new HelperDatabase(this.databaseFile);
 		refresh();
         if(write)
             this.save();
@@ -160,7 +162,7 @@ public class HelperManager {
 	 * @return
 	 */
 	public boolean refresh(){
-		this.database = new HelperDatabase(this.databaseFile);
+		
 		this.selectedLocation = null;
 		this.selectedContext = null;
 		this.selectedActionHelpInformation = null;

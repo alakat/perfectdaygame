@@ -20,6 +20,7 @@ public class DataBase implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Set<Location> locations;
+    private int nextLocationID;
 
 	/**
 	 * 
@@ -27,6 +28,7 @@ public class DataBase implements Serializable {
 	public DataBase() {
 		super();
 		this.locations = new HashSet<Location>();
+        nextLocationID=0;
 	}
 
 	/**
@@ -55,6 +57,32 @@ public class DataBase implements Serializable {
 		}
 		throw new IndexOutOfBoundsException("Localización no encontrada");
 	}
+
+    /**
+     * 
+     * @return
+     */
+    public int getNextLocationID() {
+        int i = nextLocationID;
+        nextLocationID++;
+        return i;
+    }
+
+
+    /**
+     *
+     * @param nextLocationID
+     */
+    public void setNextLocationID(int nextLocationID) {
+        this.nextLocationID = nextLocationID;
+    }
+
+    @Override
+    public String toString() {
+        return "Perfect Day";
+    }
+
+
 
 	
 	
