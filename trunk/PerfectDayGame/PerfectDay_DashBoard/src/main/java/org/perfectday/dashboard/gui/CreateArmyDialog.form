@@ -14,6 +14,7 @@
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
@@ -38,7 +39,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lTotalPoint" pref="232" max="32767" attributes="0"/>
+                              <Component id="lTotalPoint" pref="245" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="cbMinis" min="-2" pref="184" max="-2" attributes="0"/>
@@ -47,7 +48,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lPoint" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="bAddMini" pref="219" max="32767" attributes="0"/>
+                              <Component id="bAddMini" pref="241" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -61,7 +62,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cbColor" pref="267" max="32767" attributes="0"/>
+                          <Component id="cbColor" pref="297" max="32767" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="0" attributes="0">
                               <Component id="lMaxBattlePoint" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="lMission" min="-2" max="-2" attributes="0"/>

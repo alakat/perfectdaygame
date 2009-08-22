@@ -6,6 +6,7 @@
 
 package org.perfectday.dashboard.gui;
 
+import java.awt.GraphicsEnvironment;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
@@ -35,6 +36,8 @@ public class CreateArmyDialog extends javax.swing.JDialog {
         this.lMission.setText(bd.getMission().toString());
         this.lMaxBattlePoint.setText(""+bd.getPoint());
         this.armyTab.setModel(model);
+        this.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint());
+        this.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint());
         for (MiniDescription miniDescription : bd.getMinis()) {
             this.cbMinis.addItem(miniDescription);
         }

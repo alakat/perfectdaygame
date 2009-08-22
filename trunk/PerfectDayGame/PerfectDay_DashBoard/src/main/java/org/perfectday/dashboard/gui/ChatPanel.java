@@ -6,6 +6,7 @@
 
 package org.perfectday.dashboard.gui;
 
+import es.bitsonfire.perfectday.gui.HelperKeyListener;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
@@ -32,7 +33,7 @@ public class ChatPanel extends javax.swing.JPanel {
     /** Creates new form ChatPanel */
     public ChatPanel(Chat c) {
         initComponents();
-        
+        this.taSendToText.addKeyListener(new HelperKeyListener(DashBoardThreadGroup.helper.getInformation(0, 0, 0)));
         this.chat = c;
     }
 
@@ -45,6 +46,8 @@ public class ChatPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         spChat = new javax.swing.JScrollPane();
         tzChat = new javax.swing.JTextPane();
         botonera = new javax.swing.JPanel();
@@ -53,6 +56,9 @@ public class ChatPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         bEnviar = new javax.swing.JButton();
         bBatalla = new javax.swing.JButton();
+
+        jMenuItem1.setText("jMenuItem1");
+        jPopupMenu1.add(jMenuItem1);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -188,7 +194,9 @@ public void printMessage(String message,String from){
     private javax.swing.JButton bBatalla;
     private javax.swing.JButton bEnviar;
     private javax.swing.JPanel botonera;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane spChat;
     private javax.swing.JTextArea taSendToText;

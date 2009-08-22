@@ -6,6 +6,8 @@
 
 package org.perfectday.dashboard.gui;
 
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import javax.swing.JTextArea;
 import org.perfectday.core.asf.State;
 
@@ -20,6 +22,7 @@ public class LoadingDialog extends java.awt.Dialog {
         super(parent, modal);
         initComponents();
         jProgressBar1.setIndeterminate(true);
+        this.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint());
         this.setTitle("Cargando partida....");
         jProgressBar1.setMaximum(7);
         jProgressBar1.setValue(0);
@@ -27,7 +30,7 @@ public class LoadingDialog extends java.awt.Dialog {
     }
 
     public void addState(State actual) {
-        this.areaDialogoCarga.append("\nEstado actual: "+actual.getMovements().get(0).getName());
+        this.info.setText("\nEstado actual: "+actual.getMovements().get(0).getName());
         this.jProgressBar1.setValue(this.jProgressBar1.getValue()+1);
     }
 
@@ -42,9 +45,8 @@ public class LoadingDialog extends java.awt.Dialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        areaDialogoCarga = new javax.swing.JTextArea();
         jProgressBar1 = new javax.swing.JProgressBar();
+        info = new javax.swing.JLabel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -52,18 +54,12 @@ public class LoadingDialog extends java.awt.Dialog {
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cargando....."));
         jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.add(jProgressBar1, java.awt.BorderLayout.CENTER);
 
-        areaDialogoCarga.setColumns(20);
-        areaDialogoCarga.setEditable(false);
-        areaDialogoCarga.setRows(5);
-        areaDialogoCarga.setText("Estableciendo Conexion");
-        jScrollPane1.setViewportView(areaDialogoCarga);
-
-        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        jProgressBar1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cargando."));
-        jPanel1.add(jProgressBar1, java.awt.BorderLayout.PAGE_END);
+        info.setText(" ");
+        jPanel1.add(info, java.awt.BorderLayout.PAGE_END);
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -76,9 +72,6 @@ public class LoadingDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-   public JTextArea getAreaDialogCarga(){
-     return this.areaDialogoCarga;
-   }
    
    public void closeWindows(){
        this.setVisible(false);
@@ -87,10 +80,9 @@ public class LoadingDialog extends java.awt.Dialog {
    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea areaDialogoCarga;
+    private javax.swing.JLabel info;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
 }
