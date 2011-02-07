@@ -212,6 +212,7 @@ public class NProductRegisterView extends FrameView {
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
