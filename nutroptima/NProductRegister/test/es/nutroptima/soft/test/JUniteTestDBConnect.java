@@ -53,9 +53,9 @@ public class JUniteTestDBConnect {
             Logger.getLogger(JUniteTestDBConnect.class.getName()).info("INI");
             Connection conn = NConnector.getInstance().getConn();
             Statement stat = conn.createStatement();
-            ResultSet rs = stat.executeQuery("select * from test;");
+            ResultSet rs = stat.executeQuery("select * from myvTitulo;");
             while (rs.next()) {
-              System.out.println("name = " + rs.getString("name"));
+              System.out.println("titulo = " + rs.getString("titulo"));
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JUniteTestDBConnect.class.getName()).log(Level.SEVERE, null, ex);
