@@ -12,6 +12,7 @@ import org.jdesktop.application.SingleFrameApplication;
  */
 public class NProductRegisterApp extends SingleFrameApplication {
 
+
     /**
      * At startup create and show the main frame of the application.
      */

@@ -4,6 +4,11 @@
 
 package nproductregister;
 
+import es.nutroptima.soft.Bienvenida;
+import es.nutroptima.soft.NuevoProducto;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import javax.swing.JPanel;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -15,16 +20,22 @@ import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  * The application's main frame.
  */
 public class NProductRegisterView extends FrameView {
 
+    private Bienvenida bienvenida;
+    private NuevoProducto nuevoProducto;
+
     public NProductRegisterView(SingleFrameApplication app) {
         super(app);
 
         initComponents();
+        bienvenida = new Bienvenida(this);
+        nuevoProducto = new NuevoProducto(this);
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
@@ -79,7 +90,19 @@ public class NProductRegisterView extends FrameView {
                 }
             }
         });
+        this.mainPanel.setLayout(new BorderLayout());
+
+        this.mainPanel.add(bienvenida,BorderLayout.CENTER);
+
+        this.mainPanel.setVisible(true);
+
     }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
+    
 
     @Action
     public void showAboutBox() {
@@ -118,11 +141,11 @@ public class NProductRegisterView extends FrameView {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 400, Short.MAX_VALUE)
+            .add(0, 415, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 252, Short.MAX_VALUE)
+            .add(0, 275, Short.MAX_VALUE)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -162,11 +185,11 @@ public class NProductRegisterView extends FrameView {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(statusPanelSeparator, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .add(statusPanelSeparator, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
             .add(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(statusMessageLabel)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 226, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 219, Short.MAX_VALUE)
                 .add(progressBar, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(statusAnimationLabel)
@@ -198,6 +221,7 @@ public class NProductRegisterView extends FrameView {
     private javax.swing.JPanel statusPanel;
     // End of variables declaration//GEN-END:variables
 
+    
     private final Timer messageTimer;
     private final Timer busyIconTimer;
     private final Icon idleIcon;
