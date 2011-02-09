@@ -12,10 +12,8 @@
 package es.nutroptima.soft;
 
 import es.nutroptima.soft.model.Usuario;
-import es.nutroptima.soft.model.exception.LoginException;
 import es.nutroptima.soft.model.factories.UsuarioFactory;
 import java.awt.BorderLayout;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
