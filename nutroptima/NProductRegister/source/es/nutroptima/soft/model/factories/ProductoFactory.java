@@ -25,7 +25,7 @@ public class ProductoFactory {
 
     private static final ProductoFactory instance = new ProductoFactory();
 
-    public ProductoFactory getInstance(){
+    public static ProductoFactory getInstance(){
         return instance;
     }
 
@@ -35,17 +35,20 @@ public class ProductoFactory {
         Logger.getLogger(ProductoFactory.class.getName()).info("INI");
         Connection conn = NConnector.getInstance().getConn();
         Statement stat = conn.createStatement();
-        ResultSet rs = stat.executeQuery("select * from producto where idUsuario="+usuario.getId()+";");
+        ResultSet rs = stat.executeQuery("select * from productos where idUsuario="+usuario.getId()+";");
         while (rs.next()) {
           Producto p = new Producto();
-          p.setId(rs.getInt(0));
-          p.setTitulo(rs.getString(1));
-          p.setHidratosCarbono(rs.getDouble(2));
-          p.setKilocalorias(rs.getDouble(3));
-          p.setProteinas(rs.getDouble(4));
-          p.setGrasas(rs.getDouble(5));
+          p.setId(rs.getInt(1));
+          p.setTitulo(rs.getString(2));
+          p.setHidratosCarbono(rs.getDouble(3));
+          p.setKilocalorias(rs.getDouble(4));
+          p.setProteinas(rs.getDouble(5));
+          p.setGrasas(rs.getDouble(6));
+          p.setUsuario(usuario);
           //TODO cargar categoria
+          productos.add(p);
         }
+        usuario.setProductos(productos);
         return productos;
     }
 
