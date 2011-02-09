@@ -32,24 +32,39 @@ public class ProductoFactory {
     public List<Producto> getProductosByUsuario(Usuario usuario) throws ClassNotFoundException, SQLException{
         List<Producto> productos = new ArrayList<Producto>();
 
-        Logger.getLogger(ProductoFactory.class.getName()).info("INI");
+        Logger.getLogger(ProductoFactory.class.getName()).info("Load productos del usuario");
         Connection conn = NConnector.getInstance().getConn();
         Statement stat = conn.createStatement();
-        ResultSet rs = stat.executeQuery("select * from productos where idUsuario="+usuario.getId()+";");
+        ResultSet rs = stat.executeQuery("select * from productos where idUsuario="+usuario.getId()+" ORDER BY titulo desc ;");
         while (rs.next()) {
-          Producto p = new Producto();
+          Producto p = new Producto(usuario);
           p.setId(rs.getInt(1));
           p.setTitulo(rs.getString(2));
           p.setHidratosCarbono(rs.getDouble(3));
           p.setKilocalorias(rs.getDouble(4));
           p.setProteinas(rs.getDouble(5));
           p.setGrasas(rs.getDouble(6));
-          p.setUsuario(usuario);
-          //TODO cargar categoria
+          p.setCategoria(CategoriasFactory.getInstance().getCategoria(rs.getInt(7)));
           productos.add(p);
         }
         usuario.setProductos(productos);
         return productos;
+    }
+
+
+    /**
+     *  Obtiene el siguiente id para salvar
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    public int getNextProductID() throws ClassNotFoundException, SQLException{
+        Logger.getLogger(ProductoFactory.class.getName()).info("Load next id");
+        Connection conn = NConnector.getInstance().getConn();
+        Statement stat = conn.createStatement();
+        ResultSet rs = stat.executeQuery("select max(id) from productos ;");
+        int x = rs.getInt(1);
+        return x+1;
     }
 
 }

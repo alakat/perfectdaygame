@@ -5,22 +5,20 @@
 
 package es.nutroptima.soft.model.factories;
 
-import es.nutroptima.soft.model.Usuario;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
 /**
  *
  * @author Miguel Angel López Montellano <mlopez@nutroptima.es>
  */
-public class UsuarioFactoryTest {
+public class CategoriasFactoryTest {
 
-    public UsuarioFactoryTest() {
+    public CategoriasFactoryTest() {
     }
 
     @BeforeClass
@@ -39,19 +37,20 @@ public class UsuarioFactoryTest {
     public void tearDown() {
     }
 
-   
-
     /**
-     * Test of makeUsuario method, of class UsuarioFactory.
+     * Test of getInstance method, of class CategoriasFactory.
      */
     @Test
-    public void testMakeUsuario() throws Exception {
-        Usuario u = UsuarioFactory.getInstance().makeUsuario("celia", "celia");
-        Logger.getLogger(UsuarioFactoryTest.class.getName()).log(Level.INFO, "celia id:"+u.getId());
-        assertNotNull("Usuario no encontrado("+u.getId()+")", u);
-        assertEquals("No es el mismo usuario", "celia", u.getLogin());
-        assertEquals("No es el mismo usuario", 1, u.getId());
+    public void testGetInstance() {
+    }
 
+    /**
+     * Test of getCategorias method, of class CategoriasFactory.
+     */
+    @Test
+    public void testGetCategorias() {
+        int c = CategoriasFactory.getInstance().getCategorias().size();
+        assertEquals("No estan todas las categorias esperadas::"+c, c, 9);
     }
 
 }

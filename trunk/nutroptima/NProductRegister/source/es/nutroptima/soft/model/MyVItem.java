@@ -9,7 +9,7 @@ package es.nutroptima.soft.model;
  *
  * @author Miguel Angel López Montellano <mlopez@nutroptima.es>
  */
-public class MyVItem {
+public class MyVItem  {
     private int id;
     private MyVTitulo titulo;
     private UnidadPeso unidad;
