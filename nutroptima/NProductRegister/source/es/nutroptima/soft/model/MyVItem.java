@@ -5,11 +5,18 @@
 
 package es.nutroptima.soft.model;
 
+import es.nutroptima.soft.database.NConnector;
+import es.nutroptima.soft.model.factories.ItemsFactory;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Miguel Angel López Montellano <mlopez@nutroptima.es>
  */
 public class MyVItem  {
+    public static final int ID_NOT_VALID = -1;
     private int id;
     private MyVTitulo titulo;
     private UnidadPeso unidad;
@@ -96,8 +103,48 @@ public class MyVItem  {
 
     public MyVItem( Producto p) {
         this.producto = p;
+        this.id = ID_NOT_VALID;
     }
 
+
+
+    public boolean isAlrreadySave(){
+        return this.id != ID_NOT_VALID;
+    }
+
+    private void insertThis() throws ClassNotFoundException, SQLException{
+        int id_ =ItemsFactory.getInstance().nextID();
+        Logger.getLogger(Producto.class.getName()).info("insert a product");
+        NConnector.getInstance().makeInsertNewItem(this,id_).execute();
+        this.setId(id_);
+
+    }
+
+    private void updateThis() throws ClassNotFoundException, SQLException{
+        Logger.getLogger(Producto.class.getName()).info("update a product");
+        NConnector.getInstance().makeUpdateStatement(this).execute();
+    }
+
+    public void delete() throws ClassNotFoundException, SQLException{
+        if(isAlrreadySave()){
+            Logger.getLogger(Producto.class.getName()).info("delete a product");
+            NConnector.getInstance().makeDeleteStatement(this).execute();
+            this.id=ID_NOT_VALID;
+        }else{
+            Logger.getLogger(MyVItem.class.getName()).log(Level.SEVERE, "¡ELIMINANDO OBJETO NO PERSISTIDO");
+        }
+    }
+
+
+    public void save() throws ClassNotFoundException, SQLException{
+
+        Logger.getLogger(Producto.class.getName()).info("save a product");
+        if(isAlrreadySave()){
+            this.updateThis();
+        }else{
+            this.insertThis();
+        }
+    }
     
 
 }

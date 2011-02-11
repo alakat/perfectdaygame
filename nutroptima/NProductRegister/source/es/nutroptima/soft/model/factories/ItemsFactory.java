@@ -93,5 +93,22 @@ public class ItemsFactory {
     }
 
 
+    public int nextID() throws ClassNotFoundException, SQLException{
+        Logger.getLogger(ItemsFactory.class.getName()).info("Load productos del usuario");
+        Connection conn = NConnector.getInstance().getConn();
+        Statement stat = conn.createStatement();
+        ResultSet rs = stat.executeQuery("select max(id) from myvItem;");
+        return rs.getInt(1)+1;
+    }
 
+    public List<MyVTitulo> getMyvTitulos() {
+        return myvTitulos;
+    }
+
+    public List<UnidadPeso> getUnidadesPeso() {
+        return unidadesPeso;
+    }
+
+
+    
 }
