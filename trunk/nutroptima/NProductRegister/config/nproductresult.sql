@@ -2,7 +2,7 @@ create table usuario(login varchar(255), pass varchar(255), id int primary key);
 create table myvTitulo(id int primary key,titulo varchar(255));
 create table unidadPeso(id int primary key,titulo varchar(255));
 create table categoria(id int primary key,titulo varchar(255));
-create table myvItem(id int primary key,cantidad double,idMyVItem int, idUnidad int);
+create table myvItem(id int primary key,cantidad double,idMyVItem int, idUnidad int, idProducto int);
 create table productos(id int primary key,titulo varchar(255),  hidratos_carbono double,kilocalorias double, proteinas double, grasas double, idCategoria int, idPais int, idUsuario int);
 create table pais(id int primary key, nombre varchar(255));
 insert into categoria values (0,'CEREALES Y DERIVADOS');
