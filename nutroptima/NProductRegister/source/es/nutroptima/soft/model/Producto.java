@@ -29,6 +29,7 @@ public class Producto implements TableModel {
     private double proteinas;
     private double grasas;
     private Categoria categoria;
+    private Pais pais;
     private Usuario usuario;
     private List<MyVItem> items;
 
@@ -38,7 +39,7 @@ public class Producto implements TableModel {
         this.usuario = u;
     }
 
-    public Producto(int id, String titulo, double hidratosCarbono, double kilocalorias, double proteinas, double grasas, Categoria categoria, Usuario usuario) {
+    public Producto(int id, String titulo, double hidratosCarbono, double kilocalorias, double proteinas, double grasas, Categoria categoria, Pais pais, Usuario usuario) {
         this.id = id;
         this.titulo = titulo;
         this.hidratosCarbono = hidratosCarbono;
@@ -46,6 +47,7 @@ public class Producto implements TableModel {
         this.proteinas = proteinas;
         this.grasas = grasas;
         this.categoria = categoria;
+        this.pais=pais;
         this.usuario = usuario;
     }
 
@@ -148,6 +150,8 @@ public class Producto implements TableModel {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
+    
 
     /**
      * @return the usuario
@@ -267,5 +271,18 @@ public class Producto implements TableModel {
     public void removeTableModelListener(TableModelListener tl) {
     }
 
+  
+    /**
+     * @return the pais
+     */
+    public Pais getPais() {
+        return pais;
+    }
 
+    /**
+     * @param pais the pais to set
+     */
+    public void setPais(Pais pais) {
+        this.pais = pais;
+    }
 }
