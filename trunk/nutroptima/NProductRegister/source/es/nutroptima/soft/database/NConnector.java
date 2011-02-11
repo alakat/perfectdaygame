@@ -34,7 +34,7 @@ public class NConnector {
         this.conn = DriverManager.getConnection("jdbc:sqlite:"+BASE_DE_DATOS);
         //create table productos(id int primary key,titulo varchar(255),  hidratos_carbono ,kilocalorias , proteinas ,
         //grasas double, idCategoria int, idUsuario int);
-        this.insertNewProduct = this.conn.prepareStatement("insert into productos values( ?,?,?,?,?,?,?,?);");
+        this.insertNewProduct = this.conn.prepareStatement("insert into productos values( ?,?,?,?,?,?,?,?,?);");
         this.updateProduct = this.conn.prepareStatement("update productos set titulo=?, "
                 + "hidratos_carbono=?, kilocalorias=?,proteinas=?,grasas=?,idCategoria=? where id=?");
         this.deleteProduct = this.conn.prepareStatement("Delete from productos where id=?;");
@@ -72,7 +72,9 @@ public class NConnector {
         this.insertNewProduct.setDouble(5, p.getProteinas());
         this.insertNewProduct.setDouble(6, p.getGrasas());
         this.insertNewProduct.setInt(7, p.getCategoria().getId());
-        this.insertNewProduct.setInt(8, p.getUsuario().getId());
+        this.insertNewProduct.setInt(8, p.getPais().getId());
+        this.insertNewProduct.setInt(9, p.getUsuario().getId());
+
         return insertNewProduct;
     }
 
