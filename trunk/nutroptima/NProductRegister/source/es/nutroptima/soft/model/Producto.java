@@ -7,6 +7,7 @@ package es.nutroptima.soft.model;
 
 import es.nutroptima.soft.database.NConnector;
 import es.nutroptima.soft.model.factories.ItemsFactory;
+import es.nutroptima.soft.model.factories.PaisFactory;
 import es.nutroptima.soft.model.factories.ProductoFactory;
 import java.sql.SQLException;
 import java.util.List;
@@ -22,6 +23,7 @@ import javax.swing.table.TableModel;
 public class Producto implements TableModel {
 
     public static final int ID_NOT_VALID = -1;
+    public static final int ID_SPAIN = 0;
     private int id;
     private String titulo;
     private double hidratosCarbono;
@@ -34,9 +36,11 @@ public class Producto implements TableModel {
     private List<MyVItem> items;
 
 
-    public Producto(Usuario u) {
+    public Producto(Usuario u) throws ClassNotFoundException, SQLException {
         this.id = ID_NOT_VALID;
         this.usuario = u;
+        this.pais = PaisFactory.getInstance().getPais(ID_SPAIN);
+
     }
 
     public Producto(int id, String titulo, double hidratosCarbono, double kilocalorias, double proteinas, double grasas, Categoria categoria, Pais pais, Usuario usuario) {
@@ -176,6 +180,7 @@ public class Producto implements TableModel {
         Logger.getLogger(Producto.class.getName()).info("insert a product");
         int id = ProductoFactory.getInstance().getNextProductID();
         NConnector.getInstance().makePreparedStatement(this, id).execute();
+        this.setId(id);
 
     }
 

@@ -5,11 +5,14 @@
 
 package es.nutroptima.soft.database;
 
+import es.nutroptima.soft.model.MyVItem;
 import es.nutroptima.soft.model.Producto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,6 +41,9 @@ public class NConnector {
         this.updateProduct = this.conn.prepareStatement("update productos set titulo=?, "
                 + "hidratos_carbono=?, kilocalorias=?,proteinas=?,grasas=?,idCategoria=? where id=?");
         this.deleteProduct = this.conn.prepareStatement("Delete from productos where id=?;");
+        this.insertNewItem = this.conn.prepareStatement("insert into myvitem values (?,?,?,?,?);");
+        this.updateItem = this.conn.prepareStatement("update myvitem set cantidad=?, idMyVItem=?, idUnidad=? where id=?; ");
+        this.deleteItem = this.conn.prepareStatement("Delete from myvitem where id=?;");
     }
 
 
@@ -107,6 +113,47 @@ public class NConnector {
         this.deleteProduct.setInt(1, p.getId());
         return deleteProduct;
     }
+
+    /**
+     * Insertar nuevo items
+     * @param item
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    public PreparedStatement makeInsertNewItem(MyVItem item,int id) throws ClassNotFoundException, SQLException {
+
+        this.insertNewItem.setInt(1, id);
+        this.insertNewItem.setDouble(2, item.getCantidad());
+        this.insertNewItem.setInt(3, item.getTitulo().getId());
+        this.insertNewItem.setInt(4, item.getUnidad().getId());
+        this.insertNewItem.setInt(5, item.getProducto().getId());
+
+        return insertNewItem;
+    }
+
+    public PreparedStatement makeUpdateStatement( MyVItem item) throws SQLException {
+        this.updateItem.setDouble(1, item.getCantidad());
+        this.updateItem.setInt(2, item.getTitulo().getId());
+        this.updateItem.setInt(3, item.getUnidad().getId());
+        this.updateItem.setInt(4, item.getId());
+
+        return updateItem;
+    }
+
+
+    /**
+     * Consulta de eliminación
+     * @param p
+     * @return
+     */
+    public PreparedStatement makeDeleteStatement(MyVItem i) throws SQLException{
+        Logger.getLogger(NConnector.class.getName()).log(Level.INFO, "Borrando:"+i.getId());
+        this.deleteItem.setInt(1, i.getId());
+        return deleteItem;
+    }
+
+
 
 
 }
