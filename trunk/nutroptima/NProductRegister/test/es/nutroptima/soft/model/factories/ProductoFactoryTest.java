@@ -82,6 +82,7 @@ public class ProductoFactoryTest {
         p.setGrasas(1222);
         p.setProteinas(2);
         p.setCategoria(CategoriasFactory.getInstance().getCategorias().get(1));
+        p.setPais(PaisFactory.getInstance().getPais(0));
         p.save();
     }
 
