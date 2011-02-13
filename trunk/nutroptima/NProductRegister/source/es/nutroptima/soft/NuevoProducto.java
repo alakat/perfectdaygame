@@ -12,6 +12,7 @@
 package es.nutroptima.soft;
 
 import es.nutroptima.soft.model.Producto;
+import es.nutroptima.soft.submodels.CategoriasComboBoxModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.text.NumberFormat;
@@ -35,11 +36,13 @@ public class NuevoProducto extends javax.swing.JPanel {
     /** Creates new form NuevoProducto */
     public NuevoProducto() {
         initComponents();
+        this.listaCategorias.setModel(new CategoriasComboBoxModel());
     }
 
     public NuevoProducto(NProductRegisterView aThis) {
         this.view = aThis;
         initComponents();
+        this.listaCategorias.setModel(new CategoriasComboBoxModel());
     }
 
     /** This method is called from within the constructor to
@@ -51,30 +54,31 @@ public class NuevoProducto extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ListaCategorias = new javax.swing.JComboBox();
+        listaCategorias = new javax.swing.JComboBox();
         hidratosLabel = new javax.swing.JLabel();
         proteinasLabel = new javax.swing.JLabel();
         categoriaLabel = new javax.swing.JLabel();
         grasasLabel = new javax.swing.JLabel();
         nombreLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        mvItemsModel = new javax.swing.JTable();
         nombre = new javax.swing.JTextField();
         kcaloriasLabel = new javax.swing.JLabel();
         cancel = new javax.swing.JButton();
-        myvLabel = new javax.swing.JLabel();
-        addButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         infoLabel = new javax.swing.JLabel();
         proteinas = new javax.swing.JFormattedTextField();
         hidratos = new javax.swing.JFormattedTextField();
-        proteinas2 = new javax.swing.JFormattedTextField();
-        proteinas3 = new javax.swing.JFormattedTextField();
+        grasas = new javax.swing.JFormattedTextField();
+        kCalorias = new javax.swing.JFormattedTextField();
+        panelIems = new javax.swing.JPanel();
+        myvLabel = new javax.swing.JLabel();
+        addButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        mvItemsModel = new javax.swing.JTable();
 
         setName("Form"); // NOI18N
 
-        ListaCategorias.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        ListaCategorias.setName("ListaCategorias"); // NOI18N
+        listaCategorias.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaCategorias.setName("listaCategorias"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(nproductregister.NProductRegisterApp.class).getContext().getResourceMap(NuevoProducto.class);
         hidratosLabel.setText(resourceMap.getString("hidratosLabel.text")); // NOI18N
@@ -92,22 +96,6 @@ public class NuevoProducto extends javax.swing.JPanel {
         nombreLabel.setText(resourceMap.getString("nombreLabel.text")); // NOI18N
         nombreLabel.setName("nombreLabel"); // NOI18N
 
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
-
-        mvItemsModel.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        mvItemsModel.setName("mvItemsModel"); // NOI18N
-        jScrollPane1.setViewportView(mvItemsModel);
-
         nombre.setText(resourceMap.getString("nombre.text")); // NOI18N
         nombre.setName("nombre"); // NOI18N
 
@@ -121,13 +109,6 @@ public class NuevoProducto extends javax.swing.JPanel {
                 cancelActionPerformed(evt);
             }
         });
-
-        myvLabel.setText(resourceMap.getString("myvLabel.text")); // NOI18N
-        myvLabel.setName("myvLabel"); // NOI18N
-
-        addButton.setText(resourceMap.getString("addButton.text")); // NOI18N
-        addButton.setActionCommand(resourceMap.getString("addButton.actionCommand")); // NOI18N
-        addButton.setName("addButton"); // NOI18N
 
         saveButton.setText(resourceMap.getString("saveButton.text")); // NOI18N
         saveButton.setName("saveButton"); // NOI18N
@@ -147,13 +128,66 @@ public class NuevoProducto extends javax.swing.JPanel {
         hidratos.setName("hidratos"); // NOI18N
         hidratos.setValue(new Double(0.0));
 
-        proteinas2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0"))));
-        proteinas2.setName("proteinas2"); // NOI18N
-        proteinas2.setValue(new Double(0.0));
+        grasas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0"))));
+        grasas.setName("grasas"); // NOI18N
+        grasas.setValue(new Double(0.0));
 
-        proteinas3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0"))));
-        proteinas3.setName("proteinas3"); // NOI18N
-        proteinas3.setValue(new Double(0.0));
+        kCalorias.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0"))));
+        kCalorias.setName("kCalorias"); // NOI18N
+        kCalorias.setValue(new Double(0.0));
+
+        panelIems.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("panelIems.border.title"))); // NOI18N
+        panelIems.setName("panelIems"); // NOI18N
+
+        myvLabel.setText(resourceMap.getString("myvLabel.text")); // NOI18N
+        myvLabel.setName("myvLabel"); // NOI18N
+
+        addButton.setText(resourceMap.getString("addButton.text")); // NOI18N
+        addButton.setActionCommand(resourceMap.getString("addButton.actionCommand")); // NOI18N
+        addButton.setName("addButton"); // NOI18N
+
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+        mvItemsModel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        mvItemsModel.setName("mvItemsModel"); // NOI18N
+        mvItemsModel.setSize(new java.awt.Dimension(800, 600));
+        jScrollPane1.setViewportView(mvItemsModel);
+
+        org.jdesktop.layout.GroupLayout panelIemsLayout = new org.jdesktop.layout.GroupLayout(panelIems);
+        panelIems.setLayout(panelIemsLayout);
+        panelIemsLayout.setHorizontalGroup(
+            panelIemsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(panelIemsLayout.createSequentialGroup()
+                .addContainerGap()
+                .add(panelIemsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+                    .add(panelIemsLayout.createSequentialGroup()
+                        .add(68, 68, 68)
+                        .add(addButton))
+                    .add(myvLabel))
+                .addContainerGap())
+        );
+        panelIemsLayout.setVerticalGroup(
+            panelIemsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, panelIemsLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .add(panelIemsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(myvLabel)
+                    .add(addButton))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 275, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -169,41 +203,35 @@ public class NuevoProducto extends javax.swing.JPanel {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(layout.createSequentialGroup()
-                                .add(nombre, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .add(25, 25, 25))
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                                .add(proteinas, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                                .add(proteinas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(hidratosLabel)))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                                .add(addButton)
-                                .add(categoriaLabel))
-                            .add(hidratos, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(layout.createSequentialGroup()
+                                .add(hidratosLabel)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(hidratos, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 64, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                                 .add(grasasLabel)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(proteinas2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 109, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(grasas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 109, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .add(18, 18, 18)
                                 .add(kcaloriasLabel)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(proteinas3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 87, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(ListaCategorias, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(42, Short.MAX_VALUE))
-                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 454, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(layout.createSequentialGroup()
-                        .add(myvLabel)
-                        .addContainerGap(531, Short.MAX_VALUE))
-                    .add(layout.createSequentialGroup()
-                        .add(cancel)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(saveButton)
-                        .add(26, 26, 26)
-                        .add(infoLabel)
-                        .addContainerGap())))
+                                .add(kCalorias, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 87, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(layout.createSequentialGroup()
+                                .add(nombre, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 138, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(18, 18, 18)
+                                .add(categoriaLabel)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(listaCategorias, 0, 311, Short.MAX_VALUE))))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, panelIems, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(264, 264, 264)
+                .add(infoLabel)
+                .addContainerGap())
+            .add(layout.createSequentialGroup()
+                .add(29, 29, 29)
+                .add(cancel)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(saveButton)
+                .addContainerGap(684, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -213,29 +241,29 @@ public class NuevoProducto extends javax.swing.JPanel {
                     .add(categoriaLabel)
                     .add(nombre, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(nombreLabel)
-                    .add(ListaCategorias, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(listaCategorias, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(18, 18, 18)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(proteinasLabel)
-                    .add(hidratosLabel)
-                    .add(grasasLabel)
                     .add(proteinas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(hidratosLabel)
                     .add(hidratos, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(proteinas2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(grasasLabel)
+                    .add(grasas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(kcaloriasLabel)
-                    .add(proteinas3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 9, Short.MAX_VALUE)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(myvLabel)
-                    .add(addButton))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 275, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(kCalorias, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 350, Short.MAX_VALUE)
+                        .add(infoLabel)
+                        .add(46, 46, 46))
+                    .add(layout.createSequentialGroup()
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(panelIems, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)))
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(cancel)
-                    .add(saveButton)
-                    .add(infoLabel))
-                .add(8, 8, 8))
+                    .add(saveButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 29, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -252,23 +280,24 @@ public class NuevoProducto extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox ListaCategorias;
     private javax.swing.JButton addButton;
     private javax.swing.JButton cancel;
     private javax.swing.JLabel categoriaLabel;
+    private javax.swing.JFormattedTextField grasas;
     private javax.swing.JLabel grasasLabel;
     private javax.swing.JFormattedTextField hidratos;
     private javax.swing.JLabel hidratosLabel;
     private javax.swing.JLabel infoLabel;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JFormattedTextField kCalorias;
     private javax.swing.JLabel kcaloriasLabel;
+    private javax.swing.JComboBox listaCategorias;
     private javax.swing.JTable mvItemsModel;
     private javax.swing.JLabel myvLabel;
     private javax.swing.JTextField nombre;
     private javax.swing.JLabel nombreLabel;
+    private javax.swing.JPanel panelIems;
     private javax.swing.JFormattedTextField proteinas;
-    private javax.swing.JFormattedTextField proteinas2;
-    private javax.swing.JFormattedTextField proteinas3;
     private javax.swing.JLabel proteinasLabel;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
@@ -277,10 +306,39 @@ public class NuevoProducto extends javax.swing.JPanel {
         //Long test = (Long)proteinas.getValue();
         //test+=(Long)hidratos.getValue();
         infoLabel.setText(proteinas.getValue()+hidratos.getValue().toString());
+
+
+
+        //visualizar la tabla de las micronutrientes
+        this.panelIems.setVisible(true);
     }
 
     public void setBienvenida(Bienvenida bienvenida) {
         this.bienvenida = bienvenida;
+    }
+
+
+    public void resetView(Producto p){
+        if(p!=null){
+            this.nombre.setText(p.getTitulo());
+            this.hidratos.setText(""+p.getHidratosCarbono());
+            this.proteinas.setText(""+p.getProteinas());
+            this.grasas.setText(""+p.getGrasas());
+            this.kCalorias.setText(""+p.getKilocalorias());
+            this.mvItemsModel.setModel(p);
+            this.panelIems.setVisible(true);
+
+            ((CategoriasComboBoxModel)this.listaCategorias.getModel()).setSelectedItem(p.getCategoria());
+
+        }else{
+            this.nombre.setText("");
+            this.hidratos.setText("0");
+            this.proteinas.setText("0");
+            this.grasas.setText("0");
+            this.kCalorias.setText("0");
+            this.panelIems.setVisible(false);
+        }
+
     }
 
 

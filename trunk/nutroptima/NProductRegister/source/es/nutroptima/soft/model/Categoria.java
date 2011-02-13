@@ -38,5 +38,21 @@ public class Categoria {
         this.titulo = titulo;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Categoria){
+            return ((Categoria)o).getId() == this.getId();
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return this.titulo;
+    }
+
+
+
+
     
 }
