@@ -22,49 +22,50 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="proteinasLabel" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="nombreLabel" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="proteinas" min="-2" pref="53" max="-2" attributes="1"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="hidratosLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="hidratos" min="-2" pref="64" max="-2" attributes="1"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="grasasLabel" min="-2" max="-2" attributes="1"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="grasas" min="-2" pref="109" max="-2" attributes="1"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="kcaloriasLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="kCalorias" min="-2" pref="87" max="-2" attributes="1"/>
-                          </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="nombre" min="-2" pref="138" max="-2" attributes="0"/>
-                              <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                              <Component id="categoriaLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="listaCategorias" pref="311" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="nombreLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                                      <Component id="nombre" min="-2" pref="138" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="nombreError" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="categoriaLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="listaCategorias" min="-2" pref="187" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="categoriaError" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="kcaloriasLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="kCalorias" min="-2" pref="87" max="-2" attributes="1"/>
+                                  </Group>
+                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
+                          <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="panelIems" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace pref="442" max="32767" attributes="0"/>
+                      <Component id="infoLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
-                  <Component id="panelIems" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="cancel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="saveButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="1042" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="264" max="-2" attributes="0"/>
-              <Component id="infoLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-              <Component id="cancel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="saveButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="684" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -77,33 +78,32 @@
                   <Component id="nombre" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="nombreLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="listaCategorias" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="proteinasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="proteinas" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="hidratosLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="hidratos" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="grasasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="grasas" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="kcaloriasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="kCalorias" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace pref="350" max="32767" attributes="0"/>
-                      <Component id="infoLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="nombreError" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="categoriaError" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel1" min="-2" pref="99" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="panelIems" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="cancel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="saveButton" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-              </Group>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="cancel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="saveButton" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace pref="525" max="32767" attributes="0"/>
+                      <Component id="infoLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="438" max="-2" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
       </Group>
@@ -123,28 +123,10 @@
         <Property name="name" type="java.lang.String" value="listaCategorias" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="hidratosLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="hidratosLabel.text"/>
-        <Property name="name" type="java.lang.String" value="hidratosLabel" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="proteinasLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="proteinasLabel.text"/>
-        <Property name="name" type="java.lang.String" value="proteinasLabel" noResource="true"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="categoriaLabel">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="categoriaLabel.text"/>
         <Property name="name" type="java.lang.String" value="categoriaLabel" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="grasasLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="grasasLabel.text"/>
-        <Property name="name" type="java.lang.String" value="grasasLabel" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="nombreLabel">
@@ -192,36 +174,6 @@
         <Property name="name" type="java.lang.String" value="infoLabel" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="proteinas">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format format="#0.00" subtype="-1" type="0"/>
-        </Property>
-        <Property name="name" type="java.lang.String" value="proteinas" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="hidratos">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format format="#0.0" subtype="-1" type="0"/>
-        </Property>
-        <Property name="name" type="java.lang.String" value="hidratos" noResource="true"/>
-        <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new Double(0.0)" type="code"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="grasas">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format format="#0.0" subtype="-1" type="0"/>
-        </Property>
-        <Property name="name" type="java.lang.String" value="grasas" noResource="true"/>
-        <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new Double(0.0)" type="code"/>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JFormattedTextField" name="kCalorias">
       <Properties>
         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
@@ -251,12 +203,12 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" pref="554" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" pref="737" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="68" pref="68" max="68" attributes="0"/>
+                          <Component id="myvLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="addButton" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="myvLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -265,7 +217,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                  <EmptySpace pref="23" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="myvLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="addButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -284,13 +236,6 @@
             <Property name="name" type="java.lang.String" value="myvLabel" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="addButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="addButton.text"/>
-            <Property name="actionCommand" type="java.lang.String" resourceKey="addButton.actionCommand"/>
-            <Property name="name" type="java.lang.String" value="addButton" noResource="true"/>
-          </Properties>
-        </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <Properties>
             <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
@@ -301,7 +246,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="mvItemsModel">
+            <Component class="javax.swing.JTable" name="tablaVyM">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">
@@ -311,7 +256,7 @@
                     <Column editable="true" title="Title 4" type="java.lang.Object"/>
                   </Table>
                 </Property>
-                <Property name="name" type="java.lang.String" value="mvItemsModel" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="tablaVyM" noResource="true"/>
                 <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[800, 600]"/>
                 </Property>
@@ -319,7 +264,136 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="addButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="addButton.text"/>
+            <Property name="name" type="java.lang.String" value="addButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addButtonActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="nombreError">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" resourceKey="nombreError.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="nombreError.text"/>
+        <Property name="name" type="java.lang.String" value="nombreError" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="categoriaError">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" resourceKey="categoriaError.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="categoriaError.text"/>
+        <Property name="name" type="java.lang.String" value="categoriaError" noResource="true"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Macronutrientes">
+              <Property name="titleX" resourceKey="jPanel1.border.title"/>
+            </TitledBorder>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="proteinasLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="proteinas" min="-2" pref="54" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="hidratosLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="hidratos" min="-2" pref="54" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="grasasLabel" min="-2" max="-2" attributes="1"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="grasas" min="-2" pref="54" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="macronutrientesError" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="proteinasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="proteinas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="hidratosLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="hidratos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="grasasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="grasas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="macronutrientesError" min="-2" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JTextField" name="proteinas">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="proteinas.text"/>
+            <Property name="name" type="java.lang.String" value="proteinas" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="proteinasLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="proteinasLabel.text"/>
+            <Property name="name" type="java.lang.String" value="proteinasLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="hidratosLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="hidratosLabel.text"/>
+            <Property name="name" type="java.lang.String" value="hidratosLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="macronutrientesError">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" resourceKey="macronutrientesError.foreground"/>
+            <Property name="text" type="java.lang.String" resourceKey="macronutrientesError.text"/>
+            <Property name="name" type="java.lang.String" value="macronutrientesError" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="grasas">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="grasas" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="hidratos">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="hidratos" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="grasasLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="grasasLabel.text"/>
+            <Property name="name" type="java.lang.String" value="grasasLabel" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" resourceKey="jLabel1.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
+        <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

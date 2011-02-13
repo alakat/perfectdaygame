@@ -286,5 +286,9 @@ public class Bienvenida extends javax.swing.JPanel {
         this.nuevoProducto = nuevoProducto;
     }
 
+    public Usuario getUsuario(){
+        return usuarioconectado;
+    }
+
     
 }
