@@ -36,6 +36,9 @@ public class NProductRegisterView extends FrameView {
         initComponents();
         bienvenida = new Bienvenida(this);
         nuevoProducto = new NuevoProducto(this);
+        bienvenida.setNuevoProducto(this.nuevoProducto);
+        nuevoProducto.setBienvenida(bienvenida);
+
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
@@ -230,4 +233,11 @@ public class NProductRegisterView extends FrameView {
     private int busyIconIndex = 0;
 
     private JDialog aboutBox;
+
+    /**
+     * @return the bienvenida
+     */
+    public Bienvenida getBienvenida() {
+        return bienvenida;
+    }
 }

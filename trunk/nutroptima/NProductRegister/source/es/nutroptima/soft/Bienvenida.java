@@ -26,7 +26,7 @@ import org.jdesktop.application.Action;
  */
 public class Bienvenida extends javax.swing.JPanel {
 
-    private NuevoProducto nuevoProducto = new NuevoProducto();
+    private NuevoProducto nuevoProducto;
     private NProductRegisterView view;
     private Usuario usuarioconectado;
 
@@ -50,7 +50,7 @@ public class Bienvenida extends javax.swing.JPanel {
     private void initComponents() {
 
         passTF = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        listadolabel = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
@@ -66,8 +66,8 @@ public class Bienvenida extends javax.swing.JPanel {
         passTF.setText(resourceMap.getString("passTF.text")); // NOI18N
         passTF.setName("passTF"); // NOI18N
 
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
-        jLabel3.setName("jLabel3"); // NOI18N
+        listadolabel.setText(resourceMap.getString("listadolabel.text")); // NOI18N
+        listadolabel.setName("listadolabel"); // NOI18N
 
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
@@ -118,7 +118,7 @@ public class Bienvenida extends javax.swing.JPanel {
                 .add(35, 35, 35)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .add(jLabel3)
+                        .add(listadolabel)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jButton2))
                     .add(layout.createSequentialGroup()
@@ -149,7 +149,7 @@ public class Bienvenida extends javax.swing.JPanel {
                     .add(jButton1))
                 .add(18, 18, 18)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel3)
+                    .add(listadolabel)
                     .add(jButton2))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -158,9 +158,10 @@ public class Bienvenida extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        view.getMainPanel().remove(this);
         view.getMainPanel().add(nuevoProducto, BorderLayout.NORTH);
         view.getMainPanel().updateUI();
-        Logger.getLogger(this.getClass().getName()).info("TACA");
+        Logger.getLogger(this.getClass().getName()).info("Cambiando a vista de Nuevo Producto");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -181,8 +182,8 @@ public class Bienvenida extends javax.swing.JPanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel listadolabel;
     private javax.swing.JTextField loginTF;
     private javax.swing.JTextField passTF;
     private javax.swing.JTable tablaProductos;
@@ -191,4 +192,10 @@ public class Bienvenida extends javax.swing.JPanel {
     @Action
     public void lanzador(){
     }
+
+    public void setNuevoProducto(NuevoProducto nuevoProducto) {
+        this.nuevoProducto = nuevoProducto;
+    }
+
+    
 }
