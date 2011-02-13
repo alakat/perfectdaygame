@@ -38,5 +38,10 @@ public class MyVTitulo {
         return titulo;
     }
 
+    @Override
+    public String toString() {
+        return titulo;
+    }
+
     
 }

@@ -44,6 +44,8 @@ public class UnidadPesoComboBoxModel implements ComboBoxModel{
     }
 
     public Object getSelectedItem() {
+        if(index <0)
+            return this.titulos.get(0);
         return this.titulos.get(index);
     }
 
@@ -61,6 +63,11 @@ public class UnidadPesoComboBoxModel implements ComboBoxModel{
 
     public void removeListDataListener(ListDataListener ll) {
         //NO USE
+    }
+
+    @Override
+    public String toString() {
+       return this.getSelectedItem().toString();
     }
 
 

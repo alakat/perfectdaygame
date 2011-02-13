@@ -47,10 +47,13 @@ public class CategoriasComboBoxModel implements ComboBoxModel   {
 
 
     public void setSelectedItem(Object o) {
+
         this.index = this.categorias.indexOf(o);
     }
 
     public Object getSelectedItem() {
+        if(index <0)
+            return this.categorias.get(0);
         return this.categorias.get(index);
     }
 
@@ -68,6 +71,11 @@ public class CategoriasComboBoxModel implements ComboBoxModel   {
 
     public void removeListDataListener(ListDataListener ll) {
         //NO USO
+    }
+
+    @Override
+    public String toString() {
+       return this.getSelectedItem().toString();
     }
 
 
