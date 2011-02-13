@@ -6,12 +6,14 @@
 package es.nutroptima.soft.model;
 
 
+import com.sun.codemodel.internal.JCodeModel;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
@@ -90,16 +92,19 @@ public class Usuario implements TableModel {
     }
 
     public int getColumnCount() {
-        return 6;
+        return 7;
     }
 
     public String getColumnName(int i) {
-        String[] names = {"id","Nombre","KiloCalorias","H.Carbono","Grasas","Proteinas"};
+        String[] names = {"id","Nombre","KiloCalorias","H.Carbono","Grasas","Proteinas","Categoria"};
         return names[i];
     }
 
     public Class<?> getColumnClass(int i) {
-        return "".getClass();
+        if(i<6)
+            return String.class;
+        else
+            return Categoria.class;
     }
 
     public boolean isCellEditable(int i, int i1) {
@@ -108,7 +113,7 @@ public class Usuario implements TableModel {
 
     public Object getValueAt(int i, int i1) {
         try {
-            String[] names = {"getId", "getTitulo", "getKilocalorias", "getHidratosCarbono", "getGrasas", "getProteinas"};
+            String[] names = {"getId", "getTitulo", "getKilocalorias", "getHidratosCarbono", "getGrasas", "getProteinas","getCategoria"};
             Method m = Producto.class.getMethod(names[i1], null);
             Object o = this.productos.get(i);
             Object r = m.invoke(o, null);
@@ -170,6 +175,9 @@ public class Usuario implements TableModel {
                     p.setProteinas(d);
                 } catch (Exception e) {
                 }
+                break;
+            case 6:
+                p.setCategoria((Categoria) o);
                 break;
         }
         

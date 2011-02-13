@@ -11,16 +11,23 @@
 
 package es.nutroptima.soft;
 
+import es.nutroptima.soft.model.Categoria;
 import es.nutroptima.soft.model.Producto;
 import es.nutroptima.soft.model.Usuario;
+import es.nutroptima.soft.model.factories.ProductoFactory;
 import es.nutroptima.soft.model.factories.UsuarioFactory;
+import es.nutroptima.soft.submodels.CategoriasComboBoxModel;
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner.DefaultEditor;
 import nproductregister.NProductRegisterView;
 import org.jdesktop.application.Action;
 
@@ -42,6 +49,7 @@ public class Bienvenida extends javax.swing.JPanel {
     public Bienvenida(NProductRegisterView aThis) {
         this.view = aThis;
         initComponents();
+        this.tablaProductos.setDefaultEditor(Categoria.class, new DefaultCellEditor(new JComboBox(new CategoriasComboBoxModel())));
     }
 
     /** This method is called from within the constructor to
@@ -206,7 +214,7 @@ public class Bienvenida extends javax.swing.JPanel {
     private void tablaProductosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaProductosKeyTyped
         // TODO add your handling code here:
         System.out.println("EVENTOS!!"+evt.getKeyChar());
-        if(evt.getKeyChar()== '\n'){
+        if(evt.getKeyChar()== 's'){
             int idx = this.tablaProductos.getSelectedRow();
             Producto p = this.usuarioconectado.getProductos().get(idx);
             try {
@@ -244,6 +252,14 @@ public class Bienvenida extends javax.swing.JPanel {
                 Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showConfirmDialog(this, "Error ponte en contacto con la central de Nutroptima");
             }
+        }else if(evt.getKeyChar() == '\t'){
+            int idx = this.tablaProductos.getSelectedRow();
+            Producto p = this.usuarioconectado.getProductos().get(idx);
+            nuevoProducto.resetView(p);
+            view.getMainPanel().remove(this);
+            view.getMainPanel().add(nuevoProducto, BorderLayout.NORTH);
+            view.getMainPanel().updateUI();
+            Logger.getLogger(this.getClass().getName()).info("Cambiando a vista del Producto::"+p);
         }
     }//GEN-LAST:event_tablaProductosKeyTyped
 
@@ -286,9 +302,22 @@ public class Bienvenida extends javax.swing.JPanel {
         this.nuevoProducto = nuevoProducto;
     }
 
-    public Usuario getUsuario(){
+    public Usuario getUsuarioconectado() {
         return usuarioconectado;
     }
 
-    
+
+
+    public void reload(){
+        try {
+            this.usuarioconectado.setProductos(ProductoFactory.getInstance().getProductosByUsuario(usuarioconectado));
+            this.tablaProductos.setModel(usuarioconectado);
+            this.tablaProductos.updateUI();
+            this.bNuevoProducto.setEnabled(true);
+        } catch (Exception ex) {
+            Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error cargando productos, contacte con la central de Nutroptima. \n Gracias");
+        }
+    }
+
 }

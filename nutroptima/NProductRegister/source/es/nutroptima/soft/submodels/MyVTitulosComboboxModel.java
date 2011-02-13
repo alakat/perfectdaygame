@@ -39,10 +39,13 @@ public class MyVTitulosComboboxModel implements ComboBoxModel {
     }
 
     public void setSelectedItem(Object o) {
+         
         this.index = this.titulos.indexOf(o);
     }
 
     public Object getSelectedItem() {
+        if(index <0)
+            return this.titulos.get(0);
         return this.titulos.get(index);
     }
 
@@ -60,6 +63,11 @@ public class MyVTitulosComboboxModel implements ComboBoxModel {
 
     public void removeListDataListener(ListDataListener ll) {
         //NO USE
+    }
+
+    @Override
+    public String toString() {
+       return this.getSelectedItem().toString();
     }
 
 
