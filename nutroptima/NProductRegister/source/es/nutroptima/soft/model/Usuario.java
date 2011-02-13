@@ -8,6 +8,7 @@ package es.nutroptima.soft.model;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -102,7 +103,7 @@ public class Usuario implements TableModel {
     }
 
     public boolean isCellEditable(int i, int i1) {
-        return false;
+        return i1>=1;
     }
 
     public Object getValueAt(int i, int i1) {
@@ -111,6 +112,7 @@ public class Usuario implements TableModel {
             Method m = Producto.class.getMethod(names[i1], null);
             Object o = this.productos.get(i);
             Object r = m.invoke(o, null);
+
             return r;
         } catch (IllegalAccessException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,6 +133,45 @@ public class Usuario implements TableModel {
     }
 
     public void setValueAt(Object o, int i, int i1) {
+        Producto p = this.getProductos().get(i);
+        String s=null;
+        switch(i1){
+            case 1:
+                p.setTitulo(o.toString());break;
+            case 2:
+                s = o.toString();
+                try {
+                    double d = Double.parseDouble(s);
+                    p.setKilocalorias(d);
+                } catch (Exception e) {
+                }
+                break;
+
+            case 3:
+                s = o.toString();
+                try {
+                    double d = Double.parseDouble(s);
+                    p.setHidratosCarbono(d);
+                } catch (Exception e) {
+                }
+                break;
+            case 4:
+                s = o.toString();
+                try {
+                    double d = Double.parseDouble(s);
+                    p.setGrasas(d);
+                } catch (Exception e) {
+                }
+                break;
+            case 5:
+                s = o.toString();
+                try {
+                    double d = Double.parseDouble(s);
+                    p.setProteinas(d);
+                } catch (Exception e) {
+                }
+                break;
+        }
         
     }
 
