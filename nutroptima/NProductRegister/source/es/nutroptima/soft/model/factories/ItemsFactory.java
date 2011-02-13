@@ -47,7 +47,7 @@ public class ItemsFactory {
         Logger.getLogger(ItemsFactory.class.getName()).info("Load productos del usuario");
         Connection conn = NConnector.getInstance().getConn();
         Statement stat = conn.createStatement();
-        ResultSet rs = stat.executeQuery("select * from myvTitulo order by id asc;");
+        ResultSet rs = stat.executeQuery("select * from unidadPeso order by id asc;");
         while (rs.next()) {
             UnidadPeso unidad = new   UnidadPeso();
             unidad.setId(rs.getInt("id"));

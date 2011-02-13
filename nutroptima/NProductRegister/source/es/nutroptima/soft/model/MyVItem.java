@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author Miguel Angel López Montellano <mlopez@nutroptima.es>
  */
-public class MyVItem  {
+public class MyVItem {
     public static final int ID_NOT_VALID = -1;
     private int id;
     private MyVTitulo titulo;
