@@ -109,7 +109,6 @@ public class NuevoProducto extends javax.swing.JPanel {
         saveButton = new javax.swing.JButton();
         infoLabel = new javax.swing.JLabel();
         macroErrorLabel = new javax.swing.JLabel();
-        bNuevo = new javax.swing.JButton();
 
         setEnabled(false);
         setName("Form"); // NOI18N
@@ -358,15 +357,6 @@ public class NuevoProducto extends javax.swing.JPanel {
         );
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 730, 70));
-
-        bNuevo.setText(resourceMap.getString("bNuevo.text")); // NOI18N
-        bNuevo.setName("bNuevo"); // NOI18N
-        bNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bNuevoActionPerformed(evt);
-            }
-        });
-        add(bNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 610, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -458,14 +448,8 @@ public class NuevoProducto extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_addButtonActionPerformed
 
-    private void bNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNuevoActionPerformed
-        // TODO add your handling code here:
-        resetView(null);
-    }//GEN-LAST:event_bNuevoActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JButton bNuevo;
     private javax.swing.JButton cancel;
     private javax.swing.JLabel categoriaLabel;
     private javax.swing.JFormattedTextField grasas;
