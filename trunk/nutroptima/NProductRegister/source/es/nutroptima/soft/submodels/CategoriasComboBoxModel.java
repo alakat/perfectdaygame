@@ -24,12 +24,17 @@ public class CategoriasComboBoxModel implements ComboBoxModel   {
     public CategoriasComboBoxModel() {
         categorias = new ArrayList<Categoria>();
 
-        /**
-         * Para verificar que se selecciona una categoría cuando se crea un producto por primera vez.
-         */
-        categorias.add(new Categoria(-1, "Seleccionar categoria"));
-
         categorias.addAll(CategoriasFactory.getInstance().getCategorias());
+        index =0;
+    }
+
+    public CategoriasComboBoxModel(String s) {
+        categorias = new ArrayList<Categoria>();
+
+        //Para validar
+        categorias.add(new Categoria(-1, s));
+        categorias.addAll(CategoriasFactory.getInstance().getCategorias());
+        
         index =0;
     }
 
