@@ -18,16 +18,12 @@ import es.nutroptima.soft.model.factories.ProductoFactory;
 import es.nutroptima.soft.model.factories.UsuarioFactory;
 import es.nutroptima.soft.submodels.CategoriasComboBoxModel;
 import java.awt.BorderLayout;
-import java.awt.event.KeyEvent;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner.DefaultEditor;
 import nproductregister.NProductRegisterView;
 import org.jdesktop.application.Action;
 
