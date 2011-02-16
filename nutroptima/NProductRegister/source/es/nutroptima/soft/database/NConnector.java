@@ -34,7 +34,13 @@ public class NConnector {
 
     public NConnector() throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
-        this.conn = DriverManager.getConnection("jdbc:sqlite:"+BASE_DE_DATOS);
+        open();
+     
+    }
+
+
+	private void open() throws SQLException {
+		this.conn = DriverManager.getConnection("jdbc:sqlite:"+BASE_DE_DATOS);
         //create table productos(id int primary key,titulo varchar(255),  hidratos_carbono ,kilocalorias , proteinas ,
         //grasas double, idCategoria int, idUsuario int);
         this.insertNewProduct = this.conn.prepareStatement("insert into productos values( ?,?,?,?,?,?,?,?,?);");
@@ -44,7 +50,7 @@ public class NConnector {
         this.insertNewItem = this.conn.prepareStatement("insert into myvitem values (?,?,?,?,?);");
         this.updateItem = this.conn.prepareStatement("update myvitem set cantidad=?, idMyVItem=?, idUnidad=? where id=?; ");
         this.deleteItem = this.conn.prepareStatement("Delete from myvitem where id=?;");
-    }
+	}
 
 
     public static NConnector getInstance() throws ClassNotFoundException, SQLException{
@@ -153,6 +159,12 @@ public class NConnector {
         return deleteItem;
     }
 
+    public void commit() throws SQLException{
+    	this.conn.close();
+    	open();
+    }
+    
+   
 
 
 
