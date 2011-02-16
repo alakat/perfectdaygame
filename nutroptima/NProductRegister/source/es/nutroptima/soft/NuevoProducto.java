@@ -360,28 +360,7 @@ public class NuevoProducto extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        if (checkFields()) {
-            try {
-                //si el producto es nuevo lo construimos
-                if (this.producto == null) {
-                    this.producto = new Producto(this.bienvenida.getUsuarioconectado());
-                }
-                this.producto.setTitulo(this.nombre.getText());
-                this.producto.setProteinas(Double.parseDouble(this.proteinas.getText()));
-                this.producto.setGrasas(Double.parseDouble(this.grasas.getText()));
-                this.producto.setHidratosCarbono(Double.parseDouble(this.hidratos.getText()));
-                this.producto.setKilocalorias(Double.parseDouble(this.kCalorias.getText()));
-                this.producto.setCategoria((Categoria) this.listaCategorias.getSelectedItem());
-                this.producto.save();
-                this.tablaVyM.setModel(producto);
-                //visualizar la tabla de las micronutrientes
-                this.panelIems.setVisible(true);
-            } catch (Exception ex) {
-                Logger.getLogger(NuevoProducto.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "Error al guardar la información.\n Por favor Llame a la central de Nutroptima. Gracias.");
-            }
-        }
-        
+        doSave();
     }
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
@@ -393,10 +372,10 @@ public class NuevoProducto extends javax.swing.JPanel {
 }//GEN-LAST:event_cancelActionPerformed
 
     private void mvItemsModelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_mvItemsModelKeyTyped
+        /*
         if (evt.getKeyChar() == 's') {
             
                 int idx = this.tablaVyM.getSelectedRow();
-               
                 try {
                     MyVItem item = this.producto.getItems().get(idx);
                     item.save();
@@ -433,6 +412,64 @@ public class NuevoProducto extends javax.swing.JPanel {
                     Logger.getLogger(NuevoProducto.class.getName()).log(Level.SEVERE, null, ex);
                    
                 }
+        }
+        */
+
+        if (checkFields()) {
+            try {
+                //si el producto es nuevo lo construimos
+                if (this.producto == null) {
+                    this.producto = new Producto(this.bienvenida.getUsuarioconectado());
+                }
+                this.producto.setTitulo(this.nombre.getText());
+                this.producto.setProteinas(Double.parseDouble(this.proteinas.getText()));
+                this.producto.setGrasas(Double.parseDouble(this.grasas.getText()));
+                this.producto.setHidratosCarbono(Double.parseDouble(this.hidratos.getText()));
+                this.producto.setKilocalorias(Double.parseDouble(this.kCalorias.getText()));
+                this.producto.setCategoria((Categoria) this.listaCategorias.getSelectedItem());
+                this.producto.save();
+                this.tablaVyM.setModel(producto);
+                //Si muestra el panel de items y hay elementos en la tabla
+                if(this.panelIems.isVisible() && tablaVyM.getRowCount()>0){
+                    for(int i=0; i<=tablaVyM.getRowCount(); i++){
+                        MyVItem item = this.producto.getItems().get(i);
+                        item.save();
+                    }
+                }
+                //visualizar la tabla de las micronutrientes
+                this.panelIems.setVisible(true);
+
+            } catch (Exception ex) {
+                Logger.getLogger(NuevoProducto.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error al guardar la información.\n Por favor Llame a la central de Nutroptima. Gracias.");
+            }
+            Thread t = new Thread(new Runnable() {
+
+                        public void run() {
+                            try {
+                                infoLabel.setForeground(Color.green);
+                                System.out.println("Durmiendo");
+                                Thread.sleep(1500);
+                                infoLabel.setText("");
+                                System.out.println("Durmiendo");
+                                Thread.sleep(100);
+                                infoLabel.setText("Cambios guardados");
+                                System.out.println("Durmiendo");
+                                Thread.sleep(1500);
+                                infoLabel.setText("");
+                                System.out.println("Durmiendo");
+                                Thread.sleep(100);
+                                infoLabel.setText("Cambios guardados");
+                                System.out.println("Durmiendo");
+                                Thread.sleep(1500);
+                                infoLabel.setText("");
+                                System.out.println("Despieto");
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    });
+                    t.start();
         }
     }//GEN-LAST:event_mvItemsModelKeyTyped
 
@@ -521,7 +558,7 @@ public class NuevoProducto extends javax.swing.JPanel {
             proteinasLabel.setForeground(Color.red);
             hidratosLabel.setForeground(Color.red);
             grasasLabel.setForeground(Color.red);
-            macroErrorLabel.setText("El porcentaje de macronutrientes debe ser 100% y es "+Double.toString(total)+"%");
+            macroErrorLabel.setText("El porcentaje total de macronutrientes debe ser 100% y es "+Double.toString(total)+"%");
         }else{
             proteinasLabel.setForeground(Color.black);
             hidratosLabel.setForeground(Color.black);
@@ -571,5 +608,67 @@ public class NuevoProducto extends javax.swing.JPanel {
 
     public void showError(){
          JOptionPane.showMessageDialog(this, "Error salvando el micronutriente. Pongase en contacto con la central de Nutroptima");
+    }
+
+    public void doSave(){
+
+        if (checkFields()) {
+            try {
+                //si el producto es nuevo lo construimos
+                if (this.producto == null) {
+                    this.producto = new Producto(this.bienvenida.getUsuarioconectado());
+                }
+                this.producto.setTitulo(this.nombre.getText());
+                this.producto.setProteinas(Double.parseDouble(this.proteinas.getText()));
+                this.producto.setGrasas(Double.parseDouble(this.grasas.getText()));
+                this.producto.setHidratosCarbono(Double.parseDouble(this.hidratos.getText()));
+                this.producto.setKilocalorias(Double.parseDouble(this.kCalorias.getText()));
+                this.producto.setCategoria((Categoria) this.listaCategorias.getSelectedItem());
+                this.producto.save();
+                this.tablaVyM.setModel(producto);
+                //Si muestra el panel de items y hay elementos en la tabla
+                if(this.panelIems.isVisible() && tablaVyM.getRowCount()>0){
+                    Logger.getLogger(this.getClass().getName()).info("Micronutrientes para salvar: "+tablaVyM.getRowCount());
+                    for(int i=0; i<tablaVyM.getRowCount(); i++){
+                        MyVItem item = this.producto.getItems().get(i);
+                        item.save();
+                        Logger.getLogger(this.getClass().getName()).info("Salvando el micronutriente: "+i);
+                    }
+                }
+                //visualizar la tabla de las micronutrientes
+                this.panelIems.setVisible(true);
+
+            } catch (Exception ex) {
+                Logger.getLogger(NuevoProducto.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error al guardar la información.\n Por favor Llame a la central de Nutroptima. Gracias.");
+            }
+            Thread t = new Thread(new Runnable() {
+
+                        public void run() {
+                            try {
+                                infoLabel.setForeground(Color.black);
+                                System.out.println("Durmiendo");
+                                Thread.sleep(1500);
+                                infoLabel.setText("");
+                                System.out.println("Durmiendo");
+                                Thread.sleep(100);
+                                infoLabel.setText("Cambios guardados");
+                                System.out.println("Durmiendo");
+                                Thread.sleep(1500);
+                                infoLabel.setText("");
+                                System.out.println("Durmiendo");
+                                Thread.sleep(100);
+                                infoLabel.setText("Cambios guardados");
+                                System.out.println("Durmiendo");
+                                Thread.sleep(2500);
+                                infoLabel.setText("");
+                                System.out.println("Despieto");
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    });
+                    t.start();
+        }
     }
 }

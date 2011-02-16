@@ -67,6 +67,7 @@ public class Bienvenida extends javax.swing.JPanel {
         bNuevoProducto = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         lMensajesEmergentes = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(nproductregister.NProductRegisterApp.class).getContext().getResourceMap(Bienvenida.class);
         setBackground(resourceMap.getColor("Form.background")); // NOI18N
@@ -132,6 +133,9 @@ public class Bienvenida extends javax.swing.JPanel {
 
         lMensajesEmergentes.setName("lMensajesEmergentes"); // NOI18N
 
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,8 +164,10 @@ public class Bienvenida extends javax.swing.JPanel {
                 .addContainerGap())
             .add(layout.createSequentialGroup()
                 .addContainerGap()
+                .add(jLabel3)
+                .add(44, 44, 44)
                 .add(lMensajesEmergentes, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 470, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(471, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -178,7 +184,9 @@ public class Bienvenida extends javax.swing.JPanel {
                     .add(listadolabel)
                     .add(bNuevoProducto))
                 .add(38, 38, 38)
-                .add(lMensajesEmergentes, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(lMensajesEmergentes, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel3))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 391, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -282,6 +290,7 @@ public class Bienvenida extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lMensajesEmergentes;
     private javax.swing.JLabel listadolabel;
