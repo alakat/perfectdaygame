@@ -239,7 +239,7 @@ public class NuevoProducto extends javax.swing.JPanel {
                 .add(kcaloriasLabel)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(kCalorias, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 65, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -543,7 +543,7 @@ public class NuevoProducto extends javax.swing.JPanel {
             kcaloriasLabel.setForeground(Color.black);
         }
 
-        //El porcentaje de macronutrientes debe ser 100%
+        /*El porcentaje de macronutrientes debe ser 100%
         try{
             total = Double.parseDouble(proteinas.getText()) + Double.parseDouble(hidratos.getText()) + Double.parseDouble(grasas.getText());
         }
@@ -564,7 +564,7 @@ public class NuevoProducto extends javax.swing.JPanel {
             hidratosLabel.setForeground(Color.black);
             grasasLabel.setForeground(Color.black);
             macroErrorLabel.setText("");
-        }
+        }*/
 
         if(!valido){
             infoLabel.setText("Por favor, verifica los campos marcados en rojo.");
@@ -662,6 +662,7 @@ public class NuevoProducto extends javax.swing.JPanel {
                                 System.out.println("Durmiendo");
                                 Thread.sleep(2500);
                                 infoLabel.setText("");
+                                infoLabel.setForeground(Color.red);
                                 System.out.println("Despieto");
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
