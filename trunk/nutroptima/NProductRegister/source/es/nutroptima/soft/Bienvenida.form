@@ -49,8 +49,10 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
               <Component id="lMensajesEmergentes" min="-2" pref="470" max="-2" attributes="0"/>
-              <EmptySpace pref="471" max="32767" attributes="0"/>
+              <EmptySpace pref="92" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -71,7 +73,10 @@
                   <Component id="bNuevoProducto" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-              <Component id="lMensajesEmergentes" min="-2" pref="23" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="lMensajesEmergentes" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="391" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
@@ -166,6 +171,12 @@
     <Component class="javax.swing.JLabel" name="lMensajesEmergentes">
       <Properties>
         <Property name="name" type="java.lang.String" value="lMensajesEmergentes" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jLabel3.text"/>
+        <Property name="name" type="java.lang.String" value="jLabel3" noResource="true"/>
       </Properties>
     </Component>
   </SubComponents>
