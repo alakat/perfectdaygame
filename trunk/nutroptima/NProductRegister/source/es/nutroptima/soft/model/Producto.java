@@ -10,7 +10,10 @@ import es.nutroptima.soft.model.factories.PaisFactory;
 import es.nutroptima.soft.model.factories.ProductoFactory;
 import es.nutroptima.soft.submodels.MyVTitulosComboboxModel;
 import es.nutroptima.soft.submodels.UnidadPesoComboBoxModel;
+
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -176,14 +179,20 @@ public class Producto implements TableModel {
     private void insertThis() throws ClassNotFoundException, SQLException {
         Logger.getLogger(Producto.class.getName()).info("insert a product");
         int id = ProductoFactory.getInstance().getNextProductID();
-        NConnector.getInstance().makePreparedStatement(this, id).execute();
+        PreparedStatement s = NConnector.getInstance().makePreparedStatement(this, id);
+        s.addBatch();
+        s.executeBatch();
+        NConnector.getInstance().commit();
         this.setId(id);
 
     }
 
     private void updateThis() throws ClassNotFoundException, SQLException {
         Logger.getLogger(Producto.class.getName()).info("update a product");
-        NConnector.getInstance().makeUpdateStatement(this).execute();
+        PreparedStatement s =  NConnector.getInstance().makeUpdateStatement(this);
+        s.addBatch();
+        s.executeBatch();
+        NConnector.getInstance().commit();
     }
 
     public void save() throws ClassNotFoundException, SQLException {
@@ -199,8 +208,11 @@ public class Producto implements TableModel {
     public void delete() throws ClassNotFoundException, SQLException {
         if (isAlrreadySave()) {
             Logger.getLogger(Producto.class.getName()).info("delete a product");
-            NConnector.getInstance().makeDeleteStatement(this).execute();
+            PreparedStatement s = NConnector.getInstance().makeDeleteStatement(this);
             this.id = ID_NOT_VALID;
+            s.addBatch();
+            s.executeBatch();
+            NConnector.getInstance().commit();
         }
     }
 

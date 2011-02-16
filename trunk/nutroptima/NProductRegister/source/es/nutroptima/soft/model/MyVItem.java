@@ -7,6 +7,8 @@ package es.nutroptima.soft.model;
 
 import es.nutroptima.soft.database.NConnector;
 import es.nutroptima.soft.model.factories.ItemsFactory;
+
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -115,21 +117,30 @@ public class MyVItem {
     private void insertThis() throws ClassNotFoundException, SQLException{
         int id_ =ItemsFactory.getInstance().nextID();
         Logger.getLogger(Producto.class.getName()).info("insert a product");
-        NConnector.getInstance().makeInsertNewItem(this,id_).execute();
+        PreparedStatement s =  NConnector.getInstance().makeInsertNewItem(this,id_);
+        s.addBatch();
+        s.executeBatch();
+        NConnector.getInstance().commit();
         this.setId(id_);
 
     }
 
     private void updateThis() throws ClassNotFoundException, SQLException{
         Logger.getLogger(Producto.class.getName()).info("update a product");
-        NConnector.getInstance().makeUpdateStatement(this).execute();
+        PreparedStatement s=  NConnector.getInstance().makeUpdateStatement(this);
+        s.addBatch();
+        s.executeBatch();
+        NConnector.getInstance().commit();
     }
 
     public void delete() throws ClassNotFoundException, SQLException{
         if(isAlrreadySave()){
             Logger.getLogger(Producto.class.getName()).info("delete a product");
-            NConnector.getInstance().makeDeleteStatement(this).execute();
+            PreparedStatement s =  NConnector.getInstance().makeDeleteStatement(this);
             this.id=ID_NOT_VALID;
+            s.addBatch();
+            s.executeBatch();
+            NConnector.getInstance().commit();
         }else{
             Logger.getLogger(MyVItem.class.getName()).log(Level.SEVERE, "¡ELIMINANDO OBJETO NO PERSISTIDO");
         }
