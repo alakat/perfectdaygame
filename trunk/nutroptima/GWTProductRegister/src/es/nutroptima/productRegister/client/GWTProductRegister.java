@@ -39,7 +39,7 @@ public class GWTProductRegister implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		final Button sendButton = new Button("Send");
+		final Button sendButton = new Button("Cambio el nombre del bot—n y lo comparto por svn");
 		final TextBox nameField = new TextBox();
 		nameField.setText("GWT User");
 		final Label errorLabel = new Label();
