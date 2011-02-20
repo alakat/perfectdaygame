@@ -17,27 +17,14 @@ import java.util.logging.Logger;
  *
  * @author Miguel Angel López Montellano <mlopez@nutroptima.es>
  */
-public class MyVItem {
+public class MyVItem extends ObjectoActualizable {
     public static final int ID_NOT_VALID = -1;
-    private int id;
     private MyVTitulo titulo;
     private UnidadPeso unidad;
     private double cantidad;
     private Producto producto;
 
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
+   
 
     /**
      * @return the titulo
@@ -51,6 +38,7 @@ public class MyVItem {
      */
     public void setTitulo(MyVTitulo titulo) {
         this.titulo = titulo;
+        this.setActualizado(true);
     }
 
     /**
@@ -65,6 +53,7 @@ public class MyVItem {
      */
     public void setUnidad(UnidadPeso unidad) {
         this.unidad = unidad;
+        this.setActualizado(true);
     }
 
     /**
@@ -79,6 +68,7 @@ public class MyVItem {
      */
     public void setCantidad(double cantidad) {
         this.cantidad = cantidad;
+        this.setActualizado(true);
     }
 
     /**
@@ -93,10 +83,11 @@ public class MyVItem {
      */
     public void setProducto(Producto producto) {
         this.producto = producto;
+        this.setActualizado(true);
     }
 
     public MyVItem(int id, MyVTitulo titulo, UnidadPeso unidad, double cantidad, Producto producto) {
-        this.id = id;
+        super(id);
         this.titulo = titulo;
         this.unidad = unidad;
         this.cantidad = cantidad;
@@ -104,8 +95,9 @@ public class MyVItem {
     }
 
     public MyVItem( Producto p) {
+        super(ID_NOT_VALID);
         this.producto = p;
-        this.id = ID_NOT_VALID;
+        this.setActualizado(true);
     }
 
 
@@ -122,7 +114,7 @@ public class MyVItem {
         s.executeBatch();
         NConnector.getInstance().commit();
         this.setId(id_);
-
+        this.setActualizado(false);
     }
 
     private void updateThis() throws ClassNotFoundException, SQLException{
@@ -131,6 +123,7 @@ public class MyVItem {
         s.addBatch();
         s.executeBatch();
         NConnector.getInstance().commit();
+        this.setActualizado(false);
     }
 
     public void delete() throws ClassNotFoundException, SQLException{
@@ -141,6 +134,7 @@ public class MyVItem {
             s.addBatch();
             s.executeBatch();
             NConnector.getInstance().commit();
+            this.setActualizado(false);
         }else{
             Logger.getLogger(MyVItem.class.getName()).log(Level.SEVERE, "¡ELIMINANDO OBJETO NO PERSISTIDO");
         }

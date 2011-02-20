@@ -45,6 +45,7 @@ public class ProductoFactory {
           p.setProteinas(rs.getDouble(5));
           p.setGrasas(rs.getDouble(6));
           p.setCategoria(CategoriasFactory.getInstance().getCategoria(rs.getInt(7)));
+          p.setActualizado(false);
           productos.add(p);
         }
         usuario.setProductos(productos);

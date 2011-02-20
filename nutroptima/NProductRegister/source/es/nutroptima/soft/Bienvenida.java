@@ -8,7 +8,6 @@
  *
  * Created on 07-feb-2011, 22:21:47
  */
-
 package es.nutroptima.soft;
 
 import es.nutroptima.soft.model.Categoria;
@@ -18,12 +17,15 @@ import es.nutroptima.soft.model.factories.ProductoFactory;
 import es.nutroptima.soft.model.factories.UsuarioFactory;
 import es.nutroptima.soft.submodels.CategoriasComboBoxModel;
 import java.awt.BorderLayout;
+import java.awt.HeadlessException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import nproductregister.NProductRegisterView;
 import org.jdesktop.application.Action;
 
@@ -31,7 +33,7 @@ import org.jdesktop.application.Action;
  *
  * @author Sergio Álvarez López <salvarez@nutroptima.es>
  */
-public class Bienvenida extends javax.swing.JPanel {
+public class Bienvenida extends javax.swing.JPanel implements TableModelListener {
 
     private NuevoProducto nuevoProducto;
     private NProductRegisterView view;
@@ -46,6 +48,20 @@ public class Bienvenida extends javax.swing.JPanel {
         this.view = aThis;
         initComponents();
         this.tablaProductos.setDefaultEditor(Categoria.class, new DefaultCellEditor(new JComboBox(new CategoriasComboBoxModel())));
+    }
+
+    private void conectar() throws HeadlessException {
+        try {
+            // TODO add your handling code here:
+            this.usuarioconectado = UsuarioFactory.getInstance().makeUsuario(this.loginTF.getText(), this.passTF.getText());
+            this.tablaProductos.setModel(usuarioconectado);
+            this.tablaProductos.updateUI();
+            this.bNuevoProducto.setEnabled(true);
+            this.usuarioconectado.addTableModelListener(this);
+        } catch (Exception ex) {
+            Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error, usuario y contraseña no validos");
+        }
     }
 
     /** This method is called from within the constructor to
@@ -68,13 +84,19 @@ public class Bienvenida extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         lMensajesEmergentes = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jCambios = new javax.swing.JButton();
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(nproductregister.NProductRegisterApp.class).getContext().getResourceMap(Bienvenida.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(Bienvenida.class);
         setBackground(resourceMap.getColor("Form.background")); // NOI18N
         setName("Form"); // NOI18N
 
         passTF.setText(resourceMap.getString("passTF.text")); // NOI18N
         passTF.setName("passTF"); // NOI18N
+        passTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passTFActionPerformed(evt);
+            }
+        });
 
         listadolabel.setText(resourceMap.getString("listadolabel.text")); // NOI18N
         listadolabel.setName("listadolabel"); // NOI18N
@@ -136,6 +158,14 @@ public class Bienvenida extends javax.swing.JPanel {
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
+        jCambios.setText(resourceMap.getString("jCambios.text")); // NOI18N
+        jCambios.setName("jCambios"); // NOI18N
+        jCambios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCambiosActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,10 +173,6 @@ public class Bienvenida extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .add(35, 35, 35)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(layout.createSequentialGroup()
-                        .add(listadolabel)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(bNuevoProducto))
                     .add(layout.createSequentialGroup()
                         .add(jLabel1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -156,7 +182,13 @@ public class Bienvenida extends javax.swing.JPanel {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(passTF, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jButton1)))
+                        .add(jButton1))
+                    .add(layout.createSequentialGroup()
+                        .add(listadolabel)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jCambios, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, bNuevoProducto, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .add(224, 224, 224))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
@@ -167,7 +199,7 @@ public class Bienvenida extends javax.swing.JPanel {
                 .add(jLabel3)
                 .add(44, 44, 44)
                 .add(lMensajesEmergentes, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 470, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -183,7 +215,9 @@ public class Bienvenida extends javax.swing.JPanel {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(listadolabel)
                     .add(bNuevoProducto))
-                .add(38, 38, 38)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jCambios)
+                .add(9, 9, 9)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(lMensajesEmergentes, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel3))
@@ -195,6 +229,27 @@ public class Bienvenida extends javax.swing.JPanel {
 
     private void bNuevoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNuevoProductoActionPerformed
         //Limpiamos la información escrita en la interfaz
+        boolean cambios = false;
+        for (Producto producto : this.usuarioconectado.getProductos()) {
+            cambios = cambios || producto.isActualizado();
+        }
+        if (cambios) {
+            int i = JOptionPane.showConfirmDialog(this, "Hay cambios no salvados en los produtos. \n ¿Desea guardarlos?");
+            if (i == JOptionPane.YES_OPTION) {
+                for (Producto producto : this.usuarioconectado.getProductos()) {
+                    if (producto.isActualizado()) {
+                        try {
+                            producto.save();
+                        } catch (Exception ex) {
+                            Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
+                            showError();
+                        }
+                    }
+                }
+            } else {
+                System.out.println("NO OPTION:" + i);
+            }
+        }
         nuevoProducto.resetView(null);
         view.getMainPanel().remove(this);
         view.getMainPanel().add(nuevoProducto, BorderLayout.NORTH);
@@ -203,30 +258,24 @@ public class Bienvenida extends javax.swing.JPanel {
     }//GEN-LAST:event_bNuevoProductoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            // TODO add your handling code here:
-            this.usuarioconectado = UsuarioFactory.getInstance().makeUsuario(this.loginTF.getText(), this.passTF.getText());
-            this.tablaProductos.setModel(usuarioconectado);
-            this.tablaProductos.updateUI();
-            this.bNuevoProducto.setEnabled(true);
-        } catch (Exception ex) {
-            Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Error, usuario y contraseña no validos");
-        }
+        conectar();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tablaProductosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaProductosKeyTyped
         // TODO add your handling code here:
-        System.out.println("EVENTOS!!"+evt.getKeyChar());
-        if(evt.getKeyChar()== 's'){
+        System.out.println("EVENTOS!!" + evt.getKeyChar());
+
+        if (evt.getKeyChar() == 's') {
             int idx = this.tablaProductos.getSelectedRow();
             Producto p = this.usuarioconectado.getProductos().get(idx);
             try {
                 p.save();
                 lMensajesEmergentes.setText("Producto modificado");
                 lMensajesEmergentes.setVisible(true);
-                final JLabel  aux = lMensajesEmergentes;
+                final JLabel aux = lMensajesEmergentes;
                 Thread t = new Thread(new Runnable() {
+
                     public void run() {
                         try {
                             System.out.println("Durmiendo");
@@ -251,43 +300,85 @@ public class Bienvenida extends javax.swing.JPanel {
                     }
                 });
                 t.start();
-                
+
             } catch (Exception ex) {
                 Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showConfirmDialog(this, "Error ponte en contacto con la central de Nutroptima");
             }
-        }else if(evt.getKeyChar() == '\t'){
+            this.tablaProductos.updateUI();
+        } else if (evt.getKeyChar() == '\t') {
+            boolean cambios = false;
+            for (Producto producto : this.usuarioconectado.getProductos()) {
+                cambios = cambios || producto.isActualizado();
+            }
+            if (cambios) {
+                int i = JOptionPane.showConfirmDialog(this, "Hay cambios no salvados en los produtos. \n ¿Desea guardarlos?");
+                if (i == JOptionPane.YES_OPTION) {
+                    for (Producto producto : this.usuarioconectado.getProductos()) {
+                        if (producto.isActualizado()) {
+                            try {
+                                producto.save();
+                            } catch (Exception ex) {
+                                Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
+                                showError();
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("NO OPTION:" + i);
+                }
+            }
             int idx = this.tablaProductos.getSelectedRow();
             Producto p = this.usuarioconectado.getProductos().get(idx);
             nuevoProducto.resetView(p);
             view.getMainPanel().remove(this);
             view.getMainPanel().add(nuevoProducto, BorderLayout.NORTH);
             view.getMainPanel().updateUI();
-            Logger.getLogger(this.getClass().getName()).info("Cambiando a vista del Producto::"+p);
+            Logger.getLogger(this.getClass().getName()).info("Cambiando a vista del Producto::" + p);
+
         }
     }//GEN-LAST:event_tablaProductosKeyTyped
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
         // TODO add your handling code here:if
-        if(this.usuarioconectado==null){
+        if (this.usuarioconectado == null) {
             //no hace nada
         }
-        System.out.println("222click count"+evt.getClickCount());
-        if(evt.getClickCount()==2){
+        System.out.println("222click count" + evt.getClickCount());
+        if (evt.getClickCount() == 2) {
             int idx = this.tablaProductos.getSelectedRow();
             Producto p = this.usuarioconectado.getProductos().get(idx);
             nuevoProducto.resetView(p);
             view.getMainPanel().remove(this);
             view.getMainPanel().add(nuevoProducto, BorderLayout.NORTH);
             view.getMainPanel().updateUI();
-            Logger.getLogger(this.getClass().getName()).info("Cambiando a vista del Producto::"+p);
+            Logger.getLogger(this.getClass().getName()).info("Cambiando a vista del Producto::" + p);
         }
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
+    private void jCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCambiosActionPerformed
+        // TODO add your handling code here:
+        for (Producto producto : this.usuarioconectado.getProductos()) {
+            try {
+                producto.save();
+            } catch (Exception ex) {
+                Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
+                showError();
+            }
+        }
+        this.tablaProductos.updateUI();
+
+    }//GEN-LAST:event_jCambiosActionPerformed
+
+    private void passTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passTFActionPerformed
+        // TODO add your handling code here:
+        conectar();
+    }//GEN-LAST:event_passTFActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bNuevoProducto;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jCambios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -300,7 +391,7 @@ public class Bienvenida extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     @Action
-    public void lanzador(){
+    public void lanzador() {
     }
 
     public void setNuevoProducto(NuevoProducto nuevoProducto) {
@@ -311,9 +402,7 @@ public class Bienvenida extends javax.swing.JPanel {
         return usuarioconectado;
     }
 
-
-
-    public void reload(){
+    public void reload() {
         try {
             this.usuarioconectado.setProductos(ProductoFactory.getInstance().getProductosByUsuario(usuarioconectado));
             this.tablaProductos.setModel(usuarioconectado);
@@ -325,4 +414,12 @@ public class Bienvenida extends javax.swing.JPanel {
         }
     }
 
+    public void showError() {
+        JOptionPane.showMessageDialog(this, "Error salvando el micronutriente. Pongase en contacto con la central de Nutroptima");
+    }
+
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        this.tablaProductos.updateUI();
+    }
 }

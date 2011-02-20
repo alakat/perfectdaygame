@@ -8,17 +8,14 @@ import es.nutroptima.soft.database.NConnector;
 import es.nutroptima.soft.model.factories.ItemsFactory;
 import es.nutroptima.soft.model.factories.PaisFactory;
 import es.nutroptima.soft.model.factories.ProductoFactory;
-import es.nutroptima.soft.submodels.MyVTitulosComboboxModel;
-import es.nutroptima.soft.submodels.UnidadPesoComboBoxModel;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
@@ -26,11 +23,9 @@ import javax.swing.table.TableModel;
  *
  * @author Miguel Angel López Montellano <mlopez@nutroptima.es>
  */
-public class Producto implements TableModel {
+public class Producto extends ObjectoActualizable implements TableModel {
 
-    public static final int ID_NOT_VALID = -1;
     public static final int ID_SPAIN = 0;
-    private int id;
     private String titulo;
     private double hidratosCarbono;
     private double kilocalorias;
@@ -40,16 +35,17 @@ public class Producto implements TableModel {
     private Pais pais;
     private Usuario usuario;
     private List<MyVItem> items;
+    private List<TableModelListener> listeners = new ArrayList<TableModelListener>();
 
     public Producto(Usuario u) throws ClassNotFoundException, SQLException {
-        this.id = ID_NOT_VALID;
+        super(ID_NOT_VALID);
         this.usuario = u;
         this.pais = PaisFactory.getInstance().getPais(ID_SPAIN);
 
     }
 
     public Producto(int id, String titulo, double hidratosCarbono, double kilocalorias, double proteinas, double grasas, Categoria categoria, Pais pais, Usuario usuario) {
-        this.id = id;
+        super(id);
         this.titulo = titulo;
         this.hidratosCarbono = hidratosCarbono;
         this.kilocalorias = kilocalorias;
@@ -58,20 +54,6 @@ public class Producto implements TableModel {
         this.categoria = categoria;
         this.pais = pais;
         this.usuario = usuario;
-    }
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
     }
 
     /**
@@ -86,6 +68,7 @@ public class Producto implements TableModel {
      */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+        this.setActualizado(true);
     }
 
     /**
@@ -100,6 +83,7 @@ public class Producto implements TableModel {
      */
     public void setHidratosCarbono(double hidratosCarbono) {
         this.hidratosCarbono = hidratosCarbono;
+        this.setActualizado(true);
     }
 
     /**
@@ -114,6 +98,7 @@ public class Producto implements TableModel {
      */
     public void setKilocalorias(double kilocalorias) {
         this.kilocalorias = kilocalorias;
+        this.setActualizado(true);
     }
 
     /**
@@ -128,6 +113,7 @@ public class Producto implements TableModel {
      */
     public void setProteinas(double proteinas) {
         this.proteinas = proteinas;
+        this.setActualizado(true);
     }
 
     /**
@@ -142,6 +128,7 @@ public class Producto implements TableModel {
      */
     public void setGrasas(double grasas) {
         this.grasas = grasas;
+        this.setActualizado(true);
     }
 
     /**
@@ -156,6 +143,7 @@ public class Producto implements TableModel {
      */
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+        this.setActualizado(true);
     }
 
     /**
@@ -184,15 +172,17 @@ public class Producto implements TableModel {
         s.executeBatch();
         NConnector.getInstance().commit();
         this.setId(id);
+        this.setActualizado(false);
 
     }
 
     private void updateThis() throws ClassNotFoundException, SQLException {
         Logger.getLogger(Producto.class.getName()).info("update a product");
-        PreparedStatement s =  NConnector.getInstance().makeUpdateStatement(this);
+        PreparedStatement s = NConnector.getInstance().makeUpdateStatement(this);
         s.addBatch();
         s.executeBatch();
         NConnector.getInstance().commit();
+        this.setActualizado(false);
     }
 
     public void save() throws ClassNotFoundException, SQLException {
@@ -213,6 +203,7 @@ public class Producto implements TableModel {
             s.addBatch();
             s.executeBatch();
             NConnector.getInstance().commit();
+            this.setActualizado(false);
         }
     }
 
@@ -240,11 +231,11 @@ public class Producto implements TableModel {
     }
 
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     public String getColumnName(int i) {
-        String[] names = {"Titulo", "Cantidad", "Unidad"};
+        String[] names = {"Titulo", "Cantidad", "Unidad", "SALVADO"};
         return names[i];
     }
 
@@ -257,13 +248,15 @@ public class Producto implements TableModel {
                 return String.class;
             case 2:
                 return UnidadPeso.class;
+            case 3:
+                return Boolean.class;
         }
         return String.class;
     }
 
     public boolean isCellEditable(int i, int i1) {
         //todo change
-        return true;
+        return i1 < 3;
     }
 
     public Object getValueAt(int i, int i1) {
@@ -276,6 +269,8 @@ public class Producto implements TableModel {
                     return item.getCantidad();
                 case 2:
                     return item.getUnidad();
+                case 3:
+                    return new Boolean(!item.isActualizado());
             }
 
         } catch (ClassNotFoundException ex) {
@@ -305,15 +300,23 @@ public class Producto implements TableModel {
                     item.setUnidad((UnidadPeso) o);
                     break;
             }
+            TableModelEvent e = new TableModelEvent(this, TableModelEvent.UPDATE);
+            for (TableModelListener tableModelListener : this.listeners) {
+                tableModelListener.tableChanged(e);
+            }
         } catch (Exception ex) {
             Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, "ERROR EN CONTROL DE micronutrientes (tablemodel):" + ex);
         }
     }
 
     public void addTableModelListener(TableModelListener tl) {
+        //TODO
+        listeners.add(tl);
     }
 
     public void removeTableModelListener(TableModelListener tl) {
+        //TODO
+        listeners.remove(tl);
     }
 
     /**
