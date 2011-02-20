@@ -24,11 +24,6 @@
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="listadolabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="bNuevoProducto" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="loginTF" min="-2" pref="74" max="-2" attributes="0"/>
@@ -38,6 +33,14 @@
                       <Component id="passTF" min="-2" pref="82" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="listadolabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jCambios" alignment="0" max="32767" attributes="1"/>
+                          <Component id="bNuevoProducto" alignment="0" max="32767" attributes="1"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="224" max="-2" attributes="0"/>
@@ -52,7 +55,7 @@
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
               <Component id="lMensajesEmergentes" min="-2" pref="470" max="-2" attributes="0"/>
-              <EmptySpace pref="92" max="32767" attributes="0"/>
+              <EmptySpace pref="162" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -72,7 +75,9 @@
                   <Component id="listadolabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bNuevoProducto" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jCambios" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="lMensajesEmergentes" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
@@ -90,6 +95,9 @@
         <Property name="text" type="java.lang.String" resourceKey="passTF.text"/>
         <Property name="name" type="java.lang.String" value="passTF" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passTFActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="listadolabel">
       <Properties>
@@ -178,6 +186,15 @@
         <Property name="text" type="java.lang.String" resourceKey="jLabel3.text"/>
         <Property name="name" type="java.lang.String" value="jLabel3" noResource="true"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jCambios">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jCambios.text"/>
+        <Property name="name" type="java.lang.String" value="jCambios" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCambiosActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

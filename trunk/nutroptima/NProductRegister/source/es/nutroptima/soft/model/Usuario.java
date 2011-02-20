@@ -6,14 +6,13 @@
 package es.nutroptima.soft.model;
 
 
-import com.sun.codemodel.internal.JCodeModel;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
@@ -26,6 +25,7 @@ public class Usuario implements TableModel {
     private String login;
     private String pass;
     private List<Producto> productos;
+    private List<TableModelListener> listeners = new ArrayList<TableModelListener>();
 
     public Usuario(int id, String login, String pass) {
         this.id = id;
@@ -92,31 +92,38 @@ public class Usuario implements TableModel {
     }
 
     public int getColumnCount() {
-        return 7;
+        return 8;
     }
 
     public String getColumnName(int i) {
-        String[] names = {"id","Nombre","KiloCalorias","H.Carbono","Grasas","Proteinas","Categoria"};
+        String[] names = {"id","Nombre","KiloCalorias","H.Carbono","Grasas","Proteinas","Categoria","SALVADO"};
         return names[i];
     }
 
     public Class<?> getColumnClass(int i) {
         if(i<6)
             return String.class;
-        else
+        else if(i==6)
             return Categoria.class;
+        else
+            return Boolean.class;
     }
 
     public boolean isCellEditable(int i, int i1) {
-        return i1>=1;
+        return (i1>=1) &&(i1<=6);
     }
 
     public Object getValueAt(int i, int i1) {
         try {
-            String[] names = {"getId", "getTitulo", "getKilocalorias", "getHidratosCarbono", "getGrasas", "getProteinas","getCategoria"};
+            String[] names = {"getId", "getTitulo", "getKilocalorias", "getHidratosCarbono", "getGrasas", "getProteinas","getCategoria","isActualizado"};
             Method m = Producto.class.getMethod(names[i1], null);
             Object o = this.productos.get(i);
             Object r = m.invoke(o, null);
+            if(i1==7){
+               Boolean b = (Boolean) r;
+               boolean value = !(b.booleanValue());
+               return new Boolean(value);
+            }
 
             return r;
         } catch (IllegalAccessException ex) {
@@ -180,15 +187,21 @@ public class Usuario implements TableModel {
                 p.setCategoria((Categoria) o);
                 break;
         }
+        TableModelEvent e =  new TableModelEvent(this,TableModelEvent.UPDATE);
+        for (TableModelListener tableModelListener : this.listeners) {
+            tableModelListener.tableChanged(e);
+        }
         
     }
 
     public void addTableModelListener(TableModelListener tl) {
         //TODO
+        listeners.add(tl);
     }
 
     public void removeTableModelListener(TableModelListener tl) {
         //TODO
+        listeners.remove(tl);
     }
 
     

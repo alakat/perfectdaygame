@@ -86,6 +86,7 @@ public class ItemsFactory {
             item.setId(rs.getInt("id"));
             item.setTitulo(this.myvTitulos.get(rs.getInt("idMyVItem")));
             item.setUnidad(this.unidadesPeso.get(rs.getInt("idUnidad")));
+            item.setActualizado(false);
             items.add(item);
         }
         p.setItems(items);
