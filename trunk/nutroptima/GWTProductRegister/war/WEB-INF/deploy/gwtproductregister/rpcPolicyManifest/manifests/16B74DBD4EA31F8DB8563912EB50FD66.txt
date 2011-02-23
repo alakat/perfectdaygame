@@ -1,0 +1,2 @@
+serviceClass: es.nutroptima.productRegister.client.login.LoginService
+path: A0AE471A0BF7DFEE3143C69B37070FB0.gwt.rpc
