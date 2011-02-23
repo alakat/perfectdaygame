@@ -2,6 +2,11 @@
 
 
 /** Example rules used by the template application (remove for your app) */
+#nutroptima-header {
+	background: white url('n+_web.png') no-repeat;
+	height:80px;
+	margin:0px 0px 18px 0px;
+}
 h1 {
   font-size: 2em;
   font-weight: bold;
