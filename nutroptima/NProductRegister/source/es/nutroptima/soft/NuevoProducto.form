@@ -42,7 +42,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -54,7 +54,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="addButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jBorrarMicro" pref="135" max="32767" attributes="0"/>
+                          <Component id="jBorrarMicro" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lMensajesEmergentes" min="-2" pref="269" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
@@ -66,6 +66,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="myvLabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -166,20 +167,20 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="proteinasLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="proteinas" min="-2" pref="75" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="proteinas" min="-2" pref="51" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   <Component id="hidratosLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="hidratos" min="-2" pref="70" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="hidratos" min="-2" pref="54" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Component id="grasasLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="grasas" min="-2" pref="71" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="grasas" min="-2" pref="58" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Component id="kcaloriasLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="kCalorias" min="-2" pref="65" max="-2" attributes="0"/>
-                  <EmptySpace pref="190" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="kCalorias" min="-2" pref="58" max="-2" attributes="0"/>
+                  <EmptySpace pref="49" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -187,50 +188,21 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="proteinasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="proteinas" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="hidratosLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="hidratos" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="grasasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="grasas" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="kcaloriasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="kCalorias" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="proteinasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="kcaloriasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="grasas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="grasasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="23" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JFormattedTextField" name="proteinas">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="proteinas" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JFormattedTextField" name="hidratos">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="hidratos" noResource="true"/>
-            <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new Double(0.0)" type="code"/>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JFormattedTextField" name="grasas">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="grasas" noResource="true"/>
-            <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new Double(0.0)" type="code"/>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JFormattedTextField" name="kCalorias">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="kCalorias" noResource="true"/>
-            <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new Double(0.0)" type="code"/>
-            </Property>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="kcaloriasLabel">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="kcaloriasLabel.text"/>
@@ -253,6 +225,26 @@
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="proteinasLabel.text"/>
             <Property name="name" type="java.lang.String" value="proteinasLabel" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="proteinas">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="proteinas" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="hidratos">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="hidratos" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="grasas">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="grasas" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="kCalorias">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="kCalorias" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -279,19 +271,21 @@
                   <Component id="categoriaLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="listaCategorias" min="-2" pref="300" max="-2" attributes="0"/>
-                  <EmptySpace pref="39" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="29" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="2" attributes="0">
-                      <Component id="categoriaLabel" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="listaCategorias" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="nombreLabel" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="nombre" alignment="2" min="-2" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="1" groupAlignment="2" attributes="0">
+                          <Component id="categoriaLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="listaCategorias" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="nombreLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="nombre" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -357,7 +351,7 @@
                       <Component id="macroErrorLabel" alignment="0" min="-2" pref="500" max="-2" attributes="0"/>
                       <Component id="infoLabel" alignment="0" min="-2" pref="500" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="47" max="32767" attributes="0"/>
+                  <EmptySpace pref="30" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
