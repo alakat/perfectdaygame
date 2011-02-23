@@ -86,7 +86,7 @@ public class Bienvenida extends javax.swing.JPanel implements TableModelListener
         jLabel3 = new javax.swing.JLabel();
         jCambios = new javax.swing.JButton();
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(Bienvenida.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(nproductregister.NProductRegisterApp.class).getContext().getResourceMap(Bienvenida.class);
         setBackground(resourceMap.getColor("Form.background")); // NOI18N
         setName("Form"); // NOI18N
 
@@ -192,7 +192,7 @@ public class Bienvenida extends javax.swing.JPanel implements TableModelListener
                 .add(224, 224, 224))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 921, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 991, Short.MAX_VALUE)
                 .addContainerGap())
             .add(layout.createSequentialGroup()
                 .addContainerGap()

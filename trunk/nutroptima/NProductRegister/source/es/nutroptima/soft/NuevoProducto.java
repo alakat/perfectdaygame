@@ -88,14 +88,14 @@ public class NuevoProducto extends javax.swing.JPanel implements TableModelListe
         lMensajesEmergentes = new javax.swing.JLabel();
         jBorrarMicro = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        proteinas = new javax.swing.JFormattedTextField();
-        hidratos = new javax.swing.JFormattedTextField();
-        grasas = new javax.swing.JFormattedTextField();
-        kCalorias = new javax.swing.JFormattedTextField();
         kcaloriasLabel = new javax.swing.JLabel();
         grasasLabel = new javax.swing.JLabel();
         hidratosLabel = new javax.swing.JLabel();
         proteinasLabel = new javax.swing.JLabel();
+        proteinas = new javax.swing.JTextField();
+        hidratos = new javax.swing.JTextField();
+        grasas = new javax.swing.JTextField();
+        kCalorias = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         listaCategorias = new javax.swing.JComboBox();
         nombre = new javax.swing.JTextField();
@@ -111,7 +111,7 @@ public class NuevoProducto extends javax.swing.JPanel implements TableModelListe
         setName("Form"); // NOI18N
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(NuevoProducto.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(nproductregister.NProductRegisterApp.class).getContext().getResourceMap(NuevoProducto.class);
         panelIems.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("panelIems.border.title"))); // NOI18N
         panelIems.setName("panelIems"); // NOI18N
 
@@ -173,7 +173,7 @@ public class NuevoProducto extends javax.swing.JPanel implements TableModelListe
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(addButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jBorrarMicro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                        .add(jBorrarMicro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(lMensajesEmergentes, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 269, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(59, 59, 59))))
@@ -181,6 +181,7 @@ public class NuevoProducto extends javax.swing.JPanel implements TableModelListe
         panelIemsLayout.setVerticalGroup(
             panelIemsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(panelIemsLayout.createSequentialGroup()
+                .add(72, 72, 72)
                 .add(panelIemsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(panelIemsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(myvLabel)
@@ -197,17 +198,6 @@ public class NuevoProducto extends javax.swing.JPanel implements TableModelListe
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
         jPanel1.setName("jPanel1"); // NOI18N
 
-        proteinas.setName("proteinas"); // NOI18N
-
-        hidratos.setName("hidratos"); // NOI18N
-        hidratos.setValue(new Double(0.0));
-
-        grasas.setName("grasas"); // NOI18N
-        grasas.setValue(new Double(0.0));
-
-        kCalorias.setName("kCalorias"); // NOI18N
-        kCalorias.setValue(new Double(0.0));
-
         kcaloriasLabel.setText(resourceMap.getString("kcaloriasLabel.text")); // NOI18N
         kcaloriasLabel.setName("kcaloriasLabel"); // NOI18N
 
@@ -220,6 +210,14 @@ public class NuevoProducto extends javax.swing.JPanel implements TableModelListe
         proteinasLabel.setText(resourceMap.getString("proteinasLabel.text")); // NOI18N
         proteinasLabel.setName("proteinasLabel"); // NOI18N
 
+        proteinas.setName("proteinas"); // NOI18N
+
+        hidratos.setName("hidratos"); // NOI18N
+
+        grasas.setName("grasas"); // NOI18N
+
+        kCalorias.setName("kCalorias"); // NOI18N
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -228,34 +226,34 @@ public class NuevoProducto extends javax.swing.JPanel implements TableModelListe
                 .addContainerGap()
                 .add(proteinasLabel)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(proteinas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(proteinas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 51, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(37, 37, 37)
                 .add(hidratosLabel)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(hidratos, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 70, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(hidratos, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 54, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(38, 38, 38)
                 .add(grasasLabel)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(grasas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(grasas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 58, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(28, 28, 28)
                 .add(kcaloriasLabel)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(kCalorias, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 65, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(190, Short.MAX_VALUE))
+                .add(18, 18, 18)
+                .add(kCalorias, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 58, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(proteinasLabel)
                     .add(proteinas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(hidratosLabel)
                     .add(hidratos, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(grasasLabel)
-                    .add(grasas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(kcaloriasLabel)
                     .add(kCalorias, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(proteinasLabel))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .add(kcaloriasLabel)
+                    .add(grasas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(grasasLabel))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 740, 70));
@@ -287,17 +285,18 @@ public class NuevoProducto extends javax.swing.JPanel implements TableModelListe
                 .add(categoriaLabel)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(listaCategorias, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 300, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
-                    .add(categoriaLabel)
-                    .add(listaCategorias, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(nombreLabel)
-                    .add(nombre, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
+                        .add(categoriaLabel)
+                        .add(listaCategorias, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(nombreLabel))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, nombre, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -343,7 +342,7 @@ public class NuevoProducto extends javax.swing.JPanel implements TableModelListe
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(macroErrorLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 500, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(infoLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 500, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -440,9 +439,9 @@ public class NuevoProducto extends javax.swing.JPanel implements TableModelListe
     private javax.swing.JButton addButton;
     private javax.swing.JButton cancel;
     private javax.swing.JLabel categoriaLabel;
-    private javax.swing.JFormattedTextField grasas;
+    private javax.swing.JTextField grasas;
     private javax.swing.JLabel grasasLabel;
-    private javax.swing.JFormattedTextField hidratos;
+    private javax.swing.JTextField hidratos;
     private javax.swing.JLabel hidratosLabel;
     private javax.swing.JLabel infoLabel;
     private javax.swing.JButton jBorrarMicro;
@@ -450,7 +449,7 @@ public class NuevoProducto extends javax.swing.JPanel implements TableModelListe
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JFormattedTextField kCalorias;
+    private javax.swing.JTextField kCalorias;
     private javax.swing.JLabel kcaloriasLabel;
     private javax.swing.JLabel lMensajesEmergentes;
     private javax.swing.JComboBox listaCategorias;
@@ -459,7 +458,7 @@ public class NuevoProducto extends javax.swing.JPanel implements TableModelListe
     private javax.swing.JTextField nombre;
     private javax.swing.JLabel nombreLabel;
     private javax.swing.JPanel panelIems;
-    private javax.swing.JFormattedTextField proteinas;
+    private javax.swing.JTextField proteinas;
     private javax.swing.JLabel proteinasLabel;
     private javax.swing.JButton saveButton;
     private javax.swing.JTable tablaVyM;
