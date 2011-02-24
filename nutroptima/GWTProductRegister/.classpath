@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="/Applications/Helios/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.2.0_2.2.0.v201102111811/gwt-2.2.0/gwt-user.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/Applications/Helios/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.2.0_2.2.0.v201102111811/gwt-2.2.0/doc/javadoc/"/>
@@ -114,6 +114,6 @@
 			<attribute name="javadoc_location" value="file:/Applications/Helios/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.4.2_1.4.2.v201102111811/appengine-java-sdk-1.4.2/docs/javadoc/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/salmaxcraft/Documents/Java/GWT/gwt-2.1.0/samples/DynaTableRf/war/WEB-INF/lib/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
