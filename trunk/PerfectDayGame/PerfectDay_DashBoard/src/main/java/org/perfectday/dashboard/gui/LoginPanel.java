@@ -53,7 +53,12 @@ public class LoginPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Password");
 
-        tfLogin.setText("perfectday.game");
+        tfLogin.setText("miguel.developer.game");
+        tfLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfLoginActionPerformed(evt);
+            }
+        });
         tfLogin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfLoginKeyPressed(evt);
@@ -221,6 +226,10 @@ private void pfPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
         }
     }
 }//GEN-LAST:event_pfPasswordKeyPressed
+
+    private void tfLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfLoginActionPerformed
   /**/
     public XMPPConnection getConnection() {
         return connection;
