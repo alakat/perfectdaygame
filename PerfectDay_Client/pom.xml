@@ -17,6 +17,14 @@
   	<id>xtream</id>
   	<url>http://repository.codehaus.org</url>
   </repository>
+  <repository>
+      <id>official1</id>
+      <url>http://repo.maven.apache.org </url>
+  </repository>
+  <repository>
+      <id>official2</id>
+      <url>http://repo.maven.apache.org/maven2/ </url>
+  </repository>
   </repositories>
   
   <build>
