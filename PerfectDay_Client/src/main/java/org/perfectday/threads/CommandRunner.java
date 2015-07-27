@@ -5,20 +5,26 @@
 
 package org.perfectday.threads;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Properties;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
-
 /**
  *
  * Esta clase permite apilar y ejecutar comando provenientes del sistema sin acusar
  * interbloqueos
  * @author Miguel Angel Lopez Montellano (alakat@gmail.com)
  */
+import org.apache.log4j.PropertyConfigurator;
 public class CommandRunner implements Runnable {
 
+    static {
+        System.out.println("::"+new File(".").getAbsolutePath());
+        PropertyConfigurator.configure("log4j.properties");
+    }
     private static Logger logger = Logger.getLogger(CommandRunner.class);
     private List<Command> commands;
     private boolean alive;
