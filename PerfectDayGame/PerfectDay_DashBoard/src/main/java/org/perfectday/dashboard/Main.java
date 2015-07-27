@@ -5,6 +5,7 @@
 
 package org.perfectday.dashboard;
 
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.perfectday.dashboard.gui.DashBoard;
 import org.perfectday.dashboard.threads.DashBoardThreadGroup;
@@ -15,7 +16,8 @@ import org.perfectday.dashboard.threads.DashBoardThreadGroup;
  */
 public class Main implements Runnable {
 
-    private static Logger logger = Logger.getLogger(Main.class);
+    
+    private static Logger logger = LogManager.getLogger(Main.class);
     public static void main(String args[] )throws Exception{
         Thread t = new Thread(DashBoardThreadGroup.getInstance(),new Main(),"DashBoard-Main");
         t.start();
