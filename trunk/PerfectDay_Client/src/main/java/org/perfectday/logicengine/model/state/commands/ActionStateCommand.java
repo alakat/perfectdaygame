@@ -16,6 +16,13 @@ public class ActionStateCommand extends StateCommand{
 
     private String effect;
     private Object data;
+
+    public ActionStateCommand() {
+    }
+    
+    
+    
+    
     public ActionStateCommand(State state, Mini mini,String effect,Object data) {
         super(state, mini);
         this.effect = effect;

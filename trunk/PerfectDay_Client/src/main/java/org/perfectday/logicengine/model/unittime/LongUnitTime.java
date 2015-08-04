@@ -10,6 +10,11 @@ import org.perfectday.logicengine.model.activationstack.*;
 public class LongUnitTime extends UnitTime {
 
     private long value;
+
+    public LongUnitTime() {
+    }
+    
+    
     
     public LongUnitTime (long ut) {
         this.value = ut;

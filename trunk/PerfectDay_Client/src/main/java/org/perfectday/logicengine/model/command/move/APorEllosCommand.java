@@ -14,6 +14,12 @@ import org.perfectday.logicengine.model.ReferenceObject;
 public class APorEllosCommand  extends MovementCommand{
 
     private boolean successful;
+
+    public APorEllosCommand() {
+    }
+    
+    
+    
     public APorEllosCommand(ReferenceObject mini,
             ReferenceObject targetField,boolean successful) {
         super(mini, targetField);

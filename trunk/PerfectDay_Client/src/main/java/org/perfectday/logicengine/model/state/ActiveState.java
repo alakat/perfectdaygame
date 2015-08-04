@@ -17,6 +17,12 @@ import org.perfectday.logicengine.model.unittime.UnitTime;
 public abstract class ActiveState extends State {
 
     private UnitTime delayEffect;
+
+    public ActiveState() {
+    }
+    
+    
+    
     public ActiveState(String name,Mini mini,UnitTime ut,UnitTime delayEffect) {
         super(name,mini,ut);
         this.delayEffect =delayEffect;

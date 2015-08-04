@@ -18,6 +18,11 @@ public class StateCommand extends Command {
     private State state;
     private Mini mini;
 
+    public StateCommand() {
+    }
+    
+    
+
     public StateCommand(State state, Mini mini) {
         this.state = state;
         this.mini = mini;

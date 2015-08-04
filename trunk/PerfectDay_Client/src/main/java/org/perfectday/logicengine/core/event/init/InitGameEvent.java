@@ -12,6 +12,10 @@ import org.perfectday.logicengine.core.event.game.GameEvent;
  * @author Lobo <inmortalland83@gmail.com>
  */
 public class InitGameEvent extends GameEvent{
+
+    public InitGameEvent() {
+    }
+    
     
 
 }

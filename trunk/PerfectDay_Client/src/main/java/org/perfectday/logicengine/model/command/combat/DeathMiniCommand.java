@@ -15,6 +15,10 @@ public class DeathMiniCommand extends Command {
 
     private String miniDeath;
 
+    public DeathMiniCommand() {
+    }
+
+    
     public DeathMiniCommand(String miniDeath) {
         this.miniDeath = miniDeath;
     }

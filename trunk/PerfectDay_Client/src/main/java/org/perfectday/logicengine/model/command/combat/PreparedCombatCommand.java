@@ -16,6 +16,12 @@ import org.perfectday.logicengine.model.minis.action.combat.CombatActionMini;
 public class PreparedCombatCommand extends Command {
     
     private String msg;
+
+    public PreparedCombatCommand() {
+    }
+    
+    
+    
     public PreparedCombatCommand(Mini mini, CombatActionMini action) {
         msg = mini.getName()+" prepara un ataque con "+action.getName()+"!";
     }

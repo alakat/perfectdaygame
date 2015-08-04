@@ -19,6 +19,11 @@ public class MovedMiniEvent extends Event{
     private Field dest;
     private UnitTime utMoved;
 
+    public MovedMiniEvent() {
+    }
+
+    
+    
     public MovedMiniEvent(Mini mini, Field dest) {
         this.mini = mini;
         this.dest = dest;

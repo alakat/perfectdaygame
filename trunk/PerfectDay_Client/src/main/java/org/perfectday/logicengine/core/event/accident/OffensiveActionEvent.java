@@ -20,6 +20,11 @@ public class OffensiveActionEvent extends AccidentEvent {
     private InstanceCombat instanceCombat;
     private List<Command> commands;
 
+    public OffensiveActionEvent() {
+        super(null);
+    }
+
+    
     public OffensiveActionEvent(UnitTime unitTime, InstanceCombat instanceCombat) {
         super(unitTime);
         this.instanceCombat = instanceCombat;

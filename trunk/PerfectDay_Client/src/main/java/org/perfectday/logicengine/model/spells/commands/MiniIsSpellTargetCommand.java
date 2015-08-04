@@ -17,6 +17,12 @@ public class MiniIsSpellTargetCommand extends Command{
     private Mini mini;
     private Spell spell;
 
+    public MiniIsSpellTargetCommand() {
+    }
+
+    
+    
+    
     public MiniIsSpellTargetCommand(Mini mini, Spell spell) {
         this.mini = mini;
         this.spell = spell;

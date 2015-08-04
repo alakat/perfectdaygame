@@ -15,6 +15,11 @@ import org.perfectday.logicengine.model.minis.support.Support;
  */
 public class ActiveOfensiveSupportCommand extends SupportCombat {
 
+    public ActiveOfensiveSupportCommand() {
+    }
+
+    
+    
     public ActiveOfensiveSupportCommand(Mini mini, Support support) {
         super(mini, support);
     }

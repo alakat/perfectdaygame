@@ -24,6 +24,12 @@ public class CombatResolutionCommand extends Command{
     private Mini atacker;
     private Mini defensor;
 
+    public CombatResolutionCommand() {
+    }
+    
+    
+    
+
     public CombatResolutionCommand(Mini atacker,
             Mini defender, 
             double damage,

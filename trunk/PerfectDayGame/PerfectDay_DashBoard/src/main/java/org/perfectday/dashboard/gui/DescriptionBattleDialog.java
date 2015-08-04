@@ -47,15 +47,15 @@ public class DescriptionBattleDialog extends javax.swing.JDialog {
 
         jLabel1.setText("Puntos por Jugador");
 
-        jLabel2.setText("Misión de la batalla");
+        jLabel2.setText("Misi?n de la batalla");
 
-        jLabel3.setText("Batalla pública");
+        jLabel3.setText("Batalla p?blica");
 
         tfBattlePoint.setText("100");
-        tfBattlePoint.setToolTipText("Número de punto máximo que se pueden emplear en los ejercitos de los jugadores");
+        tfBattlePoint.setToolTipText("N?mero de punto m?ximo que se pueden emplear en los ejercitos de los jugadores");
 
-        cbMision.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Búsqueda y destrucción" }));
-        cbMision.setToolTipText("Misión ha desarrollar por los jugadores");
+        cbMision.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Busqueda y destruccion" }));
+        cbMision.setToolTipText("Misi?n ha desarrollar por los jugadores");
 
         chPublic.setEnabled(false);
 

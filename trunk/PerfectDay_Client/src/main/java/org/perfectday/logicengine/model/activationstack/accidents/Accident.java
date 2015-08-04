@@ -17,6 +17,10 @@ public abstract class Accident extends ReferenceObject implements Comparable {
     
     private UnitTime mUnitTime;
 
+    public Accident() {
+    }
+
+    
     public Accident(UnitTime mUnitTime) {
         this.mUnitTime = mUnitTime;
     }

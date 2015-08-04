@@ -22,6 +22,12 @@ public class EndTurnEvent extends GameEvent{
     private Mini mini;
     private Activation activation;
 
+    public EndTurnEvent() {
+    }
+
+    
+    
+    
     public Activation getActivation() {
         return activation;
     }

@@ -16,6 +16,11 @@ import org.perfectday.logicengine.model.spells.Spell;
  */
 public class MagicCureEffectFunction extends EffectFunction {
 
+    public MagicCureEffectFunction() {
+    }
+
+    
+    
     
     /**
      * Curación simple

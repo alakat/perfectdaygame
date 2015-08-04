@@ -17,6 +17,10 @@ public class SetDamageCommand extends Command {
     private ReferenceObject mini;
     private double damage;
 
+    public SetDamageCommand() {
+    }
+
+    
     public SetDamageCommand(ReferenceObject mini, double damage) {
         this.mini = mini;
         this.damage = damage;

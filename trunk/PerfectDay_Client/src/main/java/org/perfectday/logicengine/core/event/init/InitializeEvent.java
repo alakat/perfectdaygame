@@ -15,6 +15,11 @@ public class InitializeEvent extends GameEvent{
      private String players; /* this will contain the list of players parsed in XML */
      private String battleField; /* this will contain the battlefield parsed in XML */
 
+    public InitializeEvent() {
+    }
+
+     
+     
     public String getBattelField() {
         return battleField;
     }

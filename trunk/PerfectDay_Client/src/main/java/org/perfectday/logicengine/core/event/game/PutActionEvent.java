@@ -16,6 +16,11 @@ public class PutActionEvent extends Event {
     
     private Activation activation;
 
+    public PutActionEvent() {
+    }
+    
+    
+
     public Activation getActivation() {
         return activation;
     }

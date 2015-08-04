@@ -14,6 +14,11 @@ import org.perfectday.logicengine.model.state.State;
  */
 public class ClearStateCommand extends StateCommand {
 
+    public ClearStateCommand() {
+    }
+    
+    
+
     public ClearStateCommand(State state, Mini mini) {
         super(state, mini);
     }

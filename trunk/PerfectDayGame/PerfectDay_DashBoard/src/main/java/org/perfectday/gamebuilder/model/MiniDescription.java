@@ -18,6 +18,12 @@ public class MiniDescription {
     private double cost;
     private String description;
 
+    public MiniDescription() {
+        this.level = MiniLevel.SIMPLE_SOLDIER;
+    }
+    
+    
+
     public MiniDescription(String name,double c, String desc) {
       this.mini = name;
       this.level = MiniLevel.SIMPLE_SOLDIER;

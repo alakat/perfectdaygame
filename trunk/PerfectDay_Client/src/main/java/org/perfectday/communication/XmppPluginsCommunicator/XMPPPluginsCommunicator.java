@@ -121,6 +121,7 @@ public class XMPPPluginsCommunicator extends PlugCommunication {
             org.jivesoftware.smack.packet.Message mes = new org.jivesoftware.smack.packet.Message();
             String data = new XStream().toXML(message);
             mes.setProperty(MasterCommunication.NAME_GAME_MESSAGE, data);
+            logger.info(message);
             this.chat.sendMessage(mes);
         } catch (XMPPException ex) {
             //TODO informar a la interfaz

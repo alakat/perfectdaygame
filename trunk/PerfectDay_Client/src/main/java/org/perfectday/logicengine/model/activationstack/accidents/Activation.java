@@ -28,6 +28,12 @@ public class Activation extends Accident {
      */
     private Mini mini;
 
+    public Activation() {
+    }
+
+    
+    
+    
     /**
      * 
      * @param mUnitTime

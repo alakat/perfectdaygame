@@ -18,6 +18,14 @@ import org.perfectday.logicengine.model.state.State;
 public class ActivationStateEvent extends StateEvent {
 
     private List<Command> commands;
+
+    public ActivationStateEvent() {
+        
+    }
+    
+    
+    
+    
     public ActivationStateEvent(State state, Mini affectedMini) {
         super(state, affectedMini);
         this.commands = new ArrayList<Command>();

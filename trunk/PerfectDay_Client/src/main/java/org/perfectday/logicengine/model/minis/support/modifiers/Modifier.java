@@ -15,6 +15,7 @@ import org.perfectday.logicengine.model.minis.Mini;
 public abstract class Modifier {
     protected Number number;
 
+    
     public Modifier(Number number) {
         this.number = number;
     }

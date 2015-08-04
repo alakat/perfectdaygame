@@ -13,6 +13,11 @@ import org.perfectday.logicengine.model.command.Command;
  */
 public class NoPowerMagicToCast extends Command {
 
+    public NoPowerMagicToCast() {
+    }
+
+    
+    
     @Override
     public String info() {
         return "No pudo lanzar el conjuro le faltab fuerza magica";

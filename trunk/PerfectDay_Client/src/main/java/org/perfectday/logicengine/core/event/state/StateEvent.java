@@ -19,6 +19,12 @@ public class StateEvent extends Event {
     private State state;
     private Mini affectedMini;
 
+    public StateEvent() {
+    }
+
+    
+    
+    
     public StateEvent(State state, Mini affectedMini) {
         this.state = state;
         this.affectedMini = affectedMini;

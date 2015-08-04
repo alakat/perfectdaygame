@@ -24,6 +24,11 @@ import org.perfectday.logicengine.model.minis.support.modifiers.Modifier;
 public class PassiveSupport extends Support {
     private Modifier modifier;
 
+    public PassiveSupport() {
+    }
+
+    
+    
     public PassiveSupport(SupportType supportType,
             CombatKeep supportKeep, 
             boolean spread, 

@@ -32,7 +32,7 @@ public class CombatInformationPanel extends javax.swing.JPanel {
    public void setImage(String urlImg){
         this.backgroundImage = Toolkit.getDefaultToolkit().getImage(
                 CombatInformationPanel.class.getClassLoader().
-                getResource("./org/perfectday/main/laboratocGUI/model/"+urlImg));
+                getResource("assets/"+urlImg));
    }
     
     /** This method is called from within the constructor to

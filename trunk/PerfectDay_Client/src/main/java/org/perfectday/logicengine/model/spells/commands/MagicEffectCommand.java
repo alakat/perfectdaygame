@@ -16,6 +16,13 @@ public class MagicEffectCommand  extends Command{
     
     private Mini mini;
     private String efect;
+    
+    
+
+    public MagicEffectCommand() {
+    }
+    
+    
 
     public MagicEffectCommand(Mini mini, String efect) {
         this.mini = mini;

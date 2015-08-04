@@ -23,6 +23,11 @@ public class PasiveState  extends State{
     private MiniAttribute attribute;
     private Number modifier;
 
+    public PasiveState() {
+    }
+    
+    
+
     public PasiveState( MiniAttribute attribute, Number modifier,String name,Mini mini,UnitTime ut) {    
         super(name,mini,ut);
         this.attribute = attribute;
