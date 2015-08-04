@@ -18,6 +18,12 @@ public class AddStateCommand extends Command{
     private State state;
     private ReferenceObject mini;
 
+    public AddStateCommand() {
+    }
+
+    
+    
+    
     public AddStateCommand(State state, ReferenceObject mini) {
         this.state = state;
         this.mini = mini;

@@ -46,10 +46,10 @@ public class ActivationStackPanel extends javax.swing.JPanel {
         initComponents();
         this.imgActivationMini = Toolkit.getDefaultToolkit().getImage(
                 CombatInformationPanel.class.getClassLoader().
-                getResource("org/perfectday/main/laboratocGUI/model/"+IMG_ACTIVATION));
+                getResource("assets/"+IMG_ACTIVATION));
         this.imgCombatAction =Toolkit.getDefaultToolkit().getImage(
                 CombatInformationPanel.class.getClassLoader().
-                getResource("org/perfectday/main/laboratocGUI/model/"+IMG_COMBAT));
+                getResource("assets/"+IMG_COMBAT));
         
     }
 
@@ -142,7 +142,7 @@ public class ActivationStackPanel extends javax.swing.JPanel {
     //                debug("Index"+index);
             if(index>4)
                 return null;
-            if( index > this.getAccident().size())
+            if( index >= this.getAccident().size())
                 return null;
             return this.getAccident().get(index);
         }catch(Exception ex){
@@ -153,12 +153,12 @@ public class ActivationStackPanel extends javax.swing.JPanel {
     }
     @Override
     public synchronized  void paint(Graphics g) {
-        logger.info("paint");
+        logger.trace("paint");
         int i = 0;
         //Limpia lo anteriormente pintado para no solapar eventos
         g.clearRect(0, 0, 600, 600);
         if( getAccident()!=null){  
-            logger.info("Eventos : "+getAccident().size());
+            logger.trace("Eventos : "+getAccident().size());
                 for(int j =0 ;j<getAccident().size(); j++ ){
                     Accident object = getAccident().get(j);
                     paintEvent(g, i,object);    

@@ -19,6 +19,11 @@ import org.perfectday.message.model.Message;
     private Mini target;
     private ActionMini action;
 
+    public ActionEvent() {
+    }
+
+    
+    
     public ActionEvent(Mini worker, Mini target, ActionMini action) {
         this.worker = worker;
         this.target = target;

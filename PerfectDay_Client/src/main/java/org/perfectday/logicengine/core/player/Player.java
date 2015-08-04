@@ -32,6 +32,11 @@ public class Player extends ReferenceObject{
     private Brain brain;
     private boolean local;
 
+    public Player() {
+    }
+
+    
+    
 
     public Player(String name,boolean ia) {
         this.name = name;

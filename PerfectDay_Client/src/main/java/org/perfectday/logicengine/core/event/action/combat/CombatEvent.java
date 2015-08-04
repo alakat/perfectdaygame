@@ -21,6 +21,12 @@ public class CombatEvent  extends ActionEvent{
 
     private boolean conterAtack;
     private List<Command> commands;
+
+    public CombatEvent() {
+    }
+    
+    
+    
     public CombatEvent(Mini atacker, Mini target, CombatActionMini action,Boolean conterAtack) {        
         super(atacker, target, action);
         this.conterAtack = conterAtack.booleanValue();

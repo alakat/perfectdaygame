@@ -17,6 +17,11 @@ import org.perfectday.logicengine.model.spells.Spell;
  */
 public class NothingMagicEffectFunction extends EffectFunction{
 
+    public NothingMagicEffectFunction() {
+    }
+
+    
+    
     @Override
     protected void doAbstractEffect(List<Command> commands, double impactModification, Mini caster, Spell spell, Mini target) {
         //Do nothing

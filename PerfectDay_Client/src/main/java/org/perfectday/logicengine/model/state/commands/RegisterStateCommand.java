@@ -14,6 +14,11 @@ import org.perfectday.logicengine.model.state.State;
  */
 public class RegisterStateCommand extends StateCommand{
 
+    public RegisterStateCommand() {
+    }
+
+    
+    
     public RegisterStateCommand(State state, Mini mini) {
         super(state, mini);
     }

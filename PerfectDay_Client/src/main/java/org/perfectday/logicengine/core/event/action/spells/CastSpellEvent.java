@@ -17,6 +17,12 @@ import org.perfectday.logicengine.model.spells.InstanceCastSpell;
 public class CastSpellEvent extends ActionEvent {
 
     private InstanceCastSpell instanceCastSpell;
+
+    public CastSpellEvent() {
+    }
+    
+    
+    
     
     public CastSpellEvent(Mini worker, Mini target, ActionMini action, InstanceCastSpell instanceCastSpell) {
         super(worker, target, action);

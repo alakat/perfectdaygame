@@ -20,6 +20,10 @@ public class StateCombatActionMini extends CombatActionMini {
 
     private State state;
 
+    public StateCombatActionMini() {
+    }
+    
+   
     public StateCombatActionMini(String name) {
         super(name);
     }

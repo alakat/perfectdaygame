@@ -16,6 +16,12 @@ public class EndBattleEvent extends Event{
     
     private String msgWiner;
 
+    public EndBattleEvent() {
+    }
+    
+    
+    
+
     public String getMsgWiner() {
         return msgWiner;
     }

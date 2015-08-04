@@ -24,6 +24,8 @@ public class PoisonedState extends ActiveState{
 
     private static final UnitTime POISONED_STATE_CLEAR_TIME = new LongUnitTime(30l);
     private static final UnitTime POISONED_STATE_DELAY_TIME = new LongUnitTime(10l);
+        
+    
     public PoisonedState( Mini mini) {
         super("Poisond", mini,POISONED_STATE_CLEAR_TIME,POISONED_STATE_DELAY_TIME);
     }

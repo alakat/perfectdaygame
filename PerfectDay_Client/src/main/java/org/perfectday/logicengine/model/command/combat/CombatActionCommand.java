@@ -16,6 +16,10 @@ import org.perfectday.logicengine.model.minis.action.combat.CombatActionMini;
 public class CombatActionCommand extends Command{
     private String msg;
 
+    public CombatActionCommand() {
+    }
+
+    
     public CombatActionCommand(Mini attacker, Mini defender, CombatActionMini atack) {
         
         this.msg = attacker.getName()+" golpe con "+atack.getName()+

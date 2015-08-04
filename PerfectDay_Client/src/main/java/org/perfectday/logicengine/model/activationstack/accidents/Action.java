@@ -24,5 +24,7 @@ public class Action extends Accident{
     public void doAccidentWithEvent(Game game) throws Exception {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    
 }
 

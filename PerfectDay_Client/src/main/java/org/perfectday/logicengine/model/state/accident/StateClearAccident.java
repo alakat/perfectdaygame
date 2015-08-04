@@ -24,6 +24,11 @@ import org.perfectday.logicengine.model.unittime.UnitTime;
 public class StateClearAccident extends StateAccident{
     private  Mini mini;
 
+    public StateClearAccident() {
+    }
+    
+    
+
     public StateClearAccident(State state, UnitTime mUnitTime, Mini mini) {
         super(state, mUnitTime);
         this.mini = mini;        

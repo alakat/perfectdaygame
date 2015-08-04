@@ -31,9 +31,10 @@ public class DashBoard extends javax.swing.JFrame {
 
     
     /** Creates new form DashBoard */
-    public DashBoard() {
+    public DashBoard(String userInit, String passInit) {
         initComponents();
         LoginPanel loginPanel = new LoginPanel(this);
+        loginPanel.setInitialInfo(userInit, passInit);
         JDialog dialog = new JDialog(this, "Login", true);
         dialog.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint());
         loginPanel.setParent(dialog);
@@ -47,7 +48,7 @@ public class DashBoard extends javax.swing.JFrame {
         for (RosterEntry rosterEntry : loginPanel.getRoster().getEntries()) {
             Presence presence = loginPanel.getRoster().getPresence(rosterEntry.getUser());
             System.out.println(rosterEntry.getUser()+"-->"+presence.getType()+":"+presence.getStatus()  );
-            this.getWarRoom1().addChat(rosterEntry.getUser());
+            this.getWarRoom1().addChat(rosterEntry);
             
         }
        

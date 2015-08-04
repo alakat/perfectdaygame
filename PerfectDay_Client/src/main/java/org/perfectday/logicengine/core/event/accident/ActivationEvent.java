@@ -16,6 +16,13 @@ public class ActivationEvent extends AccidentEvent {
 
     private Mini activateMini;
 
+    public ActivationEvent() {
+        super(null);
+    }
+
+    
+    
+    
     public ActivationEvent(UnitTime unitTime, Mini activateMini) {
         super(unitTime);
         this.activateMini = activateMini;

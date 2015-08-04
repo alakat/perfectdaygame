@@ -43,6 +43,13 @@ public class Spell {
     private FailEffectFunction failEffectFunction;
     private int magicPointCost;
 
+    public Spell() {
+    }
+
+    
+    
+    
+    
     public Spell(String name, HitFunction hitfunction, EffectFunction effectFunction, SpellType spellType, SpellElement spellElement, CombatKeep spellKeep, CombatKeep spellEffectArea, UnitTime spellCastTime, State spellState, double failProbability, FailEffectFunction failEffectFunction, int magicPointCost) {
         this.name = name;
         this.hitfunction = hitfunction;

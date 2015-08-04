@@ -17,7 +17,15 @@ public class ActionMini  {
     
     private Object actionData; //información para realizar las acciones
     private String name;
+    
+    
 
+    public ActionMini() {
+        this.name=""+System.currentTimeMillis();
+    }
+
+    
+    
     public ActionMini(String name) {
         this.name = name;
     }

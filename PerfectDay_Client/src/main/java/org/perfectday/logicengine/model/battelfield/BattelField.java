@@ -25,6 +25,11 @@ public class BattelField {
     private int higth;
     private int weidth;
 
+    public BattelField() {
+    }
+
+    
+    
     public BattelField(int higth, int weidth) {
         this.higth = higth;
         this.weidth = weidth;

@@ -19,6 +19,11 @@ import org.perfectday.logicengine.model.unittime.UnitTime;
 public abstract class StateAccident extends Accident{
     
     private State state;
+
+    public StateAccident() {
+    }
+    
+    
     
     public StateAccident(State state,UnitTime mUnitTime) {
         super(mUnitTime);

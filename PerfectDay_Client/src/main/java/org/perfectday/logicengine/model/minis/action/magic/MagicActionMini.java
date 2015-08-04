@@ -13,6 +13,12 @@ import org.perfectday.logicengine.model.minis.action.ActionMini;
  */
 public class MagicActionMini extends ActionMini {
 
+    public MagicActionMini() {
+        super(""+System.currentTimeMillis());
+    }
+
+    
+    
     public MagicActionMini(String name) {
         super(name);
     }

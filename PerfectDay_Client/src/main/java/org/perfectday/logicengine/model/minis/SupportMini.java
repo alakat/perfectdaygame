@@ -15,6 +15,12 @@ import org.perfectday.logicengine.model.minis.support.Support;
  */
 public class SupportMini extends Mini{
 
+    public SupportMini() {
+        super(""+System.currentTimeMillis());
+    }
+
+    
+    
     public SupportMini(int atak,
             int defense, 
             int strength, 

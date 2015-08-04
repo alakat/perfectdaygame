@@ -14,6 +14,7 @@ import org.perfectday.logicengine.model.minis.Mini;
 public class AtackerModifier extends Modifier{
 
     
+    
     public AtackerModifier(Number number) {
         super(number);        
     }

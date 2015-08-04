@@ -37,6 +37,7 @@ public class MessageChatListener implements MessageListener {
     }
     
     public void processMessage(Chat chat, Message mess) {
+        Logger.getLogger(MessageChatListener.class).info(mess.getType()+":"+mess);
         if(mess.getType() == Message.Type.chat){
             String from = mess.getFrom();            
             from = from.substring(0, from.indexOf("/"));

@@ -20,6 +20,7 @@ import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 import org.apache.log4j.Logger;
 import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
@@ -40,13 +41,15 @@ public class WarRoom extends javax.swing.JPanel {
 
     private static final Logger logger = Logger.getLogger(WarRoom.class);
     private XMPPConnection connection;
-    private Map<String,Chat> chats;
-    private Map<String,ChatPanel> chatPannels;
+    private Map<RosterEntry,Chat> chats;
+    private Map<RosterEntry,ChatPanel> chatPannels;
+    private List<RosterEntry> rosterEntries;
     private DashBoard dashBoard;
     /** Creates new form WarRoom */
     public WarRoom() {
         initComponents();
-        chatPannels = new HashMap<String,ChatPanel>();
+        chatPannels = new HashMap<RosterEntry,ChatPanel>();
+        this.rosterEntries = new ArrayList<RosterEntry>();
     }
 
     
@@ -68,6 +71,8 @@ public class WarRoom extends javax.swing.JPanel {
         }
         return -1;
     }
+
+    
     
     public class ListRosterModel implements ListModel{
 
@@ -103,21 +108,31 @@ public class WarRoom extends javax.swing.JPanel {
 
 
     public void incommingMessage(String user, String body) {
-        if (this.chatPannels.containsKey(user)){
-            this.chatPannels.get(user).printMessage(body,user);
+        RosterEntry rosterEntry = this.getRosterEntryByUser(user);
+        if (this.chatPannels.containsKey(rosterEntry)){
+            this.chatPannels.get(rosterEntry).printMessage(body,rosterEntry.getName());
         }else{
-            ChatPanel cp = new ChatPanel(chats.get(user));        
-            this.chatTabbedPane.addTab(user, cp);
-            this.chatPannels.put(user, cp);
-            cp.printMessage(body, user);
+            ChatPanel cp = new ChatPanel(chats.get(rosterEntry));        
+            this.chatTabbedPane.addTab(rosterEntry.getName(), cp);
+            this.chatPannels.put(rosterEntry, cp);
+            cp.printMessage(body, rosterEntry.getName());
 
         }
     }
 
     void addChat(String user) {
-        this.chats.put(user,
-                this.connection.getChatManager().createChat(user, new MessageChatListener(this)));
-        this.rosters.add(user);
+        throw new RuntimeException("Método en desuso");
+//        this.chats.put(null,
+//                this.connection.getChatManager().createChat(user, new MessageChatListener(this)));
+//        this.rosters.add(user);
+    }
+    
+    public void addChat(RosterEntry rosterEntry) {
+        this.chats.put(rosterEntry,
+                this.connection.getChatManager().createChat(rosterEntry.getUser(), new MessageChatListener(this)));
+        this.rosterEntries.add(rosterEntry);
+        this.rosters.add(rosterEntry.getName());
+        
     }
 
     /** This method is called from within the constructor to
@@ -147,14 +162,15 @@ public class WarRoom extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 private void rostersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rostersActionPerformed
-    String user = this.rosters.getSelectedItem();
-    if (exitsChat(user)){
-        int index = indexTab(user);
+    int index = this.rosters.getSelectedIndex();
+    RosterEntry rosterEntry  = this.getRosterEntryByIndex(index);
+    
+    if (exitsChat(rosterEntry.getName())){
         this.dashBoard.getLAyuda().setText("EL usuario ya estÃ¡ creado");
     }else{
-        ChatPanel cp = new ChatPanel(chats.get(user));        
-        this.chatTabbedPane.addTab(user, cp);
-        this.chatPannels.put(user, cp);
+        ChatPanel cp = new ChatPanel(chats.get(rosterEntry));        
+        this.chatTabbedPane.addTab(rosterEntry.getName(), cp);
+        this.chatPannels.put(rosterEntry, cp);
     }
 }//GEN-LAST:event_rostersActionPerformed
 
@@ -211,7 +227,12 @@ private void rostersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
             BattleDescription bd = (BattleDescription) new XStream().fromXML(pdm.getMessage());
             GameBuilder gb = GameBuilderFactory.getInstance().createGameBuilderClient(from);
             gb.setBattleDescription(bd);
-            gb.getCommunication().setChat(this.chats.get(from));
+            RosterEntry rosterEntry = this.getRosterEntryByUser(from);
+            if (rosterEntry==null){
+                JOptionPane.showMessageDialog(null,"Error interno. Roster no encontrado","Error", JOptionPane.ERROR_MESSAGE);
+                throw new RuntimeException("Roster no e");
+            }
+            gb.getCommunication().setChat(this.chats.get(rosterEntry));
             gb.move();
         } catch (GameBuilderException ex) {
             JOptionPane.showMessageDialog(this,ex.getMessage(), "PerfectDay. Información",JOptionPane.INFORMATION_MESSAGE);
@@ -224,8 +245,25 @@ private void rostersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         } catch (InvocationTargetException ex) {
             logger.error("Ilegal invocacion",ex);
             JOptionPane.showMessageDialog(null,"Error interno. Porfavor envie el bug a ....","Error", JOptionPane.ERROR_MESSAGE);
+        }catch(Exception ex){
+            logger.error("Error al parsear XML",ex);
+            JOptionPane.showMessageDialog(null,"Error interno. Porfavor envie el bug a ....","Error", JOptionPane.ERROR_MESSAGE);
         }
             
     }
 
+    
+    
+    public RosterEntry getRosterEntryByIndex(int i){
+        return this.rosterEntries.get(i);
+    }
+    
+    public RosterEntry getRosterEntryByUser(String user){
+        for (RosterEntry rosterEntry : rosterEntries) {
+            if(rosterEntry.getUser().equalsIgnoreCase(user)){
+                return rosterEntry;
+            }
+        }
+        return null;
+    }
 }

@@ -19,6 +19,12 @@ public class OffensiveAction extends Action {
 
     private InstanceCombat instanceCombat;
 
+    public OffensiveAction() {
+        super(null);
+    }
+
+    
+    
     public OffensiveAction (UnitTime ut,InstanceCombat ic) {
         super(ut);
         this.instanceCombat = ic;

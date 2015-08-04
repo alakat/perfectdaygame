@@ -33,6 +33,12 @@ public class CombatActionMini extends ActionMini{
     protected boolean needPreparation;
     protected UnitTime costPreparation;
 
+    public CombatActionMini() {
+        super(""+System.currentTimeMillis());
+    }
+
+    
+    
     public CombatActionMini(String name) {
         super(name);
     }

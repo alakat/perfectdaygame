@@ -59,6 +59,7 @@ public class GameBuilderCommunicator {
         mes.setProperty(NAME_CONFIGURATION_GAME_ATTRIBUTE,
                 new XStream().toXML(pdm));
          try {
+             logger.info(mes.getType()+":"+mes);
             chat.sendMessage(mes);
         } catch (XMPPException ex) {
             logger.error("Error en envio!!!",ex);

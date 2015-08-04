@@ -12,6 +12,11 @@ package org.perfectday.logicengine.model.spells.commands;
 public class FailSpellCommand extends SpellCommand{
     private String failDescription;
 
+    public FailSpellCommand() {
+    }
+    
+    
+
     public FailSpellCommand(String failDescription) {
         this.failDescription = failDescription;
     }

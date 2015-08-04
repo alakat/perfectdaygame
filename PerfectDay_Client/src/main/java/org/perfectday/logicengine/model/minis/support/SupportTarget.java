@@ -24,6 +24,11 @@ public class SupportTarget {
      */
     private int yMovement;
 
+    public SupportTarget() {
+    }
+    
+    
+
     public SupportTarget(int xMovement, int yMovement) {
         this.xMovement = xMovement;
         this.yMovement = yMovement;

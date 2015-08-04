@@ -14,6 +14,13 @@ import org.perfectday.logicengine.model.state.State;
  */
 public class ClearStateEvent extends StateEvent {
 
+    public ClearStateEvent() {
+        
+    }
+    
+    
+    
+
     public ClearStateEvent(State state, Mini affectedMini) {
         super(state, affectedMini);
     }

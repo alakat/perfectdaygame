@@ -35,6 +35,13 @@ public class Field extends ReferenceObject{
      * type of field
      */
     private TypeField typeField;
+
+    public Field() {
+    }
+    
+    
+    
+    
     /**
      * 
      * @param x

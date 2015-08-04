@@ -11,4 +11,8 @@ package org.perfectday.logicengine.model.minis.support;
  */
 public class ActiveSupport {
 
+    public ActiveSupport() {
+    }
+
+    
 }

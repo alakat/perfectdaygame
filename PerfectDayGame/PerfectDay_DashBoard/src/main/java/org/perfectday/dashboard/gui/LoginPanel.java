@@ -261,6 +261,10 @@ private void pfPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
         pfPassword.requestFocus();
     }
 
+    public void setInitialInfo(String userInit, String passInit){
+        this.tfLogin.setText(userInit);
+        this.pfPassword.setText(passInit);
+    }
 
 
 

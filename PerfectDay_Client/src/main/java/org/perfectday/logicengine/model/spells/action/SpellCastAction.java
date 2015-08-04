@@ -30,6 +30,11 @@ public class SpellCastAction extends ActionMini{
      */
     private ReferenceObject target;
 
+    public SpellCastAction() {
+        super(""+System.currentTimeMillis());
+    }
+
+    
     public SpellCastAction(Spell spellcast) {
         super("Lanzamiento de:"+spellcast.getName());
         this.spellcast = spellcast;

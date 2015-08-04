@@ -24,6 +24,13 @@ public class MiniModificable extends Mini {
 
     private List<State> states;
 
+    public MiniModificable() {
+        super(""+System.currentTimeMillis());
+    }
+    
+    
+    
+
     public MiniModificable(String name) {
         super(name);
         this.states = new ArrayList<State>();

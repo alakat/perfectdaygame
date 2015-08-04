@@ -22,6 +22,13 @@ import org.perfectday.logicengine.model.unittime.UnitTime;
 public class StateActivationAccident extends StateAccident{
 
     private static final Logger logger = Logger.getLogger(StateActivationAccident.class);
+
+    public StateActivationAccident() {
+    }
+    
+    
+    
+    
     public StateActivationAccident(State state, UnitTime mUnitTime) {
         super(state, mUnitTime);
     }

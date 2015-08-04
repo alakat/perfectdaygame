@@ -29,6 +29,11 @@ public class MultiCombatActionMini extends CombatActionMini{
     private CombatKeep effectArea;
     private State state;
 
+    public MultiCombatActionMini() {
+    }
+    
+    
+
     public MultiCombatActionMini(String name) {
         super(name);
     }

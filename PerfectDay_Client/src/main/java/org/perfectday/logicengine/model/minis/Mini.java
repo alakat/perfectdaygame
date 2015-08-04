@@ -32,6 +32,12 @@ public class Mini extends ReferenceObject {
     private String name;
     private String abstractName;
     private int pointMagic;
+
+    public Mini() {
+    }
+    
+    
+    
     
     public Mini(String name) {
         this.abstractName = name;

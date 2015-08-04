@@ -13,6 +13,11 @@ import org.perfectday.logicengine.model.command.Command;
  */
 public class ConterAttackCommand extends Command{
 
+    public ConterAttackCommand() {
+    }
+
+    
+    
     @Override
     public String info() {
         return "Conter Atack!!";

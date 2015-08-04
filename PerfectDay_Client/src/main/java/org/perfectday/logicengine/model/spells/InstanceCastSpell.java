@@ -29,6 +29,12 @@ public class InstanceCastSpell {
     private Mini caster;
     private ReferenceObject target;
 
+    public InstanceCastSpell() {
+    }
+
+    
+    
+    
     public InstanceCastSpell(Spell spellcast, Mini caster, ReferenceObject target) {
         this.spellcast = spellcast;
         this.caster = caster;

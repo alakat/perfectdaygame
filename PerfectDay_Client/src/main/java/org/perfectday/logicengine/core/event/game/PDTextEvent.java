@@ -14,6 +14,8 @@ public class PDTextEvent extends GameEvent {
     private String message;
     private String user;
     
+    
+    
     public PDTextEvent(String user, String message){
         this.message=message;
         this.user=user;

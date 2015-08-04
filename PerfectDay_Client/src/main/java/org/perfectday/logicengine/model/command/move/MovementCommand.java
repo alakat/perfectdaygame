@@ -17,6 +17,12 @@ public class MovementCommand extends Command {
     private ReferenceObject mini;
     private ReferenceObject targetField;
 
+    public MovementCommand() {
+    }
+
+    
+    
+    
     public MovementCommand(ReferenceObject mini, ReferenceObject targetField) {
         this.mini = mini;
         this.targetField = targetField;

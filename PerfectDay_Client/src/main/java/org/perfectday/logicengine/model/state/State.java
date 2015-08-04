@@ -23,6 +23,9 @@ public abstract class State extends ReferenceObject{
     private Mini mini;
     private UnitTime timeEffect;
     private double percentAffected;
+
+    public State() {
+    }
     
     
 

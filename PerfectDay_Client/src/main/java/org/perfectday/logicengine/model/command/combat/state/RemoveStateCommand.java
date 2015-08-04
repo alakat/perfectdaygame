@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.perfectday.logicengine.model.command.combat.state;
 
 import org.perfectday.logicengine.model.ReferenceObject;
@@ -13,8 +12,13 @@ import org.perfectday.logicengine.model.state.State;
  *
  * @author Miguel Angel Lopez Montellano (alakat@gmail.com)
  */
-public class RemoveStateCommand extends Command{
-private State state;
+public class RemoveStateCommand extends Command {
+
+    private State state;
+
+    public RemoveStateCommand() {
+    }
+
     private ReferenceObject mini;
 
     public ReferenceObject getMini() {
@@ -35,6 +39,6 @@ private State state;
 
     @Override
     public String info() {
-        return "Se elimina el estado"+ state;
+        return "Se elimina el estado" + state;
     }
 }

@@ -15,4 +15,9 @@ import org.perfectday.logicengine.core.event.Event;
  */
 public class GameEvent extends Event{
 
+    public GameEvent() {
+    }
+    
+    
+
 }
