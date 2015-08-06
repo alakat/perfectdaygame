@@ -19,7 +19,7 @@ public class DescriptionBattleDialog extends javax.swing.JDialog {
     
     
     /** Creates new form DescriptionBattleDialog */
-    public DescriptionBattleDialog(java.awt.Frame parent, boolean modal) {
+public DescriptionBattleDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         acepted =false;

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.perfectday.dashboard.communication.GameBuilderCommunicator;
 import org.perfectday.dashboard.communication.GameBuilderGateWay;
+import org.perfectday.dashboard.communication.oneplayer.GameBuilderCommunicatorOnePlayer;
 import org.perfectday.dashboard.exception.GameBuilderException;
 import org.perfectday.dashboard.threads.DashBoardThreadGroup;
 
@@ -17,7 +18,7 @@ import org.perfectday.dashboard.threads.DashBoardThreadGroup;
  * @author Miguel Angel Lopez Montellano (alakat@gmail.com)
  */
 public class GameBuilderFactory {
-    
+    public static final String ONEPLAYER_NAME_BUILDERS = "oneplayer";
     private static final GameBuilderFactory instance = new GameBuilderFactory();
     private Map<String,GameBuilder> builders;
 
@@ -94,5 +95,32 @@ public class GameBuilderFactory {
         this.builders.put(userDestiny, gb);
         return gb;
     }
+    
+    
+    /**
+     * Crea una instancia de un Objecto {@link GameBuilderServer} para
+     * la creación de un nuevo juego.
+     * Marca el sistema como "InGameConstruction"
+     * @param userDestiny
+     * @return
+     * @throws java.lang.NoSuchMethodException
+     * @throws org.perfectday.dashboard.exception.GameBuilderException Si ya se
+     * esta creando un juego
+     */
+    public GameBuilderOnePlayer createGameBuilderOnePlayer() throws NoSuchMethodException, GameBuilderException{
+        if (Thread.currentThread().getThreadGroup() instanceof DashBoardThreadGroup) {
+            DashBoardThreadGroup dashBoardThreadGroup = (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
+            if(dashBoardThreadGroup.isInGameConstruction()){
+                throw new GameBuilderException("Otra partida se está construyendo");
+            }else{
+                dashBoardThreadGroup.setInGameConstruction(true);
+            }
+        }
+        GameBuilderOnePlayer gb = new GameBuilderOnePlayer();
+        
+        this.builders.put(ONEPLAYER_NAME_BUILDERS, gb);
+        return gb;
+    }
+    
 
 }
