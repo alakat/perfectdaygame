@@ -169,7 +169,7 @@ public class GameBuilderServer extends GameBuilder{
             logger.info("Envio de datos!");
             PerfectDayMessage pdm = PerfectDayMessageFactory.getInstance().createArmyAndBattleFieldMessage(wrapper);
             this.getCommunication().sendMessage(pdm);
-            DashBoardMiniUtilities.showDeployDialog(this);
+            DashBoardMiniUtilities.showDeployDialog(this); //Despliege b?sico. Pdt de mejorar
             
        }  catch (GameBuilderException ex) {
             logger.error("Error interno",ex);
@@ -216,13 +216,17 @@ public class GameBuilderServer extends GameBuilder{
         this.endConstructionGame();
         readArmies();
         if (Thread.currentThread().getThreadGroup() instanceof DashBoardThreadGroup) {
+            
             DashBoardThreadGroup dashBoardThreadGroup = (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
+            
             GraphicsEngineThreadGroup graphicsEngineThreadGroup =
                     GraphicsEngineThreadGroup.buildGraphicsEngineThreadGroup();
+            
             dashBoardThreadGroup.setGraphicsInRun(graphicsEngineThreadGroup);
             graphicsEngineThreadGroup.getDummyGraphicsEngine().getActivationStackPanel().
                         setAccident(dashBoardThreadGroup.getKernellInRun().
                         getGame().getActivationStack().getStack());
+            
             if(!dashBoardThreadGroup.gameGo()){
                 logger.fatal("La partida no se ejecuto. No todos los atributos en DashBoardThreadGruop están listos");
             }

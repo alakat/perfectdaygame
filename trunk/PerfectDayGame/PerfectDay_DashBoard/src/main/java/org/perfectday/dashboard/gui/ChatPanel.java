@@ -117,11 +117,14 @@ private void bEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
 }//GEN-LAST:event_bEnviarActionPerformed
 
 private void bBatallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBatallaActionPerformed
-    
     if (Thread.currentThread().getThreadGroup() instanceof DashBoardThreadGroup) {
-        DashBoardThreadGroup dashBoardThreadGroup = (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
+        DashBoardThreadGroup dashBoardThreadGroup = 
+                (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
         if(dashBoardThreadGroup.inGame()){
-            JOptionPane.showMessageDialog(this, "Ya existe una partida en ejecución","PerfectDay. Información",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Ya existe una partida en ejecución",
+                    "PerfectDay. Información",
+                    JOptionPane.INFORMATION_MESSAGE);
             return;
         }
     }

@@ -8,6 +8,7 @@ package org.perfectday.gamebuilder.model;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.perfectday.dashboard.exception.GameBuilderException;
+import org.perfectday.gamebuilder.GameBuilder;
 import org.perfectday.gamebuilder.GameBuilderClient;
 import org.perfectday.gamebuilder.GameBuilderServer;
 import org.perfectday.logicengine.model.battelfield.BattelField;
@@ -49,8 +50,9 @@ public class DashBoardMiniUtilities {
      * Muestra el dialog para la selección del despliege de las unidades.
      * @param aThis
      */
-    public static void showDeployDialog(GameBuilderServer aThis) {
-         DashBoardMiniUtilities.dummyDeployServer(aThis.getTrueServerArmy(),aThis.getBattlefield(),2,2);
+    public static void showDeployDialog(GameBuilder aThis) {
+         
+         DashBoardMiniUtilities.dummyDeployOnePlayer(aThis);
     }
 
 
@@ -81,7 +83,7 @@ public class DashBoardMiniUtilities {
         }    
     }
 
-    private static void dummyDeployServer(List<Mini> trueServerArmy, BattelField battelField, int i, int i0) {
+    private static void dummyDeployServer(List<Mini> trueServerArmy, BattelField battelField) {
         int irojo=2;
         int jrojo=2;
         for(Mini mini: trueServerArmy){
@@ -93,6 +95,11 @@ public class DashBoardMiniUtilities {
                 irojo--;
             }
         }                
+    }
+
+    private static void dummyDeployOnePlayer(GameBuilder gameBuilder) {
+        DashBoardMiniUtilities.dummyDeployServer(gameBuilder.getTrueServerArmy(), gameBuilder.getBattlefield());
+        DashBoardMiniUtilities.dummyDeployClient(gameBuilder.getTrueClientArmy(), gameBuilder.getBattlefield());
     }
 
      

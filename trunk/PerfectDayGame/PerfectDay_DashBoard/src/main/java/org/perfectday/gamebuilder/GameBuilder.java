@@ -15,6 +15,7 @@ import org.perfectday.core.asf.FiniteAutomatonState;
 import org.perfectday.core.asf.State;
 import org.perfectday.dashboard.communication.GameBuilderCommunicator;
 import org.perfectday.communication.model.plugcommunication.PerfectDayMessage;
+import org.perfectday.core.threads.GameMode;
 import org.perfectday.core.threads.KernellThreadGroup;
 import org.perfectday.dashboard.communication.model.PerfectDayMessageFactory;
 import org.perfectday.dashboard.exception.GameBuilderException;
@@ -227,7 +228,9 @@ public class GameBuilder extends FiniteAutomatonState {
 
         boolean isServer = this instanceof GameBuilderServer;
         KernellThreadGroup kernellThreadGroup =
-                KernellThreadGroup.buildKernellThreadGroup(isServer,
+                KernellThreadGroup.buildKernellThreadGroup(
+                        (isServer)?GameMode.MultiPlayerServer
+                                  :GameMode.MultiPlayerClient,
                     trueServerArmy,
                     trueClientArmy,
                     battlefield,

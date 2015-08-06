@@ -27,7 +27,11 @@ public class CreateArmyDialog extends javax.swing.JDialog {
     private ArmyTableModel model;
     private static final NumberFormat nf = new DecimalFormat();
     private static final Logger logger = Logger.getLogger(CreateArmyDialog.class);
-    /** Creates new form CreateArmyDialog */
+    /** Creates new form CreateArmyDialog
+     * @param parent
+     * @param modal
+     * @param bd 
+     */
     public CreateArmyDialog(java.awt.Frame parent, boolean modal,BattleDescription bd) {
         super(parent, modal);
         initComponents();

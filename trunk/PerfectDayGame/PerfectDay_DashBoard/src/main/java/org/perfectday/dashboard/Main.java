@@ -7,10 +7,15 @@ package org.perfectday.dashboard;
 
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Properties;
+import java.util.logging.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.perfectday.dashboard.gui.DashBoard;
+import org.perfectday.dashboard.gui.MainMenu;
 import org.perfectday.dashboard.threads.DashBoardThreadGroup;
 import static org.perfectday.main.dummyengine.model.ActivationStackPanel.IMG_ACTIVATION;
 import org.perfectday.main.dummyengine.model.CombatInformationPanel;
@@ -21,16 +26,30 @@ import org.perfectday.main.dummyengine.model.CombatInformationPanel;
  */
 public class Main implements Runnable {
     
-    private String userInit = new String("");
-    private String passInit = new String("");
+    
+    static {
+        System.out.println("::"+new File(".").getAbsolutePath());
+        Properties logsProperties = new Properties();
+        try {
+            logsProperties.load(Main.class.getClassLoader().getResourceAsStream("assets/log4j.properties"));
+            PropertyConfigurator.configure(logsProperties);
+             LogManager.getLogger(Main.class).info("LOGGING OK");
+        } catch (IOException ex) {
+            System.out.println("No log configurado");
+        }
+        
+    }
+    
+    public static String userInit = new String("");
+    public static String passInit = new String("");
 
     
     private static Logger logger = LogManager.getLogger(Main.class);
     public static void main(String args[] )throws Exception{
         Main main =new Main();
         if (args.length==2){
-            main.userInit=args[0];
-            main.passInit=args[1];
+            Main.userInit=args[0];
+            Main.passInit=args[1];
         }
         Thread t = new Thread(DashBoardThreadGroup.getInstance(),main,"DashBoard-Main");
         t.start();
@@ -43,18 +62,8 @@ public class Main implements Runnable {
     @Override
     public void run() {
 
-        //TODO  eliminar despues de usar ThreadGroup
-//        Game.getInstance_();
-        String url_="assets/"+IMG_ACTIVATION;
-        URL url = CombatInformationPanel.class.getClassLoader().
-                getResource(url_);
-        System.out.println("url_="+url_);
-        System.out.println(":::"+url);
-        System.out.println("Resource:"+getClass().getClassLoader().getResourceAsStream(url_));
-        Toolkit.getDefaultToolkit().getImage(
-                url);
         Logger.getLogger(Main.class).info("LOADING PERFECTDAY");
-        new DashBoard(userInit,passInit).setVisible(true);
+        new MainMenu().setVisible(true);
     }
 
 }

@@ -54,17 +54,21 @@ public class DashBoard extends javax.swing.JFrame {
        
         
         InitialSplashPage page;
-		try {
-			page = new InitialSplashPage(this, false, DashBoardThreadGroup.helper.getInformation(1, 0, 0).getCompletText(), DashBoardThreadGroup.helper.getInformation(1, 0, 1).getCompletText());
-			page.setVisible(true);
-			page.setLocation(new Point(300, 300));
-			synchronized (this) {
-				this.wait(5000);
-			}
-			page.dispose();
-		} catch (InterruptedException e) {
-			JOptionPane.showMessageDialog(this, "No dispone de información de ayuda");
-		}
+        //Comentamos hasta que vuelva a molar cargar una historia al arranque
+//        try {
+//                page = new InitialSplashPage(this,
+//                        false,
+//                        DashBoardThreadGroup.helper.getInformation(1, 0, 0).getCompletText(),
+//                        DashBoardThreadGroup.helper.getInformation(1, 0, 1).getCompletText());
+//                page.setVisible(true);
+//                page.setLocation(new Point(300, 300));
+//                synchronized (this) {
+//                        this.wait(5000);
+//                }
+//                page.dispose();
+//        } catch (InterruptedException e) {
+//                JOptionPane.showMessageDialog(this, "No dispone de información de ayuda");
+//        }
         
         warRoom1.repaint();
         warRoom1.setDashBoard(this);
