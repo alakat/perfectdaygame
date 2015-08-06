@@ -21,10 +21,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 public class CommandRunner implements Runnable {
 
-    static {
-        System.out.println("::"+new File(".").getAbsolutePath());
-        PropertyConfigurator.configure("log4j.properties");
-    }
+    
     private static Logger logger = Logger.getLogger(CommandRunner.class);
     private List<Command> commands;
     private boolean alive;
@@ -44,7 +41,7 @@ public class CommandRunner implements Runnable {
     }
 
     /**
-     * Ejecición de todos los commandso
+     * Ejecicioón de todos los commandso
      */
     @Override
     public void run() {
@@ -52,7 +49,7 @@ public class CommandRunner implements Runnable {
             if(this.commands.isEmpty()){
                 synchronized(this){
                     try {
-                        logger.info("lock wait");
+                        logger.trace("lock wait");
                         this.wait(2000);
                     } catch (InterruptedException ex) {
                         logger.fatal(ex.getMessage(),ex);

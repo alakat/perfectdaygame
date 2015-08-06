@@ -44,6 +44,11 @@ public class InstanceCombat extends CarringOut {
     private List<Modifier> modifierAtaquer;
     private List<Modifier> modifierDefender;
     private boolean ableConterAtack;
+
+    public InstanceCombat() {
+    }
+    
+    
     
     
     public InstanceCombat(Mini defensor,

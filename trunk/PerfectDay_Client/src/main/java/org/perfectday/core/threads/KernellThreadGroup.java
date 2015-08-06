@@ -7,6 +7,7 @@ package org.perfectday.core.threads;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.perfectday.communication.model.plugcommunication.PlugCommunication;
+import org.perfectday.logicengine.brain.simple.SimpleBrain;
 import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.core.event.manager.EventManager;
 import org.perfectday.logicengine.core.event.manager.EventManagerRunnable;
@@ -185,7 +186,7 @@ public class KernellThreadGroup extends PerfectDayThreadGroup {
      * Construye un nuevo KernellThreadGroup donde iniciará el juego
      * @return KernellThreadGroup que ha sido creado
      */
-    public static KernellThreadGroup buildKernellThreadGroup(boolean isServer,
+    public static KernellThreadGroup buildKernellThreadGroup(GameMode gamemode,
             List<Mini> serverArmy, List<Mini> clientArmy,
             BattelField battlefield, Mission mission,
             PlugCommunication communication) {
@@ -195,12 +196,16 @@ public class KernellThreadGroup extends PerfectDayThreadGroup {
         //Carga los jugadores.
         Player pServer = new Player("Rojo", false);
         Player pClient = new Player("Azul", false);
-        if(isServer){
+        if(gamemode==GameMode.MultiPlayerServer){
             pServer.setLocal(true);
             pClient.setLocal(false);
-        }else{
+        }else if ((gamemode==GameMode.MultiPlayerClient)){
             pServer.setLocal(false);
             pClient.setLocal(true);
+        }else if ((gamemode==GameMode.OnePlayer)) {
+            pServer.setLocal(true);
+            pClient.setLocal(true);
+            pClient.setIa(true);
         }
         pServer.setBand(serverArmy);
         pClient.setBand(clientArmy);
@@ -208,7 +213,8 @@ public class KernellThreadGroup extends PerfectDayThreadGroup {
         game.getPlayers().add(pClient);
         //Cargamos mission
         game.setMission(mission);
-        game.setServer(isServer);
+        game.setServer(gamemode == GameMode.MultiPlayerServer||
+                gamemode == GameMode.OnePlayer);
 
         KernellThreadGroup group = new KernellThreadGroup("Kernell",game,communication);
         group.start();

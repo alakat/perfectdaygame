@@ -21,10 +21,15 @@ public class DashBoardThreadGroup extends PerfectDayThreadGroup{
 
     private static final DashBoardThreadGroup instance = new DashBoardThreadGroup("Dashboard");
     public static HelperDatabase helper = new HelperDatabase(new File("./src/main/resources/helper.db"));
+    
+    
     public static void sendEventToKernell(Command messageReceive) {
         if (Thread.currentThread().getThreadGroup() instanceof DashBoardThreadGroup) {
             DashBoardThreadGroup dashBoardThreadGroup = (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
             dashBoardThreadGroup.getKernellInRun().getCommandRunner().sendCommand(messageReceive);
+        }else if (Thread.currentThread().getThreadGroup() instanceof KernellThreadGroup) {
+            //Incluido para permitir a la IA poder enviar eventos desde su jugada,
+            ((KernellThreadGroup)Thread.currentThread().getThreadGroup() ).getCommandRunner().sendCommand(messageReceive);
         }
     }
     private KernellThreadGroup kernellInRun;

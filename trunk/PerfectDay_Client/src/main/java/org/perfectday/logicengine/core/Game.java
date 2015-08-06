@@ -45,7 +45,7 @@ import org.perfectday.message.ReferenceObjectVO;
 public class Game {
 
     public static final String BRAIN_PROPERTIES=
-            "./org/perfectday/logicengine/brain/brain.properties";
+            "assets/brains/brain.properties";
     
     private static Game instance;
     private static int WEIDTH_BATTELFIELD=17;
