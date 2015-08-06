@@ -26,6 +26,12 @@ public class MultyTargetInstanceCombat extends InstanceCombat {
     private Field targetField;
     private static Logger logger = 
             Logger.getLogger(MultyTargetInstanceCombat.class);
+
+    public MultyTargetInstanceCombat() {
+    }
+    
+    
+    
     public MultyTargetInstanceCombat(Mini defensor,
             Field defensorField,
             Mini atacker,

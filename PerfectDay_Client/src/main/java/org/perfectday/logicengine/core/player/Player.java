@@ -113,6 +113,10 @@ public class Player extends ReferenceObject{
 
     public void setIa(boolean ia) {
         this.ia = ia;
+        if(ia){
+            Logger.getLogger(Player.class).info("Player game with IA");
+            loadBrain();
+        }
     }
 
     /**setPlugCommunication tiene un tipo abstracto como argumento

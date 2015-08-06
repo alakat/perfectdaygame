@@ -51,5 +51,11 @@ public abstract class Event {
         this.setEventType(EventType.RESPONSE);
         return this;
     }    
+
+    @Override
+    public String toString() {
+        return "Evento ("+this.getClass().getName()+")";
+    }
+    
     
 }

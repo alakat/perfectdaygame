@@ -25,7 +25,7 @@ public class Configuration {
     public Configuration() {
         try {
             Properties p = new Properties();
-            p.load(new FileInputStream(new File("assets/log4j.properties")));
+            p.load(Configuration.class.getClassLoader().getResourceAsStream("assets/log4j.properties"));
             org.apache.log4j.PropertyConfigurator.configure(p);
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
