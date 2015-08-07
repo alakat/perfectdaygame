@@ -5,7 +5,7 @@
 
 package org.perfectday.logicengine.core.industry;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.Properties;
 import org.apache.log4j.Logger;
 import org.perfectday.logicengine.combat.core.functions.HitFunction;
@@ -41,8 +41,8 @@ public class SpellFactory extends IndexFactory {
     public static final String SPELL_PM_COST="spell_pm_cost";
     private static final Logger logger = Logger.getLogger(SpellFactory.class);
     
-    private SpellFactory(File f, boolean indexProperties) {
-        super(f, indexProperties);
+    private SpellFactory(InputStream is, boolean indexProperties) {
+        super(is, indexProperties);
     }
 
     public static SpellFactory getInstance() {

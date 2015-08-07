@@ -6,6 +6,7 @@
 package org.perfectday.logicengine.core.industry;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Set;
 import org.perfectday.logicengine.core.configuration.Configuration;
 
@@ -17,8 +18,8 @@ public class CombatKeepFactory extends IndexFactory{
 
     private static CombatKeepFactory instance;
     
-    private CombatKeepFactory(File f) {
-        super(f,false);
+    private CombatKeepFactory(InputStream is) {
+        super(is,false);
     }
 
     public static CombatKeepFactory getInstance() {

@@ -6,6 +6,7 @@
 package org.perfectday.logicengine.core.industry;
 
 import java.io.File;
+import java.io.InputStream;
 import org.perfectday.logicengine.core.configuration.Configuration;
 
 /**
@@ -22,8 +23,8 @@ public class DamageFunctionFactory extends IndexFactory {
         return instance;
     }
         
-    public DamageFunctionFactory(File f) {
-        super(f,false);
+    public DamageFunctionFactory(InputStream is) {
+        super(is,false);
     }
 
     @Override

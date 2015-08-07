@@ -5,15 +5,13 @@
 
 package org.perfectday.logicengine.core.industry;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.Properties;
 import org.perfectday.logicengine.core.configuration.Configuration;
 import org.perfectday.logicengine.model.state.MiniAttribute;
 import org.perfectday.logicengine.model.state.PasiveState;
 import org.perfectday.logicengine.model.state.StateType;
 import org.perfectday.logicengine.model.unittime.LongUnitTime;
-import org.perfectday.logicengine.model.unittime.UnitTime;
-import org.perfectday.logicengine.model.unittime.UnitTime;
 import org.perfectday.logicengine.model.unittime.UnitTime;
 
 /**
@@ -32,8 +30,8 @@ public class StateFactory extends IndexFactory{
     private static final String ACTIVE_TYPE="active";
     private static final String PASSIVE_TYPE="passive";
 
-    public StateFactory(File f) {
-        super(f,true);
+    public StateFactory(InputStream is) {
+        super(is, true);
     }
 
     public static StateFactory getInstance() {

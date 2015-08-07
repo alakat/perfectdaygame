@@ -6,6 +6,7 @@
 package org.perfectday.logicengine.core.industry;
 
 import java.io.File;
+import java.io.InputStream;
 import org.perfectday.logicengine.core.configuration.Configuration;
 
 /**
@@ -16,8 +17,8 @@ public class FailEffectFunctionFactory  extends IndexFactory{
     
     private static FailEffectFunctionFactory instance;
 
-    private FailEffectFunctionFactory(File f, boolean indexProperties) {
-        super(f, indexProperties);
+    private FailEffectFunctionFactory(InputStream is, boolean indexProperties) {
+        super(is, indexProperties);
     }
 
     public static FailEffectFunctionFactory getInstance() {
