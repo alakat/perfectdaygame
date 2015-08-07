@@ -6,6 +6,7 @@
 package org.perfectday.logicengine.core.industry;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Properties;
 import org.perfectday.logicengine.core.configuration.Configuration;
 import org.perfectday.logicengine.model.minis.Mini;
@@ -39,13 +40,15 @@ public class MiniFactory  extends IndexFactory{
     private static final String COST="cost";
     private static MiniFactory instance;
 
-    public MiniFactory(File f) {
-        super(f,true);
+    public MiniFactory(InputStream is) {
+        super(is,true);
     }
 
     public static MiniFactory getInstance() {
-        if(instance == null )
+        if(instance == null ){
+            System.out.println(Configuration.getInstance().getMiniFile());
             instance = new MiniFactory(Configuration.getInstance().getMiniFile());
+        }
         return instance;
     }
 

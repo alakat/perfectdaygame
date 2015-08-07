@@ -6,6 +6,7 @@
 package org.perfectday.logicengine.core.industry;
 
 import java.io.File;
+import java.io.InputStream;
 import org.perfectday.logicengine.core.configuration.Configuration;
 
 /**
@@ -21,8 +22,8 @@ public class HitFunctionFactory extends IndexFactory{
         return instance;
     }
         
-    public HitFunctionFactory(File f) {
-        super(f,false);
+    public HitFunctionFactory(InputStream is) {
+        super(is,false);
     }
 
     @Override

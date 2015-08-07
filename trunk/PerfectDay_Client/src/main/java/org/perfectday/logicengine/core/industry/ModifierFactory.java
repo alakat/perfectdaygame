@@ -5,7 +5,7 @@
 
 package org.perfectday.logicengine.core.industry;
 
-import java.io.File;
+import java.io.InputStream;
 import org.perfectday.logicengine.core.configuration.Configuration;
 
 /**
@@ -16,8 +16,8 @@ public class ModifierFactory extends IndexFactory {
 
     private static ModifierFactory instance;
     
-    private ModifierFactory(File f)  {
-        super(f,false);
+    private ModifierFactory(InputStream is)  {
+        super(is ,false);
     }
 
     public static ModifierFactory getInstance()  {

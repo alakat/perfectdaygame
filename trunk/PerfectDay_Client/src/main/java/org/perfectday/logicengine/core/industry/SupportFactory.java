@@ -5,7 +5,7 @@
 
 package org.perfectday.logicengine.core.industry;
 
-import java.io.File;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 import org.perfectday.logicengine.combat.model.combatkeep.CombatKeep;
@@ -44,8 +44,8 @@ public class SupportFactory extends IndexFactory {
         return instance;
     }
     
-    private SupportFactory(File f)  {        
-        super(f,true);
+    private SupportFactory(InputStream is)  {        
+        super(is,true);
     }   
     
     @Override

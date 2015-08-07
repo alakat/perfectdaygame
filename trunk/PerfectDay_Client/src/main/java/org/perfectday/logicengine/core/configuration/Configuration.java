@@ -5,9 +5,11 @@
 
 package org.perfectday.logicengine.core.configuration;
 
+import es.bitsonfire.PDMinisDatabase;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +22,8 @@ import java.util.logging.Logger;
 public class Configuration {
     
     private static Configuration instance;
-    private static final String PATH_BASE = "../src/main/minis/";
+    public static final String ASSETS_PATH = "assets";
+    public static final String DATA_MINI_PATH = "/data/minis/";
 
     public Configuration() {
         try {
@@ -39,47 +42,47 @@ public class Configuration {
         return instance;
     }
     
-    public File getSupportFile(){
-        return new File(PATH_BASE+"supports.properties");
+    public InputStream getSupportFile(){
+        return PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"supports.properties");
     }
     
-    public File getCombatKeepFile(){
-        return new File(PATH_BASE+"combatkeep.properties");
+    public InputStream getCombatKeepFile(){
+        return PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"combatkeep.properties");
     }
     
-    public File getDamageFunctionFile(){
-        return new File(PATH_BASE+"damagefunctions.properties");
+    public InputStream getDamageFunctionFile(){
+        return PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"damagefunctions.properties");
     }
     
-    public File getHitFunctionFile(){
-        return new File(PATH_BASE+"hitfunctions.properties");
+    public InputStream getHitFunctionFile(){
+        return PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"hitfunctions.properties");
     }
     
-    public File getMiniFile(){
-        return new File(PATH_BASE+"minis.properties");
+    public InputStream getMiniFile(){
+        return PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"minis.properties");
     }
     
-    public File getSpellFile(){
-        return new File(PATH_BASE+"spellsbook.properties");
+    public InputStream getSpellFile(){
+        return PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"spellsbook.properties");
     }
     
-    public File getStateFile(){
-        return new File(PATH_BASE+"states.properties");
+    public InputStream getStateFile(){
+        return PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"states.properties");
     }
     
-    public File getWeaponsFile(){
-        return new File(PATH_BASE+"weapons.properties");
+    public InputStream getWeaponsFile(){
+        return PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"weapons.properties");
     }
     
-    public File getModifierFile(){
-         return new File(PATH_BASE+"supports"+File.separator+"modifiers.properties");
+    public InputStream getModifierFile(){
+         return PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"supports/modifiers.properties");
     }
     
-    public File getEffectFile(){
-        return new File(PATH_BASE+"spells"+File.separator+"effectfunctions.properties");
+    public InputStream getEffectFile(){
+        return PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"spells/effectfunctions.properties");
     }
-    public File getFailEffectFile(){
-        return new File(PATH_BASE+"spells"+File.separator+"faileffectfunctions.properties");
+    public InputStream getFailEffectFile(){
+        return PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"spells/faileffectfunctions.properties");
     }
 
 }

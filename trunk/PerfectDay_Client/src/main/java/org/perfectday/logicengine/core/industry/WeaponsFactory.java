@@ -5,7 +5,7 @@
 
 package org.perfectday.logicengine.core.industry;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.Properties;
 import org.perfectday.logicengine.combat.core.functions.DamageFunction;
 import org.perfectday.logicengine.combat.core.functions.HitFunction;
@@ -35,8 +35,8 @@ public class WeaponsFactory extends IndexFactory {
     private static final String HIT_FUNCTION="hit_function";
     private static final String DAMAGE_FUNCTION="damage_function";
 
-    public WeaponsFactory(File f) {
-        super(f,true);
+    public WeaponsFactory(InputStream is) {
+        super(is,true);
     }
 
     public static WeaponsFactory getInstance() {
