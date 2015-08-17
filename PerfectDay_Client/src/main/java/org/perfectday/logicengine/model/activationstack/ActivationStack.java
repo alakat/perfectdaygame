@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.model.activationstack.accidents.Accident;
 import org.perfectday.logicengine.model.activationstack.accidents.Activation;
 import org.perfectday.logicengine.model.activationstack.accidents.OffensiveAction;
@@ -105,6 +106,7 @@ public    class  ActivationStack {
     @Override
     public synchronized  String  toString() {
         StringBuffer sbuff =new StringBuffer();
+        sbuff.append("{"+Game.getGame().getActualTime()+"}");
         sbuff.append("\n");
         for(Accident accident:getStack()){
             sbuff.append(accident.toString());

@@ -5,6 +5,7 @@
 
 package org.perfectday.logicengine.model.minis;
 
+import es.bitsonfire.PDMinisDatabase;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
+import org.perfectday.logicengine.core.configuration.Configuration;
 import org.perfectday.logicengine.model.minis.action.CombatActionFactory;
 import org.perfectday.logicengine.model.minis.support.factory.SupportFactory;
 
@@ -90,7 +92,8 @@ public class MiniFactory {
         this.combatActionFactory = CombatActionFactory.getInstance();
         this.miniBaseAttributes = new Properties();
         try{
-            this.miniBaseAttributes.load(new FileInputStream(new File("../src/main/conf/basic-attributes.properties")));
+            this.miniBaseAttributes.load(Configuration.getInstance().getBasicAttribute());
+                    
         }catch(IOException ex){
             org.apache.log4j.Logger.getLogger(MiniFactory.class).error(
                     "No se pueden cargar los attributos iniciales.",ex);

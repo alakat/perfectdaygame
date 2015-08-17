@@ -57,7 +57,9 @@ public class JBattelField extends JPanel {
 
    
     
-    
+    /**
+     * 
+     */
     class MessageVolante{
         private int xScreen;
         private int yScreen;
@@ -503,12 +505,12 @@ public class JBattelField extends JPanel {
     public void setSelectedMini(Mini selectedMini) {
        this.miniAccess.clear();
         this.selectedMini = selectedMini;
-        if(selectedMini!=null){
-            long t0 =System.currentTimeMillis();
-            List<Field> movementField =
-                    MasterMovement.getInstance().getNearbyField( selectedMini,
-                    battelField);
-//            System.out.println("Tiempo busqueda:"+(System.currentTimeMillis()-t0));
+        // Se comenta tras la inclusi?n del bot?n de movershowAccesibleCeldForMove(selectedMini);
+    }
+
+    public void showAccesibleCeldForMove(Mini selectedMini1) {
+        if (selectedMini1 != null) {
+            List<Field> movementField = MasterMovement.getInstance().getNearbyField(selectedMini1, battelField);
             this.miniAccess.addAll(movementField);
         }
     }

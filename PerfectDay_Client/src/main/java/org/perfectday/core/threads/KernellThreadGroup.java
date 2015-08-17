@@ -184,6 +184,12 @@ public class KernellThreadGroup extends PerfectDayThreadGroup {
 
     /**
      * Construye un nuevo KernellThreadGroup donde iniciará el juego
+     * @param gamemode
+     * @param serverArmy
+     * @param clientArmy
+     * @param battlefield
+     * @param mission
+     * @param communication
      * @return KernellThreadGroup que ha sido creado
      */
     public static KernellThreadGroup buildKernellThreadGroup(GameMode gamemode,

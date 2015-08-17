@@ -14,7 +14,6 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
-import org.perfectday.logicengine.core.Game;
 import org.perfectday.logicengine.model.activationstack.accidents.Accident;
 import org.perfectday.logicengine.model.activationstack.accidents.Activation;
 import org.perfectday.logicengine.model.activationstack.accidents.OffensiveAction;
@@ -192,6 +191,8 @@ public class ActivationStackPanel extends javax.swing.JPanel {
                     ((Activation)accident).getMini().getMiniLevel().toString();
             description = description.substring(0,3);
             description += "/"+ ((Activation)accident).getMini().getMiniType().toString().substring(0, 3);
+            description +=" ..."+((Activation)accident).getUnitTime().toString();
+                   
             if ( miniName.length()>MAX_STRING)
                 miniName = miniName.substring(0,MAX_STRING);            
             img = this.imgActivationMini;

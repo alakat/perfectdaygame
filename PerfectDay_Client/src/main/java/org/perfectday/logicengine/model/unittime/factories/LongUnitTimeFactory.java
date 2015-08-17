@@ -52,6 +52,15 @@ public class LongUnitTimeFactory {
     public LongUnitTime doCombat(Mini mini){
         return new LongUnitTime((getMiniSpeed(COMBAT,mini)));
     }
+    
+    /**
+     * Deveulve un zero
+     * @param mini obvidao, reservado para uso futuro
+     * @return 
+     */
+    public LongUnitTime zero(Mini mini){
+        return new LongUnitTime(0);
+    }
 
     private long getMiniSpeed(long cost,Mini mini) {
         Logger.getLogger(LongUnitTimeFactory.class).info("Cost Base:"+cost);
@@ -62,5 +71,14 @@ public class LongUnitTimeFactory {
         halfcost = (((double)cost)/2) + (halfcost<0?0:halfcost);
         Logger.getLogger(LongUnitTimeFactory.class).info("Cost:"+halfcost);
         return new Double( halfcost ).longValue();
+    }
+
+    /**
+     * Devuelve un 1
+     * @param mini obvidao, reservado para uso futuro
+     * @return 
+     */
+    public LongUnitTime one(Mini mini) {
+        return new LongUnitTime(1);
     }
 }
