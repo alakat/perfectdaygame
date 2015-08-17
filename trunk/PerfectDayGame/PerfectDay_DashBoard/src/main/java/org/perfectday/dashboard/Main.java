@@ -7,19 +7,13 @@ package org.perfectday.dashboard;
 import es.bitsonfire.PDMinisDatabase;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
-import java.util.logging.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.perfectday.dashboard.gui.MainMenu;
 import org.perfectday.dashboard.threads.DashBoardThreadGroup;
-import static org.perfectday.logicengine.core.configuration.Configuration.DATA_MINI_PATH;
-import org.perfectday.logicengine.core.industry.MiniFactory;
-import org.perfectday.logicengine.core.industry.SpellFactory;
-import org.perfectday.logicengine.core.industry.SupportFactory;
-import org.perfectday.logicengine.core.industry.WeaponsFactory;
+import org.perfectday.logicengine.core.configuration.Configuration;
 
 /**
  *
@@ -28,6 +22,7 @@ import org.perfectday.logicengine.core.industry.WeaponsFactory;
 public class Main implements Runnable {
 
     static {
+        System.out.println("PERFECTDAY 0.9.1");
         System.out.println("::" + new File(".").getAbsolutePath());
         Properties logsProperties = new Properties();
         //load log4j properties
@@ -40,37 +35,11 @@ public class Main implements Runnable {
         }
 
         //TEST
-        System.out.println("/data/minis/minis.properties");
-        System.out.println(DATA_MINI_PATH+"minis.properties");
-        InputStream is2 = PDMinisDatabase.class.getResourceAsStream("/data/minis/minis.properties");
-        InputStream is = PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"minis.properties");
-        Properties minis = new Properties();
-        try {
-            minis.load(is);
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        for (Object key : minis.keySet()) {
-            String value = minis.getProperty((String)key);
-            System.out.println("Value:"+value);
-            Properties p1 = new Properties();
-            try {
-                p1.load(PDMinisDatabase.class.getClassLoader().getResourceAsStream("data/minis/"+value));
-            } catch (IOException ex) {
-                java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            for (Object key1 : p1.keySet()) {
-                System.out.println(key1+","+p1.getProperty((String)key1));
-            }
-            
-        }
-        
-        
-        MiniFactory.getInstance();
-        WeaponsFactory.getInstance();
-        SupportFactory.getInstance();
-        SpellFactory.getInstance();
-        
+        String quest="defensa";
+        System.out.println(
+            PDMinisDatabase.class.getResourceAsStream(Configuration.QUEST_PATH+
+                            Configuration.QUEST_TOKEN_SEPARATOR+quest+"/icon_"+quest+".jpeg")==null);
+        System.out.println(PDMinisDatabase.class.getResourceAsStream("/data/minis/minis/simplesoldier.properties"));
     }
 
     public static String userInit = new String("");
@@ -96,7 +65,7 @@ public class Main implements Runnable {
     public void run() {
 
         Logger.getLogger(Main.class).info("LOADING PERFECTDAY");
-        new MainMenu().setVisible(true);
+        new MainMenu().PDshow();
     }
 
 }

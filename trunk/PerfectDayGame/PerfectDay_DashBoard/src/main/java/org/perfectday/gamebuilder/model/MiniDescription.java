@@ -17,6 +17,9 @@ public class MiniDescription {
     private String mini;
     private double cost;
     private String description;
+    private int startX;
+    private int startY;
+    private String name;
 
     public MiniDescription() {
         this.level = MiniLevel.SIMPLE_SOLDIER;
@@ -67,6 +70,32 @@ public class MiniDescription {
     public String toString() {
         return this.getMini();
     }
+
+    public int getStartX() {
+        return startX;
+    }
+
+    public void setStartX(int startX) {
+        this.startX = startX;
+    }
+
+    public int getStartY() {
+        return startY;
+    }
+
+    public void setStartY(int startY) {
+        this.startY = startY;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
     
     
     
