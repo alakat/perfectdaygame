@@ -5,11 +5,15 @@
  */
 package org.perfectday.dashboard.gui;
 
+import java.awt.Dimension;
+import java.awt.HeadlessException;
+import java.awt.Toolkit;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import org.perfectday.dashboard.Main;
 import org.perfectday.dashboard.exception.GameBuilderException;
+import org.perfectday.dashboard.gui.quests.SelectQuestDialog;
 import org.perfectday.dashboard.threads.DashBoardThreadGroup;
 import org.perfectday.gamebuilder.GameBuilder;
 import org.perfectday.gamebuilder.GameBuilderFactory;
@@ -21,9 +25,9 @@ import org.perfectday.gamebuilder.model.BattleDescription;
  */
 public class MainMenu extends javax.swing.JFrame {
 
-    
-    private static final Logger logger =
-            Logger.getLogger(MainMenu.class);
+    private static final Logger logger
+            = Logger.getLogger(MainMenu.class);
+
     /**
      * Creates new form MainMenu
      */
@@ -44,10 +48,11 @@ public class MainMenu extends javax.swing.JFrame {
         unjugador = new javax.swing.JButton();
         about = new javax.swing.JButton();
         preferencias = new javax.swing.JButton();
+        unjugador1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        multijugador.setText("Multijugador");
+        multijugador.setText("Multijugador online");
         multijugador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 multijugadorActionPerformed(evt);
@@ -75,32 +80,42 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        unjugador1.setText("Multijugador en local");
+        unjugador1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unjugador1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(preferencias)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(105, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(unjugador1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(unjugador, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(about, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(multijugador, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(103, 103, 103))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(preferencias)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(preferencias)
-                .addGap(48, 48, 48)
+                .addGap(18, 18, 18)
                 .addComponent(unjugador, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(unjugador1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(multijugador, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(about, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
@@ -108,15 +123,15 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void multijugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multijugadorActionPerformed
         // TODO add your handling code here:
-        new DashBoard(Main.userInit,Main.passInit).setVisible(true);
+        new DashBoard(Main.userInit, Main.passInit).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_multijugadorActionPerformed
 
     private void unjugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unjugadorActionPerformed
         if (Thread.currentThread().getThreadGroup() instanceof DashBoardThreadGroup) {
-            DashBoardThreadGroup dashBoardThreadGroup = 
-                    (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
-            if(dashBoardThreadGroup.inGame()){
+            DashBoardThreadGroup dashBoardThreadGroup
+                    = (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
+            if (dashBoardThreadGroup.inGame()) {
                 JOptionPane.showMessageDialog(this,
                         "Ya existe una partida en ejecución",
                         "PerfectDay. Información",
@@ -125,38 +140,73 @@ public class MainMenu extends javax.swing.JFrame {
             }
         }
 
+        playQuestSoloGame();
+    }//GEN-LAST:event_unjugadorActionPerformed
+
+    /**
+     * Crea una partida solo con misiones
+     */
+    public void playQuestSoloGame() {
+        try {
+            GameBuilder bg = GameBuilderFactory.getInstance().createGameBuilderOnePlayerSelectQuest();
+            bg.setBattleDescription(null);
+            try {
+                bg.move();
+            } catch (IllegalAccessException ex) {
+                logger.error("Error de acceso ilegal", ex);
+
+                JOptionPane.showMessageDialog(this, "Error en las comunicaciones", "Ha sido imposible iniciar el juego", JOptionPane.ERROR_MESSAGE);
+            } catch (InvocationTargetException ex) {
+                logger.error("invocacion ilegal", ex);
+
+                JOptionPane.showMessageDialog(this, "Error en las comunicaciones", "Ha sido imposible iniciar el juego", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (GameBuilderException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "PerfectDay. Información", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NoSuchMethodException ex) {
+            logger.error("Error al crear el constructor de partidas", ex);
+            JOptionPane.showMessageDialog(this, "Error en las comunicaciones", "Ha sido imposible iniciar el juego", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Crea una partida "solo" sin misiones. Tod aletario
+     *
+     * @throws HeadlessException
+     */
+    public void playSimpleSoloGame() throws HeadlessException {
         DescriptionBattleDialog dbd = new DescriptionBattleDialog(null, true);
         dbd.setVisible(true);
         BattleDescription bd = null;
-        if(dbd.isAcepted()){        
+        if (dbd.isAcepted()) {
+            try {
+                bd = dbd.getBattleDescription();
+                Logger.getLogger(ChatPanel.class).info("Mission:" + bd.getMission());
+                Logger.getLogger(ChatPanel.class).info("Public:" + bd.isBattlePublic());
+                Logger.getLogger(ChatPanel.class).info("Point:" + bd.getPoint());
+                GameBuilder bg = GameBuilderFactory.getInstance().createGameBuilderOnePlayer();
+                bg.setBattleDescription(bd);
                 try {
-                    bd = dbd.getBattleDescription();
-                    Logger.getLogger(ChatPanel.class).info("Mission:" + bd.getMission());
-                    Logger.getLogger(ChatPanel.class).info("Public:" + bd.isBattlePublic());
-                    Logger.getLogger(ChatPanel.class).info("Point:" + bd.getPoint());
-                    GameBuilder bg = GameBuilderFactory.getInstance().createGameBuilderOnePlayer();
-                    bg.setBattleDescription(bd);
-                    try {   
-                        bg.move();
-                    } catch (IllegalAccessException ex) {
-                        logger.error("Error de acceso ilegal",ex);
+                    bg.move();
+                } catch (IllegalAccessException ex) {
+                    logger.error("Error de acceso ilegal", ex);
 
-                        JOptionPane.showMessageDialog(this, "Error en las comunicaciones","Ha sido imposible iniciar el juego",JOptionPane.ERROR_MESSAGE);
-                    } catch (InvocationTargetException ex) {
-                        logger.error("invocacion ilegal",ex);
+                    JOptionPane.showMessageDialog(this, "Error en las comunicaciones", "Ha sido imposible iniciar el juego", JOptionPane.ERROR_MESSAGE);
+                } catch (InvocationTargetException ex) {
+                    logger.error("invocacion ilegal", ex);
 
-                        JOptionPane.showMessageDialog(this, "Error en las comunicaciones","Ha sido imposible iniciar el juego",JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (GameBuilderException ex) {
-                    JOptionPane.showMessageDialog(this,ex.getMessage(), "PerfectDay. Información",JOptionPane.INFORMATION_MESSAGE);
-                } catch (NoSuchMethodException ex) {
-                    logger.error("Error al crear el constructor de partidas",ex);
-                    JOptionPane.showMessageDialog(this, "Error en las comunicaciones","Ha sido imposible iniciar el juego",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Error en las comunicaciones", "Ha sido imposible iniciar el juego", JOptionPane.ERROR_MESSAGE);
                 }
-        }else{
+            } catch (GameBuilderException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "PerfectDay. Información", JOptionPane.INFORMATION_MESSAGE);
+            } catch (NoSuchMethodException ex) {
+                logger.error("Error al crear el constructor de partidas", ex);
+                JOptionPane.showMessageDialog(this, "Error en las comunicaciones", "Ha sido imposible iniciar el juego", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
             Logger.getLogger(ChatPanel.class).info("Batalla cancelada");
         }
-    }//GEN-LAST:event_unjugadorActionPerformed
+    }
 
     private void aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutActionPerformed
         // TODO add your handling code here:
@@ -166,11 +216,35 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_preferenciasActionPerformed
 
+    private void unjugador1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unjugador1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_unjugador1ActionPerformed
+
+    /**
+     * Visible y pack especial en perfectday. Posiciona en el centro, agrupa
+     * datos. coloca tama?os etc
+     */
+    public void PDshow() {
+
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        this.pack();
+        final int width = this.getWidth();
+        final int height = this.getHeight();
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width / 2) - (width / 2);
+        int y = (screenSize.height / 2) - (height / 2);
+
+        this.setLocation(x, y);
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton about;
     private javax.swing.JButton multijugador;
     private javax.swing.JButton preferencias;
     private javax.swing.JButton unjugador;
+    private javax.swing.JButton unjugador1;
     // End of variables declaration//GEN-END:variables
 }

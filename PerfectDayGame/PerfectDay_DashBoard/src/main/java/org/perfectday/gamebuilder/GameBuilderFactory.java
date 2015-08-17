@@ -101,7 +101,6 @@ public class GameBuilderFactory {
      * Crea una instancia de un Objecto {@link GameBuilderServer} para
      * la creación de un nuevo juego.
      * Marca el sistema como "InGameConstruction"
-     * @param userDestiny
      * @return
      * @throws java.lang.NoSuchMethodException
      * @throws org.perfectday.dashboard.exception.GameBuilderException Si ya se
@@ -118,6 +117,27 @@ public class GameBuilderFactory {
         }
         GameBuilderOnePlayer gb = new GameBuilderOnePlayer();
         
+        this.builders.put(ONEPLAYER_NAME_BUILDERS, gb);
+        return gb;
+    }
+    
+    /**
+     * Crea una instancia de un Objecto {@link GameBuilderServer} para
+     * la creación de un nuevo juego. Donde se escoger? una misi?n preseleccionada 
+     * @return
+     * @throws NoSuchMethodException
+     * @throws GameBuilderException 
+     */
+    public GameBuilderSelectionQuest createGameBuilderOnePlayerSelectQuest() throws NoSuchMethodException, GameBuilderException{
+        if (Thread.currentThread().getThreadGroup() instanceof DashBoardThreadGroup) {
+            DashBoardThreadGroup dashBoardThreadGroup = (DashBoardThreadGroup) Thread.currentThread().getThreadGroup();
+            if(dashBoardThreadGroup.isInGameConstruction()){
+                throw new GameBuilderException("Otra partida se está construyendo");
+            }else{
+                dashBoardThreadGroup.setInGameConstruction(true);
+            }
+        }
+        GameBuilderSelectionQuest gb = new GameBuilderSelectionQuest();
         this.builders.put(ONEPLAYER_NAME_BUILDERS, gb);
         return gb;
     }
