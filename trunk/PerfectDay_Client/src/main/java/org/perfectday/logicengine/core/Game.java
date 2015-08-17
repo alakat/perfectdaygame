@@ -83,6 +83,7 @@ public class Game {
         this.activationStack = new ActivationStack();
         this.masterOfCombat = new MasterOfCombatImpl();
         this.masterCommunication = new MasterCommunication();
+        Game.instance=this;
     }
 
     /**
@@ -99,12 +100,13 @@ public class Game {
             game = graphicsEngineThreadGroup.getKernellThreadGroup().getGame();
         }else{
             StackTraceElement[] trace = Thread.currentThread().getStackTrace();
-            logger.fatal("Una hebra que no pertencia a Kernell o Graphics entro " +
+            logger.debug("Una hebra que no pertencia a Kernell o Graphics entro " +
                     "getPerfectDayGUI["+Thread.currentThread().getName()+","
                     +Thread.currentThread().getThreadGroup().getName()+"]");
             for (StackTraceElement stackTraceElement : trace) {
-                logger.fatal(stackTraceElement.toString());
+                logger.debug(stackTraceElement.toString());
             }
+            game=Game.instance;
         }
         return game;
     }

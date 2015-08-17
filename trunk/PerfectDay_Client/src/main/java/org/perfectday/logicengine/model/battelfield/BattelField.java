@@ -182,7 +182,6 @@ public class BattelField {
     }
     
     public void generateBattelField(MapGenerator simpleMapGenerator){
-        
         this.battelfield = simpleMapGenerator.getBattelfield();
     }
 

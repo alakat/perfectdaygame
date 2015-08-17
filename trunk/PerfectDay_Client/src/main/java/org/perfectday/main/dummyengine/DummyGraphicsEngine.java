@@ -6,9 +6,10 @@
 
 package org.perfectday.main.dummyengine;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.List;
-import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import org.apache.log4j.Logger;
@@ -23,7 +24,6 @@ import org.perfectday.logicengine.model.unittime.LongUnitTime;
 import org.perfectday.logicengine.model.minis.Mini;
 import org.perfectday.logicengine.model.minis.action.ActionMini;
 import org.perfectday.logicengine.model.unittime.factories.LongUnitTimeFactory;
-import org.perfectday.logicengine.movement.MasterMovement;
 import org.perfectday.main.dummyengine.model.ActivationStackPanel;
 import org.perfectday.main.dummyengine.model.CombatInformationDialog;
 import org.perfectday.main.dummyengine.model.JBattelField;
@@ -52,9 +52,24 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
     public DummyGraphicsEngine() {
 
 
-        initComponents();        
+        initComponents();     
+        
         this.jMiniInfo1.setVisible(false);
         this.activationStackPanel1.setDummyGraphicsEngine(this);
+        
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+
+        this.setSize(new Dimension(600, 300));
+        this.setVisible(true);
+        this.pack();
+        
+        final int width = this.getWidth();
+        final int height = this.getHeight();
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width / 2) - (width / 2);
+        int y = (screenSize.height / 2) - (height / 2);
+        this.setLocation(x, y);
     }
 
 
@@ -111,12 +126,14 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
         bAPorEllos = new javax.swing.JButton();
         bAtacarPrimaria = new javax.swing.JButton();
         bSecundario = new javax.swing.JButton();
+        bMover = new javax.swing.JButton();
         tabs = new javax.swing.JTabbedPane();
         jMiniInfo1 = new org.perfectday.main.dummyengine.model.JMiniInfo();
         pGame = new javax.swing.JPanel();
         jBattelField1 = new org.perfectday.main.dummyengine.model.JBattelField();
         jPanel1 = new javax.swing.JPanel();
         activationStackPanel1 = new org.perfectday.main.dummyengine.model.ActivationStackPanel();
+        unitTimeComponent = new org.perfectday.main.dummyengine.DummyGraphicsUnitTimePanel();
         jMenuBar4 = new javax.swing.JMenuBar();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -125,7 +142,7 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PerfectDay Suite de pruebas");
-        setFont(new java.awt.Font("Comic Sans MS", 0, 12));
+        setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
@@ -162,14 +179,23 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
             }
         });
 
+        bMover.setText("Mover");
+        bMover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bMoverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pAccionesLayout = new javax.swing.GroupLayout(pAcciones);
         pAcciones.setLayout(pAccionesLayout);
         pAccionesLayout.setHorizontalGroup(
             pAccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pAccionesLayout.createSequentialGroup()
-                .addComponent(bWait, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                .addComponent(bWait, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(bMover, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bAPorEllos, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                .addComponent(bAPorEllos, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bAtacarPrimaria, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -182,11 +208,12 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
                 .addComponent(bSecundario)
                 .addComponent(bWait)
                 .addComponent(bAPorEllos)
-                .addComponent(bAtacarPrimaria))
+                .addComponent(bAtacarPrimaria)
+                .addComponent(bMover))
         );
 
-        jMiniInfo1.setFont(new java.awt.Font("Comic Sans MS", 0, 12));
-        tabs.addTab("Informaci�n de los minis", jMiniInfo1);
+        jMiniInfo1.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        tabs.addTab("Informaci?n de los minis", jMiniInfo1);
 
         pGame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -203,7 +230,7 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
         );
         jBattelField1Layout.setVerticalGroup(
             jBattelField1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 457, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Turno"));
@@ -216,7 +243,7 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
         );
         activationStackPanel1Layout.setVerticalGroup(
             activationStackPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 418, Short.MAX_VALUE)
+            .addGap(0, 337, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -227,9 +254,20 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(activationStackPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(activationStackPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        unitTimeComponent.setBackground(javax.swing.UIManager.getDefaults().getColor("Panel.background"));
+
+        javax.swing.GroupLayout unitTimeComponentLayout = new javax.swing.GroupLayout(unitTimeComponent);
+        unitTimeComponent.setLayout(unitTimeComponentLayout);
+        unitTimeComponentLayout.setHorizontalGroup(
+            unitTimeComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        unitTimeComponentLayout.setVerticalGroup(
+            unitTimeComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pGameLayout = new javax.swing.GroupLayout(pGame);
@@ -238,7 +276,9 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
             pGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pGameLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(unitTimeComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBattelField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -248,9 +288,13 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
             .addGroup(pGameLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBattelField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(pGameLayout.createSequentialGroup()
+                        .addComponent(jBattelField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(pGameLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(unitTimeComponent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         jMenu6.setText("PerfectDay");
@@ -300,9 +344,9 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
                 .addComponent(pGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pAcciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -318,7 +362,10 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
     }//GEN-LAST:event_bWaitActionPerformed
 
     private void bAPorEllosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAPorEllosActionPerformed
+        this.unitTimeComponent.confirmMiniMovement((LongUnitTime) game.getTurnTime());
+        this.unitTimeComponent.repaint();
         DashBoardThreadGroup.sendEventToKernell(new GoForAllCommand(game.getSelectedMini()));
+        
     }//GEN-LAST:event_bAPorEllosActionPerformed
 
     private void bAtacarPrimariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtacarPrimariaActionPerformed
@@ -332,6 +379,10 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
         this.actionMiniSelected = game.getSelectedMini().getPrimaryAction();
         this.jBattelField1.getMiniAccess().clear();
         this.jBattelField1.repaint();
+        
+        this.unitTimeComponent.confirmMiniMovement((LongUnitTime) game.getTurnTime());
+        this.unitTimeComponent.selectedAction(LongUnitTimeFactory.getInstance().doCombat(game.getSelectedMini()));
+        this.unitTimeComponent.repaint();
     }//GEN-LAST:event_bAtacarPrimariaActionPerformed
 
     private void bSecundarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSecundarioActionPerformed
@@ -346,11 +397,14 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
         this.actionMiniSelected = game.getSelectedMini().getSecondaryAction();
         this.jBattelField1.getMiniAccess().clear();
         this.jBattelField1.repaint();
+        this.unitTimeComponent.confirmMiniMovement((LongUnitTime) game.getTurnTime());
+        this.unitTimeComponent.selectedAction(LongUnitTimeFactory.getInstance().doCombat(game.getSelectedMini()));
+        this.unitTimeComponent.repaint();
     }//GEN-LAST:event_bSecundarioActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Perfectday versiÃ³n pre Alfa 0.8.8\n Mas informaciÃ³n en https://sourceforge.net/projects/perfectday o en http://game-perfectday.blogspot.com/ \n este juego es software libre y actualmente busca desarrolladores.\n DiseÃƒÂ±ado y desarrollado por Miguel Angel LÃƒÂ³pez Montellano (alakat@gmail.com)");
+        JOptionPane.showMessageDialog(this, "Perfectday versi?n pre Alfa 0.8.8\n Mas informaci?n en https://sourceforge.net/projects/perfectday o en http://game-perfectday.blogspot.com/ \n este juego es software libre y actualmente busca desarrolladores.\n Dise?ado y desarrollado por Miguel Angel L?pez Montellano (alakat@gmail.com)");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -368,6 +422,15 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
     String  as = game.getActivationStack().toString();
     JOptionPane.showMessageDialog(this,as,"Debug- Show ActivationStack",JOptionPane.INFORMATION_MESSAGE);
 }//GEN-LAST:event_jMenuItem1ActionPerformed1
+
+    private void bMoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMoverActionPerformed
+        // TODO add your handling code here:
+        Mini mini = Game.getGame().getSelectedMini();
+        this.jBattelField1.showAccesibleCeldForMove(mini);
+        LongUnitTime lt = LongUnitTimeFactory.getInstance().doMovementAction(mini);
+        this.unitTimeComponent.selectedAction(lt);
+        this.jBattelField1.repaint();
+    }//GEN-LAST:event_bMoverActionPerformed
     
 //    /**
 //     * @param args the command line arguments
@@ -385,32 +448,37 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
     private org.perfectday.main.dummyengine.model.ActivationStackPanel activationStackPanel1;
     private javax.swing.JButton bAPorEllos;
     private javax.swing.JButton bAtacarPrimaria;
+    private javax.swing.JButton bMover;
     private javax.swing.JButton bSecundario;
     private javax.swing.JButton bWait;
     private org.perfectday.main.dummyengine.model.JBattelField jBattelField1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuBar jMenuBar4;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private org.perfectday.main.dummyengine.model.JMiniInfo jMiniInfo1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel pAcciones;
     private javax.swing.JPanel pGame;
     private javax.swing.JTabbedPane tabs;
+    private org.perfectday.main.dummyengine.DummyGraphicsUnitTimePanel unitTimeComponent;
     // End of variables declaration//GEN-END:variables
     
   
     
+    @Override
     public void addInfo(String s){
 //        this.tfInfo.append(s);
 //        this.tfInfo.append("\n");
 //        this.scroll.getVerticalScrollBar().setValue(1000000);
     }
 
+    /**
+     * 
+     * @param mini 
+     */
+    @Override
     public void activateMini(Mini mini) {
         jBattelField1.setSelectedMini(mini);
         this.unitTime=null;
@@ -427,6 +495,10 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
         
         jBattelField1.repaint();
         this.activationStackPanel1.repaint();
+        
+        //ampliamos activamos el refresco del componente de gasto de UTs
+        this.unitTimeComponent.newActivationMini(mini);
+        this.unitTimeComponent.repaint();
     }
 
     public UnitTime getTurnCost() {
@@ -513,6 +585,9 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
         
         jBattelField1.repaint();
         this.activationStackPanel1.repaint();
+        //Componente de gasto de unidades de tiempo
+        this.unitTimeComponent.noMiniSelected();
+        this.unitTimeComponent.repaint();
     }
 
     @Override

@@ -96,7 +96,7 @@ public class ActivationProcessor implements Processor{
         }
         Game.getGame().setMasterAPorEllos(new MasterAPorEllos(mini));
         Game.getGame().setActualTime(ae.getUnitTime());
-        Game.getGame().setTurnTime(new LongUnitTime(0l));
+        Game.getGame().setTurnTime(LongUnitTimeFactory.getInstance().zero(mini));
         Game.getPerfectDayGUI().redraw();
     }
 

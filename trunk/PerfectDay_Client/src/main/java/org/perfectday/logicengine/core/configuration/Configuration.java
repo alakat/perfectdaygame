@@ -6,13 +6,8 @@
 package org.perfectday.logicengine.core.configuration;
 
 import es.bitsonfire.PDMinisDatabase;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -24,6 +19,13 @@ public class Configuration {
     private static Configuration instance;
     public static final String ASSETS_PATH = "assets";
     public static final String DATA_MINI_PATH = "/data/minis/";
+    public static final String QUEST_PATH ="/data/quest";
+    public static final String QUESTS_FILES = "/quests";
+    public static final String QUEST_TOKEN_SEPARATOR = "/";
+    public static final String PRE_NAME_ARMY = "/army_";
+    public static final String DESCRIPTION_QUEST="/description_";
+    public static final String BATTLEFIELD_QUEST="/battlefield_";
+    public static final String PROPERTIES_EXTENSION = ".properties";
 
     public Configuration() {
         try {
@@ -83,6 +85,10 @@ public class Configuration {
     }
     public InputStream getFailEffectFile(){
         return PDMinisDatabase.class.getResourceAsStream(DATA_MINI_PATH+"spells/faileffectfunctions.properties");
+    }
+
+    public InputStream getBasicAttribute() {
+        return PDMinisDatabase.class.getResourceAsStream("/data/conf/basic-attributes.properties");
     }
 
 }
