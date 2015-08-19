@@ -7,6 +7,7 @@ package org.perfectday.logicengine.core.configuration;
 
 import es.bitsonfire.PDMinisDatabase;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Properties;
 
 
@@ -89,6 +90,11 @@ public class Configuration {
 
     public InputStream getBasicAttribute() {
         return PDMinisDatabase.class.getResourceAsStream("/data/conf/basic-attributes.properties");
+    }
+
+    public URL getURLIconByName(String atac_icon) {
+        URL url = Configuration.class.getResource(ASSETS_PATH+"/dummy_icon/"+atac_icon);
+        return url;
     }
 
 }

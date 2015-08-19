@@ -127,13 +127,12 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
         bAtacarPrimaria = new javax.swing.JButton();
         bSecundario = new javax.swing.JButton();
         bMover = new javax.swing.JButton();
-        tabs = new javax.swing.JTabbedPane();
-        jMiniInfo1 = new org.perfectday.main.dummyengine.model.JMiniInfo();
         pGame = new javax.swing.JPanel();
         jBattelField1 = new org.perfectday.main.dummyengine.model.JBattelField();
         jPanel1 = new javax.swing.JPanel();
         activationStackPanel1 = new org.perfectday.main.dummyengine.model.ActivationStackPanel();
-        unitTimeComponent = new org.perfectday.main.dummyengine.DummyGraphicsUnitTimePanel();
+        unitTimeComponent = new org.perfectday.main.dummyengine.component.DummyGraphicsUnitTimeComponent();
+        jMiniInfo1 = new org.perfectday.main.dummyengine.model.JMiniInfo();
         jMenuBar4 = new javax.swing.JMenuBar();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -190,30 +189,33 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
         pAcciones.setLayout(pAccionesLayout);
         pAccionesLayout.setHorizontalGroup(
             pAccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pAccionesLayout.createSequentialGroup()
-                .addComponent(bWait, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addComponent(bMover, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bAPorEllos, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bAtacarPrimaria, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bSecundario, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(pAccionesLayout.createSequentialGroup()
+                .addGroup(pAccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bAPorEllos, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pAccionesLayout.createSequentialGroup()
+                        .addGroup(pAccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bWait, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bMover, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2)
+                        .addGroup(pAccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(bSecundario, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                            .addComponent(bAtacarPrimaria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pAccionesLayout.setVerticalGroup(
             pAccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pAccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(bSecundario)
-                .addComponent(bWait)
+            .addGroup(pAccionesLayout.createSequentialGroup()
+                .addGroup(pAccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bWait)
+                    .addComponent(bAtacarPrimaria))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pAccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bMover)
+                    .addComponent(bSecundario))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bAPorEllos)
-                .addComponent(bAtacarPrimaria)
-                .addComponent(bMover))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jMiniInfo1.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        tabs.addTab("Informaci?n de los minis", jMiniInfo1);
 
         pGame.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -226,7 +228,7 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
         jBattelField1.setLayout(jBattelField1Layout);
         jBattelField1Layout.setHorizontalGroup(
             jBattelField1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 561, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jBattelField1Layout.setVerticalGroup(
             jBattelField1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,13 +330,15 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pGame, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(tabs, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(pAcciones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jMiniInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pAcciones, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 439, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -342,11 +346,11 @@ public class DummyGraphicsEngine extends javax.swing.JFrame implements GraphicsE
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pAcciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(73, 73, 73)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jMiniInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pAcciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -430,6 +434,7 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
         LongUnitTime lt = LongUnitTimeFactory.getInstance().doMovementAction(mini);
         this.unitTimeComponent.selectedAction(lt);
         this.jBattelField1.repaint();
+        
     }//GEN-LAST:event_bMoverActionPerformed
     
 //    /**
@@ -461,8 +466,7 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel pAcciones;
     private javax.swing.JPanel pGame;
-    private javax.swing.JTabbedPane tabs;
-    private org.perfectday.main.dummyengine.DummyGraphicsUnitTimePanel unitTimeComponent;
+    private org.perfectday.main.dummyengine.component.DummyGraphicsUnitTimeComponent unitTimeComponent;
     // End of variables declaration//GEN-END:variables
     
   
@@ -516,10 +520,6 @@ private void jMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-F
 
     public UnitTime getUnitTime() {
         return unitTime;
-    }
-
-    public JTabbedPane getTabs() {
-        return tabs;
     }
 
     /**
