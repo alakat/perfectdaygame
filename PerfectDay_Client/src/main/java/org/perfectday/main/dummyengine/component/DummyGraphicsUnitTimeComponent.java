@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.perfectday.main.dummyengine;
+package org.perfectday.main.dummyengine.component;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -20,9 +20,9 @@ import org.perfectday.logicengine.model.unittime.factories.LongUnitTimeFactory;
  *
  * @author Miguel (alakat@gmail.com)
  */
-public class DummyGraphicsUnitTimePanel extends JPanel {
+public class DummyGraphicsUnitTimeComponent extends JPanel {
 
-    private static final Logger logger = Logger.getLogger(DummyGraphicsUnitTimePanel.class);
+    private static final Logger logger = Logger.getLogger(DummyGraphicsUnitTimeComponent.class);
     private static final int MAX_WIDTH = 220;
     private static final int MAX_HEIGHT = 80;
 
@@ -45,7 +45,7 @@ public class DummyGraphicsUnitTimePanel extends JPanel {
      */
     private LongUnitTime unitTime;
 
-    public DummyGraphicsUnitTimePanel() {
+    public DummyGraphicsUnitTimeComponent() {
         this.setBackground(new Color(0, 0, 0, 0));//Transparente
 
     }

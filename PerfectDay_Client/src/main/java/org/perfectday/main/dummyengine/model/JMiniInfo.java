@@ -21,27 +21,33 @@ public class JMiniInfo extends javax.swing.JPanel {
         this.setFont(new Font("Comic Sanz",Font.ITALIC,12));
     }
     
+    
     public void setMini(Mini mini){
-        this.lAtaque.setText(""+mini.getAtak());
-        this.lDefensa.setText(""+mini.getDefense());
-        this.lFueza.setText(""+mini.getStrength());
-        this.lIniciativa.setText(""+mini.getIniciative());
-        this.lMagic.setText(""+mini.getMagicAfinity());
-        this.lMovement.setText(""+mini.getMoviment());
-        this.lResistencia.setText(""+mini.getResistance());
-        this.lVitalidad.setText(((int)(((mini.getVitality()*100))-(mini.getDamage()*100)))
-                +"/"+((int)(mini.getVitality())*100));
-//        this.lVitalidad.setText(mini.getVitality()+"/"+mini.getDamage());
-        if(mini.getPrimaryAction()!=null)
-            this.lPrimaryAtack.setText(mini.getPrimaryAction().toString());
-        if(mini.getSecondaryAction()!=null)
-            this.lSecondAtack.setText(mini.getSecondaryAction().toString());
-        if(mini.getConterAtackAction()!=null)
-            this.lConterAtack.setText(mini.getConterAtackAction().toString());
-        else
-            this.lConterAtack.setText("No contra ataca");
+        this.attributePanel.setMini(mini);
         this.lMini.setText(mini.getName()+"::"+mini.getMiniLevel()+"/"+mini.getAbstractName());
     }
+    
+//    public void setMini(Mini mini){
+//        this.lAtaque.setText(""+mini.getAtak());
+//        this.lDefensa.setText(""+mini.getDefense());
+//        this.lFueza.setText(""+mini.getStrength());
+//        this.lIniciativa.setText(""+mini.getIniciative());
+//        this.lMagic.setText(""+mini.getMagicAfinity());
+//        this.lMovement.setText(""+mini.getMoviment());
+//        this.lResistencia.setText(""+mini.getResistance());
+//        this.lVitalidad.setText(((int)(((mini.getVitality()*100))-(mini.getDamage()*100)))
+//                +"/"+((int)(mini.getVitality())*100));
+////        this.lVitalidad.setText(mini.getVitality()+"/"+mini.getDamage());
+//        if(mini.getPrimaryAction()!=null)
+//            this.lPrimaryAtack.setText(mini.getPrimaryAction().toString());
+//        if(mini.getSecondaryAction()!=null)
+//            this.lSecondAtack.setText(mini.getSecondaryAction().toString());
+//        if(mini.getConterAtackAction()!=null)
+//            this.lConterAtack.setText(mini.getConterAtackAction().toString());
+//        else
+//            this.lConterAtack.setText("No contra ataca");
+//        this.lMini.setText(mini.getName()+"::"+mini.getMiniLevel()+"/"+mini.getAbstractName());
+//    }
     
     /** This method is called from within the constructor to
      * initialize the form.
@@ -51,64 +57,20 @@ public class JMiniInfo extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        lAtaque = new javax.swing.JLabel();
-        lDefensa = new javax.swing.JLabel();
-        lMovement = new javax.swing.JLabel();
-        vitalidad = new javax.swing.JLabel();
-        lFueza = new javax.swing.JLabel();
-        lResistencia = new javax.swing.JLabel();
-        lVitalidad = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        lIniciativa = new javax.swing.JLabel();
-        lMagic = new javax.swing.JLabel();
-        lPrimaryAtack = new javax.swing.JLabel();
-        lSecondAtack = new javax.swing.JLabel();
-        lConterAtack = new javax.swing.JLabel();
+        dummyDegradateYellowBar1 = new org.perfectday.main.dummyengine.component.DummyDegradateYellowBar();
         lMini = new javax.swing.JLabel();
+        attributePanel = new org.perfectday.main.dummyengine.component.DummyAttributeMiniPanel();
 
-        jLabel1.setText("Ataque");
-
-        jLabel2.setText("Defensa");
-
-        jLabel3.setText("Movimiento");
-
-        jLabel4.setText("Fueza");
-
-        jLabel5.setText("Resistencia");
-
-        lAtaque.setText("jLabel6");
-
-        lDefensa.setText("jLabel6");
-
-        lMovement.setText("jLabel6");
-
-        vitalidad.setText("Vitalidad");
-
-        lFueza.setText("jLabel6");
-
-        lResistencia.setText("jLabel7");
-
-        lVitalidad.setText("jLabel8");
-
-        jLabel6.setText("Iniciativa");
-
-        jLabel7.setText("Magic");
-
-        lIniciativa.setText("jLabel8");
-
-        lMagic.setText("jLabel8");
-
-        lPrimaryAtack.setText("primary atack");
-
-        lSecondAtack.setText("secondAtack");
-
-        lConterAtack.setText("jLabel8");
+        javax.swing.GroupLayout dummyDegradateYellowBar1Layout = new javax.swing.GroupLayout(dummyDegradateYellowBar1);
+        dummyDegradateYellowBar1.setLayout(dummyDegradateYellowBar1Layout);
+        dummyDegradateYellowBar1Layout.setHorizontalGroup(
+            dummyDegradateYellowBar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 130, Short.MAX_VALUE)
+        );
+        dummyDegradateYellowBar1Layout.setVerticalGroup(
+            dummyDegradateYellowBar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
 
         lMini.setText("jLabel8");
 
@@ -117,55 +79,11 @@ public class JMiniInfo extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1))
-                                .addGap(23, 23, 23)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lAtaque)
-                                    .addComponent(lDefensa)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lMovement)))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(vitalidad))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(16, 16, 16)
-                                        .addComponent(lVitalidad))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lFueza)
-                                            .addComponent(lResistencia))))))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lIniciativa)
-                            .addComponent(lMagic))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lSecondAtack, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                            .addComponent(lPrimaryAtack, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                            .addComponent(lConterAtack, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lMini)))
-                .addContainerGap())
+                    .addComponent(lMini)
+                    .addComponent(attributePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,64 +91,16 @@ public class JMiniInfo extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(lMini)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(lFueza)
-                            .addComponent(jLabel6)
-                            .addComponent(lIniciativa)
-                            .addComponent(lPrimaryAtack))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(lMagic)
-                            .addComponent(lSecondAtack))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lConterAtack)
-                        .addGap(12, 12, 12))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(lAtaque))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5)
-                            .addComponent(lDefensa)
-                            .addComponent(lResistencia))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(lMovement)
-                            .addComponent(vitalidad)
-                            .addComponent(lVitalidad))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(attributePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel lAtaque;
-    private javax.swing.JLabel lConterAtack;
-    private javax.swing.JLabel lDefensa;
-    private javax.swing.JLabel lFueza;
-    private javax.swing.JLabel lIniciativa;
-    private javax.swing.JLabel lMagic;
+    private org.perfectday.main.dummyengine.component.DummyAttributeMiniPanel attributePanel;
+    private org.perfectday.main.dummyengine.component.DummyDegradateYellowBar dummyDegradateYellowBar1;
     private javax.swing.JLabel lMini;
-    private javax.swing.JLabel lMovement;
-    private javax.swing.JLabel lPrimaryAtack;
-    private javax.swing.JLabel lResistencia;
-    private javax.swing.JLabel lSecondAtack;
-    private javax.swing.JLabel lVitalidad;
-    private javax.swing.JLabel vitalidad;
     // End of variables declaration//GEN-END:variables
     
 }

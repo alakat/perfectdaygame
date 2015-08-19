@@ -339,7 +339,7 @@ public class JBattelField extends JPanel {
                 dummyGraphicsEngine.getJMiniInfo1().setMini(
                         battelField.getBattelfield()[i][j].getMiniOcupant()
                         );
-                dummyGraphicsEngine.getTabs().setSelectedIndex(0);
+                //dummyGraphicsEngine.getTabs().setSelectedIndex(0);
                 //Pintamos quien es en la pila de acciones.
                 dummyGraphicsEngine.getActivationStackPanel().setSelectedMini(
                         battelField.getBattelfield()[i][j].getMiniOcupant());
