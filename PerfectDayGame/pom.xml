@@ -65,5 +65,6 @@
   <modules>
     <module>PerfectDay_DashBoard</module>
     <module>PerfectDay_IEngine3D</module>
+    <module>PerfectDay_MinisDatabase</module>
   </modules>
 </project>
