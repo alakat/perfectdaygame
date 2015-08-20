@@ -6,6 +6,7 @@
 package org.perfectday.dashboard.gui;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.lang.reflect.InvocationTargetException;
@@ -247,4 +248,5 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton unjugador;
     private javax.swing.JButton unjugador1;
     // End of variables declaration//GEN-END:variables
+
 }
