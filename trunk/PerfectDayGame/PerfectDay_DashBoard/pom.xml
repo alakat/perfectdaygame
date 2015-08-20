@@ -79,6 +79,11 @@
             <artifactId>PerfectDayHelp</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>es.bitsonfire</groupId>
+            <artifactId>PerfectDay_MinisDatabase</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>windows-1256</project.build.sourceEncoding>
