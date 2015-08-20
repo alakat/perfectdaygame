@@ -1,94 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>es.bitsonfire</groupId>
-  <artifactId>PerfectDay_Client</artifactId>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>es.bitsonfire</groupId>
+    <artifactId>PerfectDay_Client</artifactId>
     <packaging>jar</packaging>
-  <version>1.0</version>
-  <name>PerfectDay_Client</name>
-  <url>http://maven.apache.org</url>
-  <repositories>
-  <repository>
-  	<id>smackRepo</id>
-  	<url>http://maven.it.su.se/it.su.se/maven2/</url>
+    <version>1.0</version>
+    <name>PerfectDay_Client</name>
+    <url>http://maven.apache.org</url>
+    <repositories>
+        <repository>
+            <id>smackRepo</id>
+            <url>http://maven.it.su.se/it.su.se/maven2/</url>
   	
-  </repository>
-  <repository>
-  	<id>xtream</id>
-  	<url>http://repository.codehaus.org</url>
-  </repository>
-  <repository>
-      <id>official1</id>
-      <url>http://repo.maven.apache.org </url>
-  </repository>
-  <repository>
-      <id>official2</id>
-      <url>http://repo.maven.apache.org/maven2/ </url>
-  </repository>
-  </repositories>
+        </repository>
+        <repository>
+            <id>xtream</id>
+            <url>http://repository.codehaus.org</url>
+        </repository>
+        <repository>
+            <id>official1</id>
+            <url>http://repo.maven.apache.org </url>
+        </repository>
+        <repository>
+            <id>official2</id>
+            <url>http://repo.maven.apache.org/maven2/ </url>
+        </repository>
+    </repositories>
   
-  <build>
-  <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-            <encoding>${project.build.sourceEncoding}</encoding>
-        </configuration>
-      </plugin>
-      <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>2.4.3</version>
-          <configuration>
-              <encoding>${project.build.sourceEncoding}</encoding>
-          </configuration>
-      </plugin>
-  </plugins>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <debug>true</debug>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
   
   
-  <resources>
-      <resource>
-        <targetPath>assets</targetPath>
-        <directory>${basedir}/src/main/java/assets</directory>
-        <includes>
-          <include>**/*.*</include>
-        </includes>
-      </resource>
-    </resources>
+        <resources>
+            <resource>
+                <targetPath>assets</targetPath>
+                <directory>${basedir}/src/main/java/assets</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
   
-  </build>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-    <groupId>smack</groupId>
-	<artifactId>smack</artifactId>
-	<version>3.0.4</version>
-    </dependency>
-    <dependency>
-	    <groupId>log4j</groupId>
-	  <artifactId>log4j</artifactId>
-	  <version>1.2.12</version>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>smack</groupId>
+            <artifactId>smack</artifactId>
+            <version>3.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.12</version>
 
-    </dependency>
-    <dependency>
-	    <groupId>com.thoughtworks.xstream</groupId>
-	    <artifactId>xstream</artifactId>
-	    <version>1.3</version>
-	</dependency> 
-	<dependency>
-        <groupId>es.bitsonfire</groupId>
-        <artifactId>PerfectDayHelp</artifactId>
-        <version>1.0</version>
-    </dependency>
-  </dependencies>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.3</version>
+        </dependency> 
+        <dependency>
+            <groupId>es.bitsonfire</groupId>
+            <artifactId>PerfectDayHelp</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>es.bitsonfire</groupId>
+            <artifactId>PerfectDay_MinisDatabase</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
     <properties>
         <project.build.sourceEncoding>windows-1256</project.build.sourceEncoding>
     </properties>
