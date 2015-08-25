@@ -14,6 +14,10 @@ import org.apache.log4j.PropertyConfigurator;
 import org.perfectday.dashboard.gui.MainMenu;
 import org.perfectday.dashboard.threads.DashBoardThreadGroup;
 import org.perfectday.logicengine.core.configuration.Configuration;
+import org.perfectday.logicengine.model.minis.MiniFactory;
+import org.perfectday.logicengine.model.minis.MiniLevel;
+import org.perfectday.logicengine.model.minis.MiniType;
+import org.perfectday.main.dummyengine.commons.DummyFactorySprites;
 
 /**
  *
@@ -40,6 +44,9 @@ public class Main implements Runnable {
             PDMinisDatabase.class.getResourceAsStream(Configuration.QUEST_PATH+
                             Configuration.QUEST_TOKEN_SEPARATOR+quest+"/icon_"+quest+".jpeg")==null);
         System.out.println(PDMinisDatabase.class.getResourceAsStream("/data/minis/minis/simplesoldier.properties"));
+        //DummyFactorySprites.getInstance();
+        MiniFactory.getInstance().createMini(MiniType.LANCER, MiniLevel.HERO);
+        System.out.println("DUmmy factory sprite created");
     }
 
     public static String userInit = new String("");

@@ -99,13 +99,13 @@ public class Game {
             GraphicsEngineThreadGroup graphicsEngineThreadGroup = (GraphicsEngineThreadGroup) Thread.currentThread().getThreadGroup();
             game = graphicsEngineThreadGroup.getKernellThreadGroup().getGame();
         }else{
-            StackTraceElement[] trace = Thread.currentThread().getStackTrace();
-            logger.debug("Una hebra que no pertencia a Kernell o Graphics entro " +
-                    "getPerfectDayGUI["+Thread.currentThread().getName()+","
-                    +Thread.currentThread().getThreadGroup().getName()+"]");
-            for (StackTraceElement stackTraceElement : trace) {
-                logger.debug(stackTraceElement.toString());
-            }
+//            StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+//            logger.debug("Una hebra que no pertencia a Kernell o Graphics entro " +
+//                    "getPerfectDayGUI["+Thread.currentThread().getName()+","
+//                    +Thread.currentThread().getThreadGroup().getName()+"]");
+//            for (StackTraceElement stackTraceElement : trace) {
+//                logger.debug(stackTraceElement.toString());
+//            }
             game=Game.instance;
         }
         return game;

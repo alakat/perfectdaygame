@@ -6,7 +6,6 @@
 package org.perfectday.dashboard.gui;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.lang.reflect.InvocationTargetException;
@@ -14,7 +13,6 @@ import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import org.perfectday.dashboard.Main;
 import org.perfectday.dashboard.exception.GameBuilderException;
-import org.perfectday.dashboard.gui.quests.SelectQuestDialog;
 import org.perfectday.dashboard.threads.DashBoardThreadGroup;
 import org.perfectday.gamebuilder.GameBuilder;
 import org.perfectday.gamebuilder.GameBuilderFactory;
@@ -34,6 +32,7 @@ public class MainMenu extends javax.swing.JFrame {
      */
     public MainMenu() {
         initComponents();
+       // this.testPannel.runTest();
     }
 
     /**
@@ -96,7 +95,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addComponent(preferencias)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(105, Short.MAX_VALUE)
+                .addContainerGap(112, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(unjugador1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(unjugador, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)

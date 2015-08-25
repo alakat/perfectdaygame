@@ -7,6 +7,7 @@ package org.perfectday.main.dummyengine.model;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -21,8 +22,10 @@ import org.perfectday.logicengine.model.battelfield.TypeField;
 import org.perfectday.logicengine.model.command.combat.CombatResolutionCommand;
 import org.perfectday.logicengine.model.minis.Mini;
 import org.perfectday.logicengine.model.minis.MiniLevel;
+import org.perfectday.logicengine.model.minis.MiniType;
 import org.perfectday.logicengine.movement.MasterMovement;
 import org.perfectday.main.dummyengine.DummyGraphicsEngine;
+import org.perfectday.main.dummyengine.commons.DummyFactorySprites;
 import org.perfectday.threads.commands.kernell.PutEventCommand;
 
 /**
@@ -207,6 +210,8 @@ public class JBattelField extends JPanel {
 
     private void paintSoildier(int j, Graphics g, int i) {
         g.fillArc(i * SIZE_FIELD+2, j * SIZE_FIELD+2, SIZA_SOLDIER, SIZA_SOLDIER, 0, 360);
+        //DummyFactorySprites.getInstance().createAnimation(MiniType.SOLDIER, "active_wait").paint((Graphics2D) g.create(i * SIZE_FIELD+2, j * SIZE_FIELD+2, 30, 30));
+        
     }
     
     private void printAsessain(Graphics g, int i, int j) {

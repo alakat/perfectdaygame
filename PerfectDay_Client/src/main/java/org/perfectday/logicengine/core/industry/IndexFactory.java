@@ -4,10 +4,7 @@
  */
 
 package org.perfectday.logicengine.core.industry;
-import es.bitsonfire.PDMinisDatabase;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -30,8 +27,7 @@ public abstract class IndexFactory {
     
     public IndexFactory(InputStream is,boolean indexProperties)  {
         try {
-            //Solo por obligar las referencias
-            System.out.println("Index factory:"+is);
+            
             PDMinisDatabase pDMinisDatabase = new PDMinisDatabase();
             
             Properties index = new Properties();
@@ -73,7 +69,7 @@ public abstract class IndexFactory {
             if (object instanceof String) {
                 String name = (String) object;
                 String url = index.getProperty(name);
-                url = path + File.separator + url;
+                url = path + url;
                 Properties p = new Properties();
                 try {
                     logger.debug("Properties to load:"+url);
